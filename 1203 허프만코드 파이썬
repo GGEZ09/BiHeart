@@ -1,0 +1,115 @@
+def cou(s):
+    dic={' ':0}
+    for x in s:
+        if x in dic:
+            dic[x]+=1
+        else:
+            dic[x]=1
+    count=[]
+    k=0
+    for x in dic:
+        k=ord(x)
+        count.append([x,k,dic[x]])
+    count.sort()
+    return count
+
+def huf(count):
+    cend=count[:]
+    dic={}
+    cend.sort(key= lambda x:x[2])
+    k=27
+    while(len(cend)>1):
+        cend.sort(key= lambda x:x[2])
+        a=cend[0]
+        b=cend[1]
+        if len(a[0])==1:
+            dic[a[0]]='0'
+        else:
+            for c in a[0]:
+                dic[c]='0'+dic[c]
+        if len(b[0])==1:
+            dic[b[0]]='1'
+        else:
+            for c in b[0]:
+                dic[c]='1'+dic[c]
+        if len(cend)>2:
+            t=a[0]+b[0]
+            cend=[[t,k,a[2]+b[2]]]+cend[2:]
+        else:
+            t=a[0]+b[0]
+            cend=[[t,k,a[2]+b[2]]]
+        k+=1
+    dend=[]
+    for x in dic:
+        k=ord(x)
+        dend.append([x,k,int(dic[x],2),len(dic[x]),dic[x]])
+    dend.sort(key=lambda x:x[0])
+    return [dend,dic]
+
+def decode(s,dix):
+    x=0
+    end=''
+    while x<len(s):
+        st=''
+        while True:
+            st=st+s[x]
+            x+=1
+            if st in dix:
+                end+=dix[st]
+                break
+    print(end)
+    return end
+
+def encode(s,dic):
+    end=''
+    for x in s:
+        end+=dic[x]
+    print(end)
+    return end
+
+s='mans feelings are always purest and most glowing in the hour of meeting and of farewell'
+f=0
+count=[]
+count=cou(s)
+h,dic=huf(count)
+dix={}
+for x in dic:
+    dix[dic[x]]=x
+while(True):
+    inp=int(input('1.문자열(키) 지정[필수]\n2.문자열 인코딩\n3.인코딩\n4.디코딩\n5.종료'))
+    if inp==1:
+        inp2=input()
+        s=inp2
+        print(s)
+        count=cou(s)
+        print('ch      k       c[k]')
+        for x in count:
+            for y in x:
+                print (y,end='\t')
+            print()
+        h,dic=huf(count)
+        dix={}
+        for x in dic:
+            dix[dic[x]]=x
+        print('------------------------------------')
+        print('ch      k       code    length  huff')
+        for x in h:
+            for y in x:
+                print (y,end='\t')
+            print()
+        continue
+    if inp==2:
+        encode(s,dic)
+        continue
+    if inp==3:
+        cry=input()
+        encode(cry,dic)
+        continue
+    if inp==4:
+        cry=input()
+        decode(cry,dix)
+        continue
+    break
+
+우선순위 큐를 이용한 트라이를 만드는 방식이며 아스키코드 고정 길이로 보낼 때와 비교하여 비교적 높은 압축률을 보인다ㅏ
+파이썬으로 짠 것도 있고 테스트용이므로 무한루프를 이용했으므로 실제 이식할 때는 라즈베리파이에 맞게 다시 바꿔줘야함
