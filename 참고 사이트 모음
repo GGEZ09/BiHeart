@@ -1,2 +1,10 @@
 서보 제어 , 플렉스 센서 제어, 무선 제어, 아두이노 송신기/수신기 제어 - https://youtu.be/uEd2B7fS8Eg
 이외의 사이트 : https://www.kickstarter.com(킥스타터)
+TXD - 송신 데이터
+  UART 송수신, 3비트 송수신법
+    https://cafe.naver.com/circuitsmanual/211879
+RXD - 수신 데이터
+
+GND - 전압을 위한 선
+
+6~10m
