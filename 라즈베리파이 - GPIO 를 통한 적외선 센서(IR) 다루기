@@ -7,7 +7,6 @@ GPIO(General Purpose Input/Output)는 이런 저런 전자부품을 연결하기
 
 $ cat /etc/modules
 # /etc/modules: kernel modules to load at boot time.
-#
 # This file contains the names of kernel modules that should be loaded
 # at boot time, one per line. Lines beginning with "#" are ignored.
 
