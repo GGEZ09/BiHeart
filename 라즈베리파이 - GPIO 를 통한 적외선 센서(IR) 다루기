@@ -1,4 +1,4 @@
-라즈베리파이 - GPIO 를 통한 적외선 센서(IR) 다루기
+라즈베리파이 - GPIO 를 통한 적외선 센서(IR) 다루기.
 
 수신 편
 GPIO(General Purpose Input/Output)는 이런 저런 전자부품을 연결하기 위한 목적으로 사용됩니다.
