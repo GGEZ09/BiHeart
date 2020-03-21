@@ -1036,7 +1036,7 @@ def mainGame():
     
     while True:
         
-        if mode=="main1": #
+        while mode=="main1": #
             state=0
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)             #
@@ -1053,6 +1053,7 @@ def mainGame():
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
             buttons.draw(screen)
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1065,7 +1066,7 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0                   
 
-        elif mode=="main2":
+        while mode=="main2":
             state=0
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
@@ -1077,6 +1078,7 @@ def mainGame():
             click, mode, deck3, deck, pHands ,sun, tuk, que = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que)
             buttons.draw(screen)
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1089,10 +1091,10 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
 
-        elif mode=="deck1": 
+        while mode=="deck1": 
             if hsu2>19:
                 mode="deck2"
-                continue
+                break
             textFont2 = pygame.font.Font(None,55)
             background, backgroundRect = imageLoad("bjs.png", 0)    #f2 ea bf / 242 234 191
             screen.blit(background, backgroundRect)
@@ -1185,6 +1187,7 @@ def mainGame():
             
             buttons.draw(screen)
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1197,10 +1200,10 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
 
-        elif mode=="deck2": 
+        while mode=="deck2": 
             if hsu2<20:
                 mode="deck1"
-                continue
+                break
             textFont2 = pygame.font.Font(None,55)
             background, backgroundRect = imageLoad("bjs.png", 0)    #f2 ea bf / 242 234 191
             screen.blit(background, backgroundRect)
@@ -1289,6 +1292,7 @@ def mainGame():
             gsuFont = pygame.font.Font.render(textFont, (str(gsu2)+"(>9)"), 1, (255,5,5), (242,234,191))
             screen.blit(gsuFont, (475, 455))
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1300,8 +1304,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
+                
 
-        elif mode=="connect":
+        while mode=="connect":
             to+=1
             if to>=5:
                 mode="main2"
@@ -1340,6 +1345,7 @@ def mainGame():
             click, mode = bMT.update(mX, mY, click, mode)
             click, mode = bMC.update(mX, mY, click, mode)
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1352,7 +1358,7 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
             
-        elif mode=="pregame":
+        while mode=="pregame":
             try:
                 if to<5:
                     send_data(9,9,9)
@@ -1379,6 +1385,7 @@ def mainGame():
             click, mode = bGS.update(mX, mY, click, mode)
             click, mode, sun, pHands, oHands, deck3 = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3)
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1391,7 +1398,7 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
                     
-        elif mode=="att" or mode=="def":
+        while mode=="att" or mode=="def":
             tuk=9
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
@@ -1431,7 +1438,7 @@ def mainGame():
             if len(que)==3:
                 tuk=que[1]
                 if que[2]<9:
-                    poi, backgroundRect = imageLoad("down-grey.png", 0)
+                    poi, backgroundRect = imageLoad("target.png", 0)
                     poi.set_colorkey((0,0,0))
                     screen.blit(poi, (gtwitch[que[2]]-38, 120))
                     
@@ -1479,10 +1486,11 @@ def mainGame():
                     screen.blit(c[j], (i-75, 240))
                 j+=1
             if len(que)==1:
-                swi, backgroundRect = imageLoad("down-grey.png", 0)
+                swi, backgroundRect = imageLoad("switch.png", 0)
                 swi.set_colorkey((0,0,0))
                 screen.blit(swi, (pPT[que[0]]-22, 330))
                 
+            clock.tick(60)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
