@@ -597,9 +597,13 @@ def mainGame():
                     else:
                         mode="def"
                 elif mode=="def":
-                    mode="com"
+                    modedp=mode
+                    mode='defcom'
+                    state=0
                 elif mode=="att":
-                    mode="com"
+                    modedp=mode
+                    mode='attcom'
+                    state=0
                 click = 0
                 self.image, self.rect = imageLoad("Ok.png", 0)
                 self.position = (745, 200)
@@ -1011,10 +1015,13 @@ def mainGame():
     sun=0 #0 1
     cnt=2 #
     pHands, oHands,pPos,oPos= [], [], 0, 0
+    buf=0
+    
     ol=6
     mX, mY = 0, 0
     click = 0
     mode="main1"
+    modedp=""
     hsu=0
     gsu=0
     hsu2=0
@@ -1393,6 +1400,12 @@ def mainGame():
                     click = 0
                     
         while mode=="att" or mode=="def":
+            try:
+                if to<5:
+                    send_data(9,9,9)
+                    to+=1
+            except:
+                oo=0;
             tuk=9
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
@@ -1498,113 +1511,243 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
                     
-        while mode=="com":
-            to=-25
-            state=0
-            oHands=[]
-            ll=len(pHands)
-            Ha=[]
-            po=0
-            for i in pHands:
-                for j in range(len(CT)):
-                    if i==CT[j]:
-                        Ha.append(j)
-            
-            while to<5:
-                to+=1
-                try:
-                    if state==0:
-                        send_data(0,0,0)
-                        temp=receive_data()
-                        if temp[0]=='1':
-                            oHands.append(temp[1])
-                            oHands.append(temp[2])
-                            to=0
-                            state=1
-                            tmp=[Ha[po]]
-                            if po+1<ll:
-                                tmp.append(Ha[po+1])
+        while mode=="attcom":
+            to+=1
+            if to>=10:
+                mode=modedp
+                to=0
+                break
+            try:
+                if state==0:
+                    send_data(0,0,0)
+                    temp=receive_data()
+                    if temp=='000':
+                        to=0
+                        state=1
+                elif state==1:
+                    send_data(1,que[0],que[2])
+                    temp=receive_data()
+                    if temp[0]=='2':
+                        to=0
+                        state=2
+                        del pHands[que[1]]
+                        if que[0]=='A':
+                            nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                            nowcard.set_colorkey(beige)
+                            ol-=1
+                            if temp[1]=='6':
+                                oHeart-=1
+                        elif que[0]=='S':
+                            if temp[1]=='0':
+                                continue
                             else:
-                                tmp[1]=-1
-                            po+=2
-                    elif state==1:
-                        send_data(state,tmp[0],tmp[1])
-                        temp=receive_data()
-                        if temp[0]=='2':
-                            oHandstemp.append(temp[1])
-                            oHands.append(temp[2])
-                            to=0
-                            state=2
-                            tmp=[-1,-1]
-                            if po<ll:
-                                tmp[0]=Ha[po]
-                            if ll>po+1:
-                                tmp.append(Ha[po+1])
-                            po+=2
-                    elif state==2:
-                        send_data(state,tmp[0],tmp[1])
-                        temp=receive_data()
-                        if temp[0]=='3':
-                            oHands.append(temp[1])
-                            oHands.append(temp[2])
-                            to=0
-                            state=3
-                            tmp=[-1,-1]
-                            if po<ll:
-                                tmp[0]=Ha[po]
-                            if ll>po+1:
-                                tmp.append(Ha[po+1])
-                            po+=2
-                    elif state==3:
-                        send_data(state,tmp[0],tmp[1])
-                        temp=receive_data()
-                        if temp[0]=='4':
-                            oHands.append(temp[1])
-                            oHands.append(temp[2])
-                            to=0
-                            state=4
-                            tmp=[-1,-1]
-                            if po<ll:
-                                tmp[0]=Ha[po]
-                            if ll>po+1:
-                                tmp.append(Ha[po+1])
-                            po+=2
-                    elif state==4:
-                        send_data(state,tmp[0],tmp[1])
-                        temp=receive_data()
-                        if temp[0]=='5':
-                            oHands.append(temp[1])
-                            oHands.append(temp[2])
-                            to=0
-                            state=5
-                            tmp=[-1,-1]
-                            if po<ll:
-                                tmp[0]=Ha[po]
-                            if ll>po+1:
-                                tmp.append(Ha[po+1])
-                            po+=2
-                    elif state==5:
-                        send_data(state,tmp[0],tmp[1])
-                        temp=receive_data()
-                        if temp[0]=='6':
-                            oHands.append(temp[1])
-                            to=0
-                            state=6
-                            tmp=[-1,-1]
-                            if po<ll:
-                                tmp[0]=Ha[po]
-                            if ll>po+1:
-                                tmp.append(Ha[po+1])
-                except:
-                    oo=0;
-            print(Ha,oHands)
-            
-        #while mode=="attbat":
-            #cnt-=1
-            #if que[0]=='A':
-            #elif que[0]=='S':
-            #elif que[0]=='H':
-        
+                                nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                                nowcard.set_colorkey(beige)
+                                ol-=1
+                        elif que[0]=='H':
+                            nowcard, backgroundRect = imageLoad(CT[5], 1)
+                            nowcard.set_colorkey(beige)
+                            pHands=pHands[]+deck3[:2]
+                            deck3=deck3[2:]
+                elif state==2:
+                    send_data(9,9,9)
+                    temp=receive_data()
+                    if temp=='999':
+                        to=0
+                        state=2
+                        cnt-=1
+                        if oHeart==0:
+                            mode="main2"
+                            break
+                        if pHeart==0:
+                            mode="main2"
+                            break
+                        if cnt==0:
+                            mode="def"   
+                        else:
+                            mode="att"
+            except:
+                oo=0;
+            background, backgroundRect = imageLoad("bjs2.png", 0)
+            screen.blit(background, backgroundRect)
+            buttons=pygame.sprite.Group(bGS, bGO)
+            buttons.draw(screen)
+            pPT=PT[len(pHands)]
+            j=0
+            c=[0]*len(pHands)
+            for i in pPT:
+                c[j], backgroundRect = imageLoad(pHands[j], 1)
+                c[j].set_colorkey(beige)
+                screen.blit(c[j], (i-75, 240))
+                j+=1
+            gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
+            gtwi=38
+            for i in range(ol):
+                gtwitch[i]=gtwi
+                gtwi+=76
+            buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
+            buttons1.draw(screen)
+            click, mode = bGS.update(mX, mY, click, mode)
+            click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
+            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
+            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
+            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
+            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
+            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
+            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
+            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
+            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
+            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
+            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
+            try:
+                screen.blit(nowcard, (80, 240))
+            except:
+                oo=0;
+                
+            clock.tick(60)
+            pygame.display.flip() 
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mX, mY = pygame.mouse.get_pos()
+                        click = 1
+                elif event.type == MOUSEBUTTONUP:
+                    mX, mY = 0, 0
+                    click = 0
+
+        while mode=="defcom":
+            to+=1
+            if to>=10:
+                mode=modedp
+                to=0
+                break
+            try:
+                if state==0:
+                    temp=receive_data()
+                    if temp=='000':
+                        to=0
+                        state=1
+                elif state==1:
+                    send_data(0,0,0)
+                    temp=receive_data()
+                    if temp[0]=='1':
+                        to=0
+                        state=2
+                        buf=0
+                        if temp[1]=='A':
+                            nowcard, backgroundRect = imageLoad(CT[0], 1)
+                            nowcard.set_colorkey(beige)
+                            ol-=1
+                            if temp[2]>0:
+                                if pHands[temp[2]-1]==CT[2]:
+                                    buf=2
+                                    del pHands[temp[2]-1]
+                                    continue
+                            if temp[2]+1<len(pHands):
+                                if pHands[temp[2]+1]==CT[2]:
+                                    buf=2
+                                    del pHands[temp[2]+1]
+                                    continue
+                            if pHands[temp[2]]==CT[3]:
+                                buf=3
+                                del pHands[temp[2]+1]
+                                pHands=pHands[]+deck3[:2]
+                                deck3=deck3[2:]
+                                continue
+                            elif pHands[temp[2]]==CT[4]:
+                                buf=4
+                                del pHands[temp[2]+1]
+                                continue
+                            else:
+                                buf=CT.index(pHands[temp[2]])
+                                if pHands[temp[2]]==CT[6]:
+                                    pHeart-=1
+                                del pHands[temp[2]]
+                        elif temp[1]=='S':
+                            nowcard, backgroundRect = imageLoad(CT[1], 1)
+                            nowcard.set_colorkey(beige)
+                            ol-=1
+                            for i in pHands:
+                                if buf!=0:
+                                    break
+                                for j in range(2,5):
+                                    if i == CT[j]:
+                                        buf=j
+                                        break
+                        elif temp[1]=='H':
+                            nowcard, backgroundRect = imageLoad(CT[5], 1)
+                            nowcard.set_colorkey(beige)
+                            ol+=1
+                            buf=0
+                elif state==2:
+                    send_data(2,buf,0)
+                    temp=receive_data()
+                    if temp[0]=='999':
+                        to=0
+                        state=2
+                        cnt-=1
+                        if oHeart==0:
+                            mode="main2"
+                            break
+                        if pHeart==0:
+                            mode="main2"
+                            break
+                        if cnt==0:
+                            mode="att"   
+                        else:
+                            mode="def"
+            except:
+                oo=0;
+            background, backgroundRect = imageLoad("bjs2.png", 0)
+            screen.blit(background, backgroundRect)
+            buttons=pygame.sprite.Group(bGS, bGO)
+            buttons.draw(screen)
+            pPT=PT[len(pHands)]
+            j=0
+            c=[0]*len(pHands)
+            for i in pPT:
+                c[j], backgroundRect = imageLoad(pHands[j], 1)
+                c[j].set_colorkey(beige)
+                screen.blit(c[j], (i-75, 240))
+                j+=1
+            gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
+            gtwi=38
+            for i in range(ol):
+                gtwitch[i]=gtwi
+                gtwi+=76
+            buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
+            buttons1.draw(screen)
+            click, mode = bGS.update(mX, mY, click, mode)
+            click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
+            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
+            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
+            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
+            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
+            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
+            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
+            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
+            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
+            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
+            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
+            try:
+                screen.blit(nowcard, (80, 240))
+            except:
+                oo=0;
+                
+            clock.tick(60)
+            pygame.display.flip() 
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mX, mY = pygame.mouse.get_pos()
+                        click = 1
+                elif event.type == MOUSEBUTTONUP:
+                    mX, mY = 0, 0
+                    click = 0
         
 if __name__ == "__main__":
     mainGame()
