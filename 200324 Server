@@ -600,13 +600,9 @@ def mainGame():
                     else:
                         mode="def"
                 elif mode=="def":
-                    modedp=mode
                     mode='defcom'
-                    state=0
                 elif mode=="att":
-                    modedp=mode
                     mode='attcom'
-                    state=0
                 click = 0
                 self.image, self.rect = imageLoad("Ok.png", 0)
                 self.position = (745, 200)
@@ -1412,6 +1408,7 @@ def mainGame():
         while mode=="att" or mode=="def":
             try:
                 if to<5:
+                    modedp=mode
                     send_data(9,9,9)
                     to+=1
             except:
@@ -1563,7 +1560,7 @@ def mainGame():
                     temp=receive_data()
                     if temp=='999':
                         to=0
-                        state=3
+                        state=0
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
@@ -1572,7 +1569,7 @@ def mainGame():
                             mode="main2"
                             continue
                         if cnt==0:
-                            mode="def"   
+                            mode="def"
                         else:
                             mode="att"
             except:
