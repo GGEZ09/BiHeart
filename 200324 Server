@@ -1539,6 +1539,7 @@ def mainGame():
                         to=0
                         state=2
                         buf=0
+                        cnt-=1
                         if temp[1]=='A':
                             nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
@@ -1587,10 +1588,10 @@ def mainGame():
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
-                    if temp[0]=='999':
-                        to=0
-                        state=2
+                    if temp=='999':
                         cnt-=1
+                        to=0
+                        state=3
                         if oHeart==0:
                             mode="main2"
                             break
@@ -1695,7 +1696,7 @@ def mainGame():
                     temp=receive_data()
                     if temp=='999':
                         to=0
-                        state=2
+                        state=3
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
