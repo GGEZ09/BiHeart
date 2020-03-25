@@ -1559,6 +1559,8 @@ def mainGame():
                         to=0
                         state=0
                         to2=0
+                        que=[]
+                        tuk=9
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
@@ -1694,6 +1696,8 @@ def mainGame():
                         to=0
                         state=0
                         to2=0
+                        que=[]
+                        tuk=9
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
