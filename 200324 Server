@@ -1656,7 +1656,7 @@ def mainGame():
                                     buf=2
                                     del pHands[t2-1]
                                     continue
-                            if temp[2]+1<len(pHands):
+                            if t2+1<len(pHands):
                                 if pHands[t2+1]==CT[2]:
                                     buf=2
                                     del pHands[t2+1]
