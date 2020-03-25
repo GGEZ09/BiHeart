@@ -1577,6 +1577,7 @@ def mainGame():
                             continue
                         if cnt==0:
                             cnt=2
+                            ol+=2
                             mode="def"
                         else:
                             mode=modedp
