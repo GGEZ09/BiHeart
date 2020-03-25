@@ -1554,7 +1554,7 @@ def mainGame():
                     temp=receive_data()
                     if temp=='999':
                         to=0
-                        state=2
+                        state=3
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
@@ -1684,9 +1684,9 @@ def mainGame():
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
-                    if temp[0]=='999':
+                    if temp=='999':
                         to=0
-                        state=2
+                        state=3
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
