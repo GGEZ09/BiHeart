@@ -1406,9 +1406,9 @@ def mainGame():
                     click = 0
                     
         while mode=="att" or mode=="def":
+            modedp=mode
             try:
                 if to<5:
-                    modedp=mode
                     send_data(9,9,9)
                     to+=1
             except:
