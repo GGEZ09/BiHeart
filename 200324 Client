@@ -1563,12 +1563,15 @@ def mainGame():
                         tuk=9
                         cnt-=1
                         if oHeart==0:
+                            cnt=2
                             mode="main2"
                             continue
                         if pHeart==0:
+                            cnt=2
                             mode="main2"
                             continue
                         if cnt==0:
+                            cnt=2
                             mode="def"
                         else:
                             mode="att"
@@ -1660,13 +1663,13 @@ def mainGame():
                                     continue
                             if pHands[t2]==CT[3]:
                                 buf=3
-                                del pHands[t2+1]
+                                del pHands[t2]
                                 pHands=pHands[]+deck3[:2]
                                 deck3=deck3[2:]
                                 continue
                             elif pHands[t2]==CT[4]:
                                 buf=4
-                                del pHands[t2+1]
+                                del pHands[t2]
                                 continue
                             else:
                                 if pHands[t2]==CT[6]:
@@ -1700,13 +1703,18 @@ def mainGame():
                         tuk=9
                         cnt-=1
                         if oHeart==0:
+                            cnt=2
                             mode="main2"
                             continue
                         if pHeart==0:
+                            cnt=2
                             mode="main2"
                             continue
                         if cnt==0:
-                            mode="att"   
+                            cnt=2
+                            pHands=pHands[]+deck3[:2]
+                            deck3=deck3[2:]
+                            mode="att"
                         else:
                             mode="def"
             except:
