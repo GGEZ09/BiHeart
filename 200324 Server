@@ -1689,7 +1689,7 @@ def mainGame():
                         elif que[0]=='H':
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
-                            pHands=pHands[]+deck3[:2]
+                            pHands=pHands+deck3[:2]
                             deck3=deck3[2:]
                 elif state==2:
                     send_data(9,9,9)
