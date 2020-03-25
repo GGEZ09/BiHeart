@@ -1004,6 +1004,9 @@ def mainGame():
     deck2=[]                # 
     deck3=[]                # 
     que=[]
+    to=0
+    to2=0
+    tuk=9
     
     dek={}
     dek2={}
@@ -1012,6 +1015,8 @@ def mainGame():
     cnt=2 #
     pHands, oHands,pPos,oPos= [], [], 0, 0
     buf=0
+    pHeart=2
+    oHeart=2
     
     ol=6
     mX, mY = 0, 0
@@ -1022,8 +1027,6 @@ def mainGame():
     gsu=0
     hsu2=0
     gsu2=0
-    to=0
-    tuk=9
     
 
     
@@ -1399,10 +1402,11 @@ def mainGame():
                     
         while mode=="att" or mode=="def":
             try:
-                if to<5:
+                if to2<5:
                     modedp=mode
+                    to=0
                     send_data(9,9,9)
-                    to+=1
+                    to2+=1
             except:
                 oo=0;
             tuk=9
@@ -1554,6 +1558,7 @@ def mainGame():
                     if temp=='999':
                         to=0
                         state=0
+                        to2=0
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
@@ -1562,7 +1567,7 @@ def mainGame():
                             mode="main2"
                             continue
                         if cnt==0:
-                            mode="def"   
+                            mode="def"
                         else:
                             mode="att"
             except:
@@ -1599,7 +1604,7 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
             try:
-                screen.blit(nowcard, (80, 240))
+                screen.blit(nowcard, (0, 120))
             except:
                 oo=0;
                 
@@ -1636,35 +1641,36 @@ def mainGame():
                         to=0
                         state=2
                         buf=0
+                        t2=int(temp[2])
                         if temp[1]=='A':
                             nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
                             ol-=1
-                            if temp[2]>0:
-                                if pHands[temp[2]-1]==CT[2]:
+                            if t2>0:
+                                if pHands[t2-1]==CT[2]:
                                     buf=2
-                                    del pHands[temp[2]-1]
+                                    del pHands[t2-1]
                                     continue
                             if temp[2]+1<len(pHands):
-                                if pHands[temp[2]+1]==CT[2]:
+                                if pHands[t2+1]==CT[2]:
                                     buf=2
-                                    del pHands[temp[2]+1]
+                                    del pHands[t2+1]
                                     continue
-                            if pHands[temp[2]]==CT[3]:
+                            if pHands[t2]==CT[3]:
                                 buf=3
-                                del pHands[temp[2]+1]
+                                del pHands[t2+1]
                                 pHands=pHands[]+deck3[:2]
                                 deck3=deck3[2:]
                                 continue
-                            elif pHands[temp[2]]==CT[4]:
+                            elif pHands[t2]==CT[4]:
                                 buf=4
-                                del pHands[temp[2]+1]
+                                del pHands[t2+1]
                                 continue
                             else:
-                                buf=CT.index(pHands[temp[2]])
-                                if pHands[temp[2]]==CT[6]:
+                                if pHands[t2]==CT[6]:
+                                    buf=6
                                     pHeart-=1
-                                del pHands[temp[2]]
+                                del pHands[t2]
                         elif temp[1]=='S':
                             nowcard, backgroundRect = imageLoad(CT[1], 1)
                             nowcard.set_colorkey(beige)
@@ -1686,7 +1692,8 @@ def mainGame():
                     temp=receive_data()
                     if temp=='999':
                         to=0
-                        state=3
+                        state=0
+                        to2=0
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
@@ -1732,7 +1739,7 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
             try:
-                screen.blit(nowcard, (80, 240))
+                screen.blit(nowcard, (0, 120))
             except:
                 oo=0;
                 
