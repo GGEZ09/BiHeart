@@ -1538,7 +1538,9 @@ def mainGame():
                             nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                             nowcard.set_colorkey(beige)
                             ol-=1
-                            if temp[1]=='6':
+                            if temp[1]=='4':
+                                cnt=1
+                            elif temp[1]=='6':
                                 oHeart-=1
                         elif que[0]=='S':
                             if temp[1]=='0':
@@ -1669,6 +1671,7 @@ def mainGame():
                                 continue
                             elif pHands[t2]==CT[4]:
                                 buf=4
+                                cnt=1
                                 del pHands[t2]
                                 continue
                             else:
