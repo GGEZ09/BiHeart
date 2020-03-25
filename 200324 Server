@@ -650,7 +650,7 @@ def mainGame():
                 self.position = (gtwi, 120)
                 self.rect.center = self.position
 
-                if mode=="att":
+                if mode=="att" and len(que)==3:
                     if que[0]=="A":
                         que[2]=opos
             
@@ -1341,7 +1341,7 @@ def mainGame():
                     temp=receive_data()
                     if temp=='1AC':
                         to=0
-                        state=2
+                        state=0
                         mode="pregame"
             except:
                 oo=0;
@@ -1520,88 +1520,61 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
 		    
-        while mode=="defcom":
+        while mode=="attcom":
+            print(modedp, state)
             to+=1
             if to>=10:
                 mode=modedp
                 to=0
-                break
             try:
                 if state==0:
+                    send_data(0,0,0)
                     temp=receive_data()
                     if temp=='000':
                         to=0
                         state=1
                 elif state==1:
-                    send_data(0,0,0)
+                    send_data(1,que[0],que[2])
                     temp=receive_data()
-                    if temp[0]=='1':
+                    if temp[0]=='2':
                         to=0
                         state=2
-                        buf=0
-                        cnt-=1
-                        if temp[1]=='A':
-                            nowcard, backgroundRect = imageLoad(CT[0], 1)
+                        del pHands[que[1]]
+                        if que[0]=='A':
+                            nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                             nowcard.set_colorkey(beige)
                             ol-=1
-                            if temp[2]>0:
-                                if pHands[temp[2]-1]==CT[2]:
-                                    buf=2
-                                    del pHands[temp[2]-1]
-                                    continue
-                            if temp[2]+1<len(pHands):
-                                if pHands[temp[2]+1]==CT[2]:
-                                    buf=2
-                                    del pHands[temp[2]+1]
-                                    continue
-                            if pHands[temp[2]]==CT[3]:
-                                buf=3
-                                del pHands[temp[2]+1]
-                                pHands=pHands[]+deck3[:2]
-                                deck3=deck3[2:]
-                                continue
-                            elif pHands[temp[2]]==CT[4]:
-                                buf=4
-                                del pHands[temp[2]+1]
+                            if temp[1]=='6':
+                                oHeart-=1
+                        elif que[0]=='S':
+                            if temp[1]=='0':
                                 continue
                             else:
-                                buf=CT.index(pHands[temp[2]])
-                                if pHands[temp[2]]==CT[6]:
-                                    pHeart-=1
-                                del pHands[temp[2]]
-                        elif temp[1]=='S':
-                            nowcard, backgroundRect = imageLoad(CT[1], 1)
-                            nowcard.set_colorkey(beige)
-                            ol-=1
-                            for i in pHands:
-                                if buf!=0:
-                                    break
-                                for j in range(2,5):
-                                    if i == CT[j]:
-                                        buf=j
-                                        break
-                        elif temp[1]=='H':
+                                nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                                nowcard.set_colorkey(beige)
+                                ol-=1
+                        elif que[0]=='H':
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
-                            ol+=1
-                            buf=0
+                            pHands=pHands+deck3[:2]
+                            deck3=deck3[2:]
                 elif state==2:
-                    send_data(2,buf,0)
+                    send_data(9,9,9)
                     temp=receive_data()
                     if temp=='999':
-                        cnt-=1
                         to=0
                         state=3
+                        cnt-=1
                         if oHeart==0:
                             mode="main2"
-                            break
+                            continue
                         if pHeart==0:
                             mode="main2"
-                            break
+                            continue
                         if cnt==0:
-                            mode="att"   
+                            mode="def"   
                         else:
-                            mode="def"
+                            mode="att"
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1652,47 +1625,74 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-                    
-        while mode=="attcom":
+
+        while mode=="defcom":
+            print(modedp, state)
             to+=1
             if to>=10:
                 mode=modedp
                 to=0
-                break
+                continue
             try:
                 if state==0:
-                    send_data(0,0,0)
                     temp=receive_data()
                     if temp=='000':
                         to=0
                         state=1
                 elif state==1:
-                    send_data(1,que[0],que[2])
+                    send_data(0,0,0)
                     temp=receive_data()
-                    if temp[0]=='2':
+                    if temp[0]=='1':
                         to=0
                         state=2
-                        del pHands[que[1]]
-                        if que[0]=='A':
-                            nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                        buf=0
+                        if temp[1]=='A':
+                            nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
                             ol-=1
-                            if temp[1]=='6':
-                                oHeart-=1
-                        elif que[0]=='S':
-                            if temp[1]=='0':
+                            if temp[2]>0:
+                                if pHands[temp[2]-1]==CT[2]:
+                                    buf=2
+                                    del pHands[temp[2]-1]
+                                    continue
+                            if temp[2]+1<len(pHands):
+                                if pHands[temp[2]+1]==CT[2]:
+                                    buf=2
+                                    del pHands[temp[2]+1]
+                                    continue
+                            if pHands[temp[2]]==CT[3]:
+                                buf=3
+                                del pHands[temp[2]+1]
+                                pHands=pHands[]+deck3[:2]
+                                deck3=deck3[2:]
+                                continue
+                            elif pHands[temp[2]]==CT[4]:
+                                buf=4
+                                del pHands[temp[2]+1]
                                 continue
                             else:
-                                nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
-                                nowcard.set_colorkey(beige)
-                                ol-=1
-                        elif que[0]=='H':
+                                buf=CT.index(pHands[temp[2]])
+                                if pHands[temp[2]]==CT[6]:
+                                    pHeart-=1
+                                del pHands[temp[2]]
+                        elif temp[1]=='S':
+                            nowcard, backgroundRect = imageLoad(CT[1], 1)
+                            nowcard.set_colorkey(beige)
+                            ol-=1
+                            for i in pHands:
+                                if buf!=0:
+                                    continue
+                                for j in range(2,5):
+                                    if i == CT[j]:
+                                        buf=j
+                                        continue
+                        elif temp[1]=='H':
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
-                            pHands=pHands+deck3[:2]
-                            deck3=deck3[2:]
+                            ol+=1
+                            buf=0
                 elif state==2:
-                    send_data(9,9,9)
+                    send_data(2,buf,0)
                     temp=receive_data()
                     if temp=='999':
                         to=0
@@ -1700,14 +1700,14 @@ def mainGame():
                         cnt-=1
                         if oHeart==0:
                             mode="main2"
-                            break
+                            continue
                         if pHeart==0:
                             mode="main2"
-                            break
+                            continue
                         if cnt==0:
-                            mode="def"   
+                            mode="att"   
                         else:
-                            mode="att"
+                            mode="def"
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
