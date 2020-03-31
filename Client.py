@@ -1528,7 +1528,7 @@ def mainGame():
                 if state==0:
                     send_data(0,0,0)
                     temp=receive_data()
-                    if temp=='000':
+                    if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
                 elif state==1:
@@ -1653,7 +1653,7 @@ def mainGame():
             try:
                 if state==0:
                     temp=receive_data()
-                    if temp=='000':
+                    if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
                 elif state==1:
