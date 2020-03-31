@@ -44,11 +44,6 @@ def receive_data():
     if bytes!='':
         bytes=bytes[1:]
         temp=bytes
-    elif bytes=='':
-        if temp=='500':
-            bytes='600'
-        elif temp=='600':
-            bytes='500'
     ser.flushOutput()
     time.sleep(0.1)
     print('I sent : '+bytes)
@@ -600,6 +595,8 @@ def mainGame():
                     mode='defcom'
                 elif mode=="att":
                     mode='attcom'
+                elif mode=="win"or mode=="los":
+                    mode='main2'
                 click = 0
                 self.image, self.rect = imageLoad("Ok.png", 0)
                 self.position = (745, 200)
@@ -613,7 +610,7 @@ def mainGame():
             self.image, self.rect = imageLoad("Turnj.png", 0)
             self.position = (745, 120)
             
-        def update(self, mX, mY, click, mode, sun):
+        def update(self, mX, mY, click, mode, que):
             self.image, self.rect = imageLoad("Turnj.png", 0)
             self.position = (745, 120)
             self.rect.center = self.position
@@ -624,8 +621,10 @@ def mainGame():
                 self.image, self.rect = imageLoad("Turnj.png", 0)
                 self.position = (745, 120)
                 self.rect.center = self.position
+                que=['T',9,9]
+                mode='attcom'
             
-            return click, mode, sun
+            return click, mode, que
 
     class opponentCard(pygame.sprite.Sprite):   #
         def __init__(self):
@@ -1435,7 +1434,7 @@ def mainGame():
             buttons1.draw(screen)
             click, mode = bGS.update(mX, mY, click, mode)
             click, mode, sun, pHands, oHands, deck3 ,cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
+            click, mode, que = bGT.update(mX, mY, click, mode, que)
             click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
             click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
             click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
@@ -1517,6 +1516,8 @@ def mainGame():
                     
         while mode=="attcom":
             print(modedp, state)
+            nowcard, backgroundRect = imageLoad("back.png", 1)
+            nowcard.set_colorkey(beige)
             to+=1
             if to>=10:
                 mode=modedp
@@ -1559,6 +1560,11 @@ def mainGame():
                             nowcard.set_colorkey(beige)
                             pHands=pHands+deck3[:2]
                             deck3=deck3[2:]
+                        elif que[0]=='T':
+                            nowcard, backgroundRect = imageLoad("back.png", 1)
+                            nowcard.set_colorkey(beige)
+                            cnt=1
+                            
                 elif state==2:
                     send_data(9,9,9)
                     temp=receive_data()
@@ -1571,11 +1577,11 @@ def mainGame():
                         cnt-=1
                         if oHeart==0:
                             cnt=2
-                            mode="main2"
+                            mode="win"
                             continue
                         if pHeart==0:
                             cnt=2
-                            mode="main2"
+                            mode="los"
                             continue
                         if cnt==0:
                             cnt=2
@@ -1636,6 +1642,8 @@ def mainGame():
 
         while mode=="defcom":
             print(modedp, state)
+            nowcard, backgroundRect = imageLoad("back.png", 1)
+            nowcard.set_colorkey(beige)
             to+=1
             if to>=10:
                 mode=modedp
@@ -1705,6 +1713,10 @@ def mainGame():
                             nowcard.set_colorkey(beige)
                             ol+=1
                             buf=0
+                        elif temp[1]=='T':
+                            nowcard, backgroundRect = imageLoad("back.png", 1)
+                            nowcard.set_colorkey(beige)
+                            cnt=1
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
@@ -1717,11 +1729,11 @@ def mainGame():
                         cnt-=1
                         if oHeart==0:
                             cnt=2
-                            mode="main2"
+                            mode="win"
                             continue
                         if pHeart==0:
                             cnt=2
-                            mode="main2"
+                            mode="los"
                             continue
                         if cnt==0:
                             cnt=2
@@ -1772,6 +1784,70 @@ def mainGame():
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mX, mY = pygame.mouse.get_pos()
+                        click = 1
+                elif event.type == MOUSEBUTTONUP:
+                    mX, mY = 0, 0
+                    click = 0
+                    
+        while mode=="win": #
+            try:
+                if to2<5:
+                    modedp=mode
+                    to=0
+                    send_data(9,9,9)
+                    to2+=1
+            except:
+                oo=0;
+            background, backgroundRect = imageLoad("bjs2.png", 0)
+            screen.blit(background, backgroundRect)
+            
+            title, backgroundRect = imageLoad("title.png", 0)
+            screen.blit(title, (230,30))
+            buttons=pygame.sprite.Group(bGO)
+            buttons.draw(screen)
+            click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
+
+            clock.tick(60)
+            pygame.display.flip()                           #
+        
+            for event in pygame.event.get():
+                if event.type==QUIT:
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mX, mY = pygame.mouse.get_pos()
+                        click = 1
+                elif event.type == MOUSEBUTTONUP:
+                    mX, mY = 0, 0
+                    click = 0
+                    
+        while mode=="los": #
+            try:
+                if to2<5:
+                    modedp=mode
+                    to=0
+                    send_data(9,9,9)
+                    to2+=1
+            except:
+                oo=0;
+            background, backgroundRect = imageLoad("bjs2.png", 0)
+            screen.blit(background, backgroundRect)
+            
+            title, backgroundRect = imageLoad("title.png", 0)
+            screen.blit(title, (230,30))
+            buttons=pygame.sprite.Group(bGO)
+            buttons.draw(screen)
+            click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
+
+            clock.tick(60)
+            pygame.display.flip()                           #
+        
+            for event in pygame.event.get():
+                if event.type==QUIT:
                     sys.exit()
                 elif event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
