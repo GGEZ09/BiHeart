@@ -1309,11 +1309,11 @@ def mainGame():
         while mode=="connect":
             to+=1
             if to>=5:
-                mode="main2"
+                mode="main2"#recieve nothing or strainge data while I send data 5 times, Time Out 
                 to=0
             try:
                 if state==0:
-                    temp=receive_data_first()
+                    temp=receive_data_first()#wait in 5times first
                     if temp=='000':
                         to=0
                         state=1
@@ -1325,9 +1325,9 @@ def mainGame():
                         to=0
                         state=2
                         sun=(int(temp[1])+1)%2
-                        pHands=[CT[6],CT[6]]+deck3[:(sun+3)]
+                        pHands=[CT[6],CT[6]]+deck3[:(sun+1)]
                         deck3=deck3[(sun+3):]
-                        ol=sun+6
+                        ol=sun+1
                         
                 elif state==2:
                     send_data(1,'A','C')
@@ -1405,7 +1405,7 @@ def mainGame():
                 if to2<5:
                     modedp=mode
                     to=0
-                    send_data(9,9,9)
+                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
                     to2+=1
             except:
                 oo=0;
@@ -1417,6 +1417,9 @@ def mainGame():
             else :
                 buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
+            
+            if len(pHands)>9:
+                pHands=pHands[:9]
             pPT=PT[len(pHands)]
             j=0
             c=[0]*len(pHands)
@@ -1538,35 +1541,35 @@ def mainGame():
                         to=0
                         state=2
                         del pHands[que[1]]
-                        if que[0]=='A':
+                        if que[0]=='A':#When I played 'Attack' at -->
                             nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                             nowcard.set_colorkey(beige)
                             ol-=1
-                            if temp[1]=='4':
+                            if temp[1]=='4':#--> Negate : make my turn 1
                                 cnt=1
-                            elif temp[1]=='3':
+                            elif temp[1]=='3':#--> Flash : opponent draw 2cards
                                 ol+=2
-                            elif temp[1]=='6':
+                            elif temp[1]=='6':#--> Heart : subtract one of opponent's heart
                                 oHeart-=1
-                        elif que[0]=='S':
-                            if temp[1]=='0':
+                        elif que[0]=='S':#When I played 'Snipe' and -->
+                            if temp[1]=='0':#--> opponent has not secret card : nothing happend
                                 continue
-                            else:
+                            else:#--> opponent has secret card : delete that card
                                 nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                                 nowcard.set_colorkey(beige)
                                 ol-=1
-                        elif que[0]=='H':
+                        elif que[0]=='H':#When I played 'Hide' : draw two cards
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
                             pHands=pHands+deck3[:2]
                             deck3=deck3[2:]
-                        elif que[0]=='T':
+                        elif que[0]=='T':#When I click 'EndTurn' button : end turn
                             nowcard, backgroundRect = imageLoad("back.png", 1)
                             nowcard.set_colorkey(beige)
                             cnt=1
                             
-                elif state==2:
-                    send_data(9,9,9)
+                elif state==2:#end communication
+                    send_data(9,9,9)#send 999 untill opponent send 999
                     temp=receive_data()
                     if temp=='999':
                         to=0
