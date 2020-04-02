@@ -1325,9 +1325,9 @@ def mainGame():
                         to=0
                         state=2
                         sun=(int(temp[1])+1)%2
-                        pHands=[CT[6],CT[6]]+deck3[:(sun+1)]
+                        pHands=[CT[6],CT[6]]+deck3[:(sun+3)]
                         deck3=deck3[(sun+3):]
-                        ol=sun+1
+                        ol=sun+6
                         
                 elif state==2:
                     send_data(1,'A','C')
@@ -1368,7 +1368,7 @@ def mainGame():
         while mode=="pregame":
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
-            if sun==0:
+            if sun==0:#sun=> 0 : attack / 1 : defend
                 title, backgroundRect = imageLoad("sun.png", 0)
             else :
                 title, backgroundRect = imageLoad("hu.png", 0)   #
