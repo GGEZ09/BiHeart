@@ -1328,7 +1328,7 @@ def mainGame():
                     temp=receive_data()
                     if temp=='1AC':
                         to=0
-                        ol=sun+1
+                        ol=sun+6
                         state=2
                 elif state==2:
                     send_data(1,sun,0)
