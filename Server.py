@@ -589,8 +589,7 @@ def mainGame():
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 if mode=="pregame":
                     if sun==0:
-                        pHands=pHands+deck3[:2]
-                        deck3=deck3[2:]
+                        draw(pHands,deck3)
                         mode="att"
                     else:
                         mode="def"
@@ -962,7 +961,32 @@ def mainGame():
             deck[t],deck[i]=deck[i],deck[t]
         return deck
 
-                
+    def draw(p, d):
+        if len(d)>=2:
+            tmp=2
+        elif len(d)==1:
+            tmp=1
+        elif len(d)==0:
+            return p, d
+        if len(p)==0:
+            return p, d
+        elif len(p)<=7:
+            p=p+d[:tmp]
+            d=d[tmp:]
+        elif len(p)==8:
+            p=p+d[:1]
+            d=d[tmp:]
+        elif len(p)==9:
+            d=d[tmp:]
+        return p, d
+
+    def upol(o,i):
+        o+=i
+        if o>9:
+            o=9
+        elif o<0:
+            o=0
+        return o
             
     init_serial()
     state=0
@@ -1018,6 +1042,8 @@ def mainGame():
     to=0                    #timeout
     to2=0
     tuk=9
+    n1=0#opponent card show flag
+    n2=9#player card show flag(<9)
     
     dek={}
     dek2={}
@@ -1522,8 +1548,6 @@ def mainGame():
 		    
         while mode=="attcom":
             print(modedp, state)
-            nowcard, backgroundRect = imageLoad("back.png", 1)
-            nowcard.set_colorkey(beige)
             to+=1
             if to>=10:
                 mode=modedp
@@ -1540,32 +1564,38 @@ def mainGame():
                 elif state==1:
                     send_data(1,que[0],que[2])
                     temp=receive_data()
-                    if temp[0]=='2':
+                    if temp[0]=='2':#temp -> ['2','X','0']
+                        n1=1
                         to=0
                         state=2
                         del pHands[que[1]]
                         if que[0]=='A':#When I played 'Attack' at -->
-                            nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                            nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
-                            ol-=1
+                            n2=1
+                            nowcard2, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                            nowcard2.set_colorkey(beige)
+                            ol=upol(ol,-1)
                             if temp[1]=='4':#--> Negate : make my turn 1
                                 cnt=1
                             elif temp[1]=='3':#--> Flash : opponent draw 2cards
-                                ol+=2
+                                ol=upol(ol,2)
                             elif temp[1]=='6':#--> Heart : subtract one of opponent's heart
                                 oHeart-=1
                         elif que[0]=='S':#When I played 'Snipe' and -->
+                            nowcard, backgroundRect = imageLoad(CT[1], 1)
+                            nowcard.set_colorkey(beige)
                             if temp[1]=='0':#--> opponent has not secret card : nothing happend
-                                continue
+                                oo=0;
                             else:#--> opponent has secret card : delete that card
-                                nowcard, backgroundRect = imageLoad(CT[int(temp[1])], 1)
-                                nowcard.set_colorkey(beige)
-                                ol-=1
+                                n2=1
+                                nowcard2, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                                nowcard2.set_colorkey(beige)
+                                ol=upol(ol,-1)
                         elif que[0]=='H':#When I played 'Hide' : draw two cards
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
-                            pHands=pHands+deck3[:2]
-                            deck3=deck3[2:]
+                            draw(pHands,deck3)
                         elif que[0]=='T':#When I click 'EndTurn' button : end turn
                             nowcard, backgroundRect = imageLoad("back.png", 1)
                             nowcard.set_colorkey(beige)
@@ -1581,6 +1611,8 @@ def mainGame():
                         que=[]
                         tuk=9
                         cnt-=1
+                        n1=0#opponent card show flag
+                        n2=9#player card show flag(<9)
                         if oHeart==0:
                             cnt=2
                             mode="win"
@@ -1591,7 +1623,7 @@ def mainGame():
                             continue
                         if cnt==0:
                             cnt=2
-                            ol+=2
+                            ol=upol(ol,2)
                             mode="def"
                         else:
                             mode=modedp
@@ -1628,10 +1660,12 @@ def mainGame():
             click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
-            try:
-                screen.blit(nowcard, (0, 120))
-            except:
-                oo=0;
+            if n1==0:
+                nowcard, backgroundRect = imageLoad("back.png", 1)
+                nowcard.set_colorkey(beige)
+            screen.blit(nowcard, (0, 120))
+            if n2<9:
+                screen.blit(nowcard2, (250, 120))
                 
             clock.tick(60)
             pygame.display.flip() 
@@ -1648,8 +1682,6 @@ def mainGame():
 
         while mode=="defcom":
             print(modedp, state)
-            nowcard, backgroundRect = imageLoad("back.png", 1)
-            nowcard.set_colorkey(beige)
             to+=1
             if to>=10:
                 mode=modedp
@@ -1666,44 +1698,45 @@ def mainGame():
                     send_data(0,0,0)
                     temp=receive_data()
                     if temp[0]=='1':
+                        n1=1
                         to=0
                         state=2
                         buf=0
                         t2=int(temp[2])
                         if temp[1]=='A':
+                            n2=t2
+                            nowcard2, backgroundRect = imageLoad(pHands[t2], 1)
                             nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
-                            ol-=1
+                            ol=upol(ol,-1)
                             if t2>0:
                                 if pHands[t2-1]==CT[2]:
                                     buf=2
+                                    nowcard2, backgroundRect = imageLoad(CT[2], 1)
                                     del pHands[t2-1]
-                                    continue
                             if t2+1<len(pHands):
                                 if pHands[t2+1]==CT[2]:
                                     buf=2
+                                    nowcard2, backgroundRect = imageLoad(CT[2], 1)
                                     del pHands[t2+1]
-                                    continue
                             if pHands[t2]==CT[3]:
                                 buf=3
                                 del pHands[t2]
-                                pHands=pHands+deck3[:2]
-                                deck3=deck3[2:]
-                                continue
+                                draw(pHands,deck3)
                             elif pHands[t2]==CT[4]:
                                 buf=4
                                 cnt=1
                                 del pHands[t2]
-                                continue
                             else:
                                 if pHands[t2]==CT[6]:
                                     buf=6
                                     pHeart-=1
                                 del pHands[t2]
+                            nowcard2.set_colorkey(beige)
                         elif temp[1]=='S':
                             nowcard, backgroundRect = imageLoad(CT[1], 1)
                             nowcard.set_colorkey(beige)
-                            ol-=1
+                            ol=upol(ol,-1)
                             k1=0
                             for i in pHands:
                                 if buf!=0:
@@ -1711,18 +1744,21 @@ def mainGame():
                                 for j in range(2,5):
                                     if i == CT[j]:
                                         buf=j
+                                        n2=k1
+                                        nowcard2, backgroundRect = imageLoad(pHands[k1], 1)
+                                        nowcard2.set_colorkey(beige)
                                         del pHands[k1]
-                                        continue
                                 k1+=1
                         elif temp[1]=='H':
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
-                            ol+=1
+                            ol=upol(ol,1)
                             buf=0
                         elif temp[1]=='T':
                             nowcard, backgroundRect = imageLoad("back.png", 1)
                             nowcard.set_colorkey(beige)
                             cnt=1
+                        
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
@@ -1733,6 +1769,8 @@ def mainGame():
                         que=[]
                         tuk=9
                         cnt-=1
+                        n1=0#opponent card show flag
+                        n2=9#player card show flag(<9)
                         if oHeart==0:
                             cnt=2
                             mode="win"
@@ -1743,11 +1781,12 @@ def mainGame():
                             continue
                         if cnt==0:
                             cnt=2
-                            pHands=pHands+deck3[:2]
-                            deck3=deck3[2:]
+                            draw(pHands,deck3)
                             mode="att"
+                            continue
                         else:
                             mode=modedp
+                            continue
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1758,6 +1797,10 @@ def mainGame():
             j=0
             c=[0]*len(pHands)
             for i in pPT:
+                if i==n2:
+                    arw, backgroundRect = imageLoad("down-gray.png", 0)
+                    arw.set_colorkey(0,0,0)
+                    screen.blit(arw, (i-22, 180))
                 c[j], backgroundRect = imageLoad(pHands[j], 1)
                 c[j].set_colorkey(beige)
                 screen.blit(c[j], (i-75, 240))
@@ -1781,10 +1824,12 @@ def mainGame():
             click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
-            try:
-                screen.blit(nowcard, (0, 120))
-            except:
-                oo=0;
+            if n1==0:
+                nowcard, backgroundRect = imageLoad("back.png", 1)
+                nowcard.set_colorkey(beige)
+            screen.blit(nowcard, (0, 120))
+            if n2<9:
+                screen.blit(nowcard2, (250, 120))
                 
             clock.tick(60)
             pygame.display.flip() 
