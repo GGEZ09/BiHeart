@@ -15,7 +15,7 @@ def init_serial():
     global ser
     ser=serial.Serial()
     ser.baudrate=9600
-    ser.port='/dev/ttyS0'
+    ser.port='/dev/ttyAMA0'
     ser.timeout=0.9
     ser.open()
     if ser.isOpen():
