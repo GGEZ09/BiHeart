@@ -507,6 +507,7 @@ def mainGame():
                 click = 0
                 tuk=9
                 que=[]
+                cnt=2
                 
                 self.image, self.rect = imageLoad("GameStart.png", 0)
                 self.position = (200, 240)
@@ -586,7 +587,7 @@ def mainGame():
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 if mode=="pregame":
                     if sun==0:
-                        draw(pHands,deck3)
+                        pHands,deck3=draw(pHands,deck3)
                         mode="att"
                     else:
                         mode="def"
@@ -1594,7 +1595,7 @@ def mainGame():
                         elif que[0]=='H':#When I played 'Hide' : draw two cards
                             nowcard, backgroundRect = imageLoad(CT[5], 1)
                             nowcard.set_colorkey(beige)
-                            draw(pHands,deck3)
+                            pHands,deck3=draw(pHands,deck3)
                         elif que[0]=='T':#When I click 'EndTurn' button : end turn
                             nowcard, backgroundRect = imageLoad("back.png", 1)
                             nowcard.set_colorkey(beige)
@@ -1721,7 +1722,7 @@ def mainGame():
                             if pHands[t2]==CT[3]:
                                 buf=3
                                 del pHands[t2]
-                                draw(pHands,deck3)
+                                pHands,deck3=draw(pHands,deck3)
                             elif pHands[t2]==CT[4]:
                                 buf=4
                                 cnt=1
@@ -1780,7 +1781,7 @@ def mainGame():
                             continue
                         if cnt==0:
                             cnt=2
-                            draw(pHands,deck3)
+                            pHands,deck3=draw(pHands,deck3)
                             mode="att"
                             continue
                         else:
