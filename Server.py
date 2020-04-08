@@ -405,7 +405,7 @@ def mainGame():
             
             return click, dek2, hsu2
 
-    class buttenDeckOk(pygame.sprite.Sprite):   #
+    class buttonDeckOk(pygame.sprite.Sprite):   #
         
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -439,7 +439,7 @@ def mainGame():
                 
             return click, mode, deck, dek, hsu, gsu
 
-    class buttenDeckCancel(pygame.sprite.Sprite):   #
+    class buttonDeckCancel(pygame.sprite.Sprite):   #
         
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -520,7 +520,7 @@ def mainGame():
             
             return click, mode, deck3, deck, pHands, sun, tuk, que
         
-    class buttenMainTest(pygame.sprite.Sprite):   #
+    class buttonMainTest(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("GameTest.png", 0)
@@ -539,7 +539,7 @@ def mainGame():
             
             return click, mode
         
-    class buttenMainCancel(pygame.sprite.Sprite):   #
+    class buttonMainCancel(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Cancel2.png", 0)
@@ -558,7 +558,7 @@ def mainGame():
             
             return click, mode
 
-    class buttenGameSurren(pygame.sprite.Sprite):   # # 
+    class buttonGameSurren(pygame.sprite.Sprite):   # # 
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Surren.png", 0)
@@ -577,7 +577,7 @@ def mainGame():
             
             return click, mode
 
-    class buttenGameOk(pygame.sprite.Sprite):   #
+    class buttonGameOk(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Ok.png", 0)
@@ -607,7 +607,7 @@ def mainGame():
             
             return click, mode, sun, pHands, oHands, deck3, cnt
 
-    class buttenGameTurnj(pygame.sprite.Sprite):   #
+    class buttonGameTurnj(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Turnj.png", 0)
@@ -1003,19 +1003,19 @@ def mainGame():
     cN = cardNegate()
     cS = cardSnipe()
     cH = cardHide()
-    bDO = buttenDeckOk()
-    bDC = buttenDeckCancel()
+    bDO = buttonDeckOk()
+    bDC = buttonDeckCancel()
     tA=thumbAttack()
     tS=thumbSnipe()
     tSh=thumbShield()
     tF=thumbFlash()
     tN=thumbNegate()
     tH=thumbHide()
-    bMT=buttenMainTest()
-    bMC=buttenMainCancel()
-    bGS=buttenGameSurren()
-    bGO=buttenGameOk()
-    bGT=buttenGameTurnj()
+    bMT=buttonMainTest()
+    bMC=buttonMainCancel()
+    bGS=buttonGameSurren()
+    bGO=buttonGameOk()
+    bGT=buttonGameTurnj()
     o1=opponentCard()
     o2=opponentCard()
     o3=opponentCard()
@@ -1710,28 +1710,27 @@ def mainGame():
                             nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
                             ol=upol(ol,-1)
-                            if t2>0:
+                            if t2>0: #if shield card locates leftside of opponent aimed card
                                 if pHands[t2-1]==CT[2]:
                                     buf=2
                                     nowcard2, backgroundRect = imageLoad(CT[2], 1)
                                     del pHands[t2-1]
-                            if t2+1<len(pHands):
+                            if buf==0 and t2+1<len(pHands):#if shield card locates rightside of opponent aimed card
                                 if pHands[t2+1]==CT[2]:
                                     buf=2
                                     nowcard2, backgroundRect = imageLoad(CT[2], 1)
                                     del pHands[t2+1]
-                            if pHands[t2]==CT[3]:
-                                buf=3
-                                del pHands[t2]
-                                pHands,deck3=draw(pHands,deck3)
-                            elif pHands[t2]==CT[4]:
-                                buf=4
-                                cnt=1
-                                del pHands[t2]
-                            else:
-                                if pHands[t2]==CT[6]:
+                            if buf==0:
+                                buf=CT.index(pHands[t2])
+                                if buf==3: #flash
+                                    pHands,deck3=draw(pHands,deck3)
+                                elif buf==4: #Negate
+                                    cnt=1
+                                elif buf==6: #Heart
                                     buf=6
                                     pHeart-=1
+                                #else : attack / snipe / hide
+                                nowcard2, backgroundRect = imageLoad(CT[buf], 1)
                                 del pHands[t2]
                             nowcard2.set_colorkey(beige)
                         elif temp[1]=='S':
