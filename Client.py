@@ -498,7 +498,7 @@ def mainGame():
             self.image, self.rect = imageLoad("GameStart.png", 0)
             self.position = (200, 240)
             
-        def update(self, mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que):
+        def update(self, mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt):
             self.image, self.rect = imageLoad("GameStart.png", 0)
             self.position = (200, 240)
             self.rect.center = self.position
@@ -515,7 +515,7 @@ def mainGame():
                 deck3=shuffleDeck(deck)
                 
             
-            return click, mode, deck3, deck, pHands, sun, tuk, que
+            return click, mode, deck3, deck, pHands, sun, tuk, que, cnt
         
     class buttonMainTest(pygame.sprite.Sprite):   #
         def __init__(self):
@@ -1102,7 +1102,7 @@ def mainGame():
             screen.blit(title, (230,30))
             buttons = pygame.sprite.Group(dE, gS)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
-            click, mode, deck3, deck, pHands ,sun, tuk, que = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que)
+            click, mode, deck3, deck, pHands ,sun, tuk, que, cnt = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt)
             buttons.draw(screen)
             
             clock.tick(60)
