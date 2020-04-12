@@ -513,7 +513,6 @@ def mainGame():
                 self.position = (200, 240)
                 self.rect.center = self.position
                 deck3=shuffleDeck(deck)
-                
             
             return click, mode, deck3, deck, pHands, sun, tuk, que, cnt
         
