@@ -16,7 +16,7 @@ def init_serial():
     ser=serial.Serial()
     ser.baudrate=9600
     ser.port='/dev/ttyAMA0'
-    ser.timeout=0.9
+    ser.timeout=0.5
     ser.open()
     if ser.isOpen():
         print('Open : '+ser.portstr)
@@ -28,14 +28,14 @@ def send_data(COMM,data1,data2):
     msg.append(int(hex(ord(str(data2))),16))
     ser.flushInput()
     ser.write(msg)
-    time.sleep(0.1)
+    time.sleep(0.2)
     print('I send : '+str(msg))
 	
 def receive_data_first():
     bytes=ser.readline(3)
     #bytes=bytes[1:]
     ser.flushOutput()
-    time.sleep(0.1)
+    time.sleep(0.2)
     print('I sent : '+bytes)
     return bytes
 
@@ -45,7 +45,7 @@ def receive_data():
         bytes=bytes[1:]
     temp=bytes
     ser.flushOutput()
-    time.sleep(0.1)
+    time.sleep(0.2)
     print('I sent : '+bytes)
     return bytes
 
