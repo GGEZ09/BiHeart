@@ -405,7 +405,7 @@ def mainGame():
             
             return click, dek2, hsu2
 
-    class buttenDeckOk(pygame.sprite.Sprite):   #
+    class buttonDeckOk(pygame.sprite.Sprite):   #
         
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -439,7 +439,7 @@ def mainGame():
                 
             return click, mode, deck, dek, hsu, gsu
 
-    class buttenDeckCancel(pygame.sprite.Sprite):   #
+    class buttonDeckCancel(pygame.sprite.Sprite):   #
         
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -499,7 +499,7 @@ def mainGame():
             self.image, self.rect = imageLoad("GameStart.png", 0)
             self.position = (200, 240)
             
-        def update(self, mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que):
+        def update(self, mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt):
             self.image, self.rect = imageLoad("GameStart.png", 0)
             self.position = (200, 240)
             self.rect.center = self.position
@@ -518,9 +518,9 @@ def mainGame():
                 pHands=[CT[6],CT[6]]+deck3[:(sun+3)]
                 deck3=deck3[(sun+3):]
             
-            return click, mode, deck3, deck, pHands, sun, tuk, que
+            return click, mode, deck3, deck, pHands, sun, tuk, que, cnt
         
-    class buttenMainTest(pygame.sprite.Sprite):   #
+    class buttonMainTest(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("GameTest.png", 0)
@@ -539,7 +539,7 @@ def mainGame():
             
             return click, mode
         
-    class buttenMainCancel(pygame.sprite.Sprite):   #
+    class buttonMainCancel(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Cancel2.png", 0)
@@ -558,7 +558,7 @@ def mainGame():
             
             return click, mode
 
-    class buttenGameSurren(pygame.sprite.Sprite):   # # 
+    class buttonGameSurren(pygame.sprite.Sprite):   # # 
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Surren.png", 0)
@@ -577,7 +577,7 @@ def mainGame():
             
             return click, mode
 
-    class buttenGameOk(pygame.sprite.Sprite):   #
+    class buttonGameOk(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Ok.png", 0)
@@ -607,7 +607,7 @@ def mainGame():
             
             return click, mode, sun, pHands, oHands, deck3, cnt
 
-    class buttenGameTurnj(pygame.sprite.Sprite):   #
+    class buttonGameTurnj(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Turnj.png", 0)
@@ -649,279 +649,7 @@ def mainGame():
             
             return click, mode, que
 
-    class playerCard1(pygame.sprite.Sprite):   #1
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard2(pygame.sprite.Sprite):   #2
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard3(pygame.sprite.Sprite):   #3
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard4(pygame.sprite.Sprite):   #4
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard5(pygame.sprite.Sprite):   #5
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard6(pygame.sprite.Sprite):   #6
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard7(pygame.sprite.Sprite):   #7
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard8(pygame.sprite.Sprite):   #
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("back.png", 1)
-            self.position = (-40, 360)
-            
-        def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
-            self.image, self.rect = imageLoad(pHands[pos], 1)
-            if tuk==pos:
-                self.position = (ptwi, 330)
-            else:
-                self.position = (ptwi, 360)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                click = 0
-                if mode=="def":
-                    que.append(pos)
-                    if len(que)==2:
-                        pHands[que[0]],pHands[que[1]]=pHands[que[1]],pHands[que[0]]
-                        que=[]
-
-                elif mode=="att":
-                    pp=pHands[pos]
-                    if pp in CT[:2]:
-                        if pp == CT[0]:
-                            que=["A",pos,9]
-                        elif pp == CT[1]:
-                            que=["S",pos,9]
-                    elif pp == CT[5]:
-                        que=["H",pos,9]
-                print(pos,que)
-                        
-            return click, mode, que, pHands
-
-    class playerCard9(pygame.sprite.Sprite):   #
+    class playerCard(pygame.sprite.Sprite):   #1
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("back.png", 1)
@@ -1003,19 +731,19 @@ def mainGame():
     cN = cardNegate()
     cS = cardSnipe()
     cH = cardHide()
-    bDO = buttenDeckOk()
-    bDC = buttenDeckCancel()
+    bDO = buttonDeckOk()
+    bDC = buttonDeckCancel()
     tA=thumbAttack()
     tS=thumbSnipe()
     tSh=thumbShield()
     tF=thumbFlash()
     tN=thumbNegate()
     tH=thumbHide()
-    bMT=buttenMainTest()
-    bMC=buttenMainCancel()
-    bGS=buttenGameSurren()
-    bGO=buttenGameOk()
-    bGT=buttenGameTurnj()
+    bMT=buttonMainTest()
+    bMC=buttonMainCancel()
+    bGS=buttonGameSurren()
+    bGO=buttonGameOk()
+    bGT=buttonGameTurnj()
     o1=opponentCard()
     o2=opponentCard()
     o3=opponentCard()
@@ -1025,15 +753,15 @@ def mainGame():
     o7=opponentCard()
     o8=opponentCard()
     o9=opponentCard()
-    p1=playerCard1()
-    p2=playerCard2()
-    p3=playerCard3()
-    p4=playerCard4()
-    p5=playerCard5()
-    p6=playerCard6()
-    p7=playerCard7()
-    p8=playerCard8()
-    p9=playerCard9()
+    p1=playerCard()
+    p2=playerCard()
+    p3=playerCard()
+    p4=playerCard()
+    p5=playerCard()
+    p6=playerCard()
+    p7=playerCard()
+    p8=playerCard()
+    p9=playerCard()
             
     buttons = pygame.sprite.Group(dE, gS)
     deck=[]                 #
@@ -1107,7 +835,7 @@ def mainGame():
             screen.blit(title, (230,30))
             buttons = pygame.sprite.Group(dE, gS)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
-            click, mode, deck3, deck, pHands ,sun, tuk, que = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que)
+            click, mode, deck3, deck, pHands ,sun, tuk, que, cnt = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt)
             buttons.draw(screen)
                 
             clock.tick(60)
@@ -1710,28 +1438,27 @@ def mainGame():
                             nowcard, backgroundRect = imageLoad(CT[0], 1)
                             nowcard.set_colorkey(beige)
                             ol=upol(ol,-1)
-                            if t2>0:
+                            if t2>0: #if shield card locates leftside of opponent aimed card
                                 if pHands[t2-1]==CT[2]:
                                     buf=2
                                     nowcard2, backgroundRect = imageLoad(CT[2], 1)
                                     del pHands[t2-1]
-                            if t2+1<len(pHands):
+                            if buf==0 and t2+1<len(pHands):#if shield card locates rightside of opponent aimed card
                                 if pHands[t2+1]==CT[2]:
                                     buf=2
                                     nowcard2, backgroundRect = imageLoad(CT[2], 1)
                                     del pHands[t2+1]
-                            if pHands[t2]==CT[3]:
-                                buf=3
-                                del pHands[t2]
-                                pHands,deck3=draw(pHands,deck3)
-                            elif pHands[t2]==CT[4]:
-                                buf=4
-                                cnt=1
-                                del pHands[t2]
-                            else:
-                                if pHands[t2]==CT[6]:
+                            if buf==0:
+                                buf=CT.index(pHands[t2])
+                                if buf==3: #flash
+                                    pHands,deck3=draw(pHands,deck3)
+                                elif buf==4: #Negate
+                                    cnt=1
+                                elif buf==6: #Heart
                                     buf=6
                                     pHeart-=1
+                                #else : attack / snipe / hide
+                                nowcard2, backgroundRect = imageLoad(CT[buf], 1)
                                 del pHands[t2]
                             nowcard2.set_colorkey(beige)
                         elif temp[1]=='S':
