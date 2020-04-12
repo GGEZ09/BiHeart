@@ -1259,6 +1259,9 @@ def mainGame():
             except:
                 oo=0;
             cnt=2
+            oHeart=2
+            pHeart=2
+            print("new game started! my Heart : ",pHeart," opponent's Heart : ",oHeart)
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if sun==0:#sun=> 0 : attack / 1 : defend
@@ -1411,7 +1414,7 @@ def mainGame():
         while mode=="attcom":
             print(modedp, state)
             to+=1
-            if to>=10:
+            if to>=15:
                 mode=modedp
                 to=0
                 state=0
@@ -1545,7 +1548,7 @@ def mainGame():
         while mode=="defcom":
             print(modedp, state)
             to+=1
-            if to>=10:
+            if to>=15:
                 mode=modedp
                 to=0
                 state=0
