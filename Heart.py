@@ -16,7 +16,7 @@ def init_serial():
     ser=serial.Serial()
     ser.baudrate=9600
     ser.port='/dev/ttyAMA0'
-    ser.timeout=0.9
+    ser.timeout=0.5
     ser.open()
     if ser.isOpen():
         print('Open : '+ser.portstr)
@@ -28,14 +28,14 @@ def send_data(COMM,data1,data2):
     msg.append(int(hex(ord(str(data2))),16))
     ser.flushInput()
     ser.write(msg)
-    time.sleep(0.1)
+    time.sleep(0.2)
     print('I send : '+str(msg))
 	
 def receive_data_first():
     bytes=ser.readline(3)
     #bytes=bytes[1:]
     ser.flushOutput()
-    time.sleep(0.1)
+    time.sleep(0.2)
     print('I sent : '+bytes)
     return bytes
 
@@ -45,7 +45,7 @@ def receive_data():
         bytes=bytes[1:]
     temp=bytes
     ser.flushOutput()
-    time.sleep(0.1)
+    time.sleep(0.2)
     print('I sent : '+bytes)
     return bytes
 
@@ -1160,8 +1160,9 @@ def mainGame():
                     send_data(1,sun,0)
                     temp=receive_data()
                     if temp=='1AC':
-                        oHeart, pHeart=2, 2
                         to=0
+                        oHeart=2
+                        pHeart=2
                         state=0
                         mode="pregame"
             except:
@@ -1216,9 +1217,10 @@ def mainGame():
                 elif state==2:
                     send_data(1,'A','C')
                     temp=receive_data()
-                    oHeart, pHeart=2, 2
                     if temp=='999':
                         to=0
+                        oHeart=2
+                        pHeart=2
                         state=0
                         mode="pregame"
             except:
@@ -1256,6 +1258,7 @@ def mainGame():
                     to+=1
             except:
                 oo=0;
+            cnt=2
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if sun==0:#sun=> 0 : attack / 1 : defend
