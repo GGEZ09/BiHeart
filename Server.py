@@ -517,6 +517,8 @@ def mainGame():
             
             return click, mode, deck3, deck, pHands, sun, tuk, que, cnt
         
+<<<<<<< HEAD
+=======
     class gameJoin(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -559,6 +561,7 @@ def mainGame():
             
             return click, mode
         
+>>>>>>> origin/master
     class buttonMainTest(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)

@@ -1160,8 +1160,9 @@ def mainGame():
                     send_data(1,sun,0)
                     temp=receive_data()
                     if temp=='1AC':
-                        oHeart, pHeart=2, 2
                         to=0
+                        oHeart=2
+                        pHeart=2
                         state=0
                         mode="pregame"
             except:
@@ -1216,9 +1217,10 @@ def mainGame():
                 elif state==2:
                     send_data(1,'A','C')
                     temp=receive_data()
-                    oHeart, pHeart=2, 2
                     if temp=='999':
                         to=0
+                        oHeart=2
+                        pHeart=2
                         state=0
                         mode="pregame"
             except:
@@ -1256,6 +1258,7 @@ def mainGame():
                     to+=1
             except:
                 oo=0;
+            cnt=2
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if sun==0:#sun=> 0 : attack / 1 : defend
