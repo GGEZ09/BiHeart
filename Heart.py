@@ -1261,7 +1261,7 @@ def mainGame():
             cnt=2
             oHeart=2
             pHeart=2
-            print("new game started! my Heart : ",pHeart," opponent's Heart : ",oHeart)
+            to2=0
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if sun==0:#sun=> 0 : attack / 1 : defend
@@ -1711,7 +1711,6 @@ def mainGame():
         while mode=="win": #
             try:
                 if to2<5:
-                    modedp=mode
                     to=0
                     send_data(9,9,9)
                     to2+=1
@@ -1743,7 +1742,6 @@ def mainGame():
         while mode=="los": #
             try:
                 if to2<5:
-                    modedp=mode
                     to=0
                     send_data(9,9,9)
                     to2+=1
