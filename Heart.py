@@ -1416,13 +1416,13 @@ def mainGame():
             try:
                 if state==0:
                     send_data(0,0,0)
-                    temp=receive_data()
+                    temp=receive_data_first()
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
                 elif state==1:
                     send_data(1,que[0],que[2])
-                    temp=receive_data()
+                    temp=receive_data_first()
                     if temp[0]=='2':#temp -> ['2','X','0']
                         n1=1
                         to=0
@@ -1462,7 +1462,7 @@ def mainGame():
                             
                 elif state==2:#end communication
                     send_data(9,9,9)#send 999 untill opponent send 999
-                    temp=receive_data()
+                    temp=receive_data_first()
                     if temp=='999':
                         to=0
                         state=0
@@ -1549,13 +1549,13 @@ def mainGame():
                 continue
             try:
                 if state==0:
-                    temp=receive_data()
+                    temp=receive_data_first()
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
                 elif state==1:
                     send_data(0,0,0)
-                    temp=receive_data()
+                    temp=receive_data_first()
                     if temp[0]=='1':
                         n1=1
                         to=0
@@ -1619,7 +1619,7 @@ def mainGame():
                         
                 elif state==2:
                     send_data(2,buf,0)
-                    temp=receive_data()
+                    temp=receive_data_first()
                     if temp=='999':
                         to=0
                         state=0
