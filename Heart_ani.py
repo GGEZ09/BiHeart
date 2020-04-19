@@ -1876,7 +1876,7 @@ def mainGame():
                         mode="def"
                         continue
                     else:
-                        mode=modedp
+                        mode="att"
                         continue
             else:
                 x1+=chax1
@@ -1905,6 +1905,7 @@ def mainGame():
         while mode=="defani":
             try:
                 if to2<5:
+                    modedp="def"
                     to=0
                     send_data(9,9,9)#send 999 5times to end opponent's 2nd state
                     to2+=1
