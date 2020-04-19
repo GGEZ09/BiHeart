@@ -1833,19 +1833,19 @@ def mainGame():
                     else:
                         mode=modedp
             else:
-                chax1=((250-x1)/60)
-                chay1=-2
+                chax1=((250-x1)/10)
+                chay1=-12
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
                 if n2<9:
-                    chax2=((475-x2)/60)
-                    chay2=1
+                    chax2=((475-x2)/10)
+                    chay2=6
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
             
-            clock.tick(240)
+            clock.tick(100)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1986,19 +1986,21 @@ def mainGame():
                     else:
                         mode=modedp
             else:
-                chax1=((250-x1)/60)
-                chay1=1
+                chax1=((250-x1)/10)
+                chay1=6
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
+                print(x1,y1,chax1,chay1)
                 if n2<9:
-                    chax2=((475-x2)/60)
-                    chay2=-2
+                    chax2=((475-x2)/10)
+                    chay2=-12
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
+                    print(x2,y2,chax2,chay2)
 
-            clock.tick(240)
+            clock.tick(100)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
