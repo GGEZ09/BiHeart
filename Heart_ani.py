@@ -1848,9 +1848,35 @@ def mainGame():
                     if cnt==0:
                         cnt=2
                         ol=upol(ol,2)
+
+                        d1, backgroundRect = imageLoad("switch.png", 0)
+                        d1.set_alpha(0)
+                        x3=800#My Turn symbol set for 1sec
+                        while x3>650:
+                            x3-=(150/60)
+                            screen.blit(d1,(x3,y3))
+                            d2, backgroundRect = imageLoad("dah.png", 0)
+                            #d1.set_colorkey(beige)
+                            screen.blit(d2,(75,46))
+                                
+                            clock.tick(60)
+                            pygame.display.flip() 
+                            for event in pygame.event.get():
+                                if event.type == QUIT:
+                                    sys.exit()
+                                elif event.type == MOUSEBUTTONDOWN:
+                                    if event.button == 1:
+                                        mX, mY = pygame.mouse.get_pos()
+                                        click = 1
+                                elif event.type == MOUSEBUTTONUP:
+                                    mX, mY = 0, 0
+                                    click = 0
+                        
                         mode="def"
+                        continue
                     else:
                         mode=modedp
+                        continue
             else:
                 x1+=chax1
                 y1+=chay1
@@ -2001,10 +2027,109 @@ def mainGame():
                         continue
                     if cnt==0:
                         cnt=2
-                        ol=upol(ol,2)
+
+                        d1, backgroundRect = imageLoad("switch.png", 0)
+                        d1.set_alpha(0)
+                        x3=800#My Turn symbol set for 1sec
+                        while x3>650:
+                            x3-=(150/60)
+                            screen.blit(d1,(x3,y3))
+                            d2, backgroundRect = imageLoad("dah.png", 0)
+                            #d1.set_colorkey(beige)
+                            screen.blit(d2,(75,46))
+                                
+                            clock.tick(60)
+                            pygame.display.flip() 
+                            for event in pygame.event.get():
+                                if event.type == QUIT:
+                                    sys.exit()
+                                elif event.type == MOUSEBUTTONDOWN:
+                                    if event.button == 1:
+                                        mX, mY = pygame.mouse.get_pos()
+                                        click = 1
+                                elif event.type == MOUSEBUTTONUP:
+                                    mX, mY = 0, 0
+                                    click = 0
+                        
+                        pHands,deck3,dr=draw(pHands,deck3,1)
+                        dr1=dr
+                        pHands,deck3,dr=draw(pHands,deck3,1)
+                        dr2=dr
+                        if dr1==1:
+                            if dr2==1:
+                                d1, backgroundRect = imageLoad(pHands[-2], 1)
+                                d1.set_colorkey(beige)
+                                dn=2
+                            else:
+                                d1, backgroundRect = imageLoad(pHands[-1], 1)
+                                d1.set_colorkey(beige)
+                                dn=1
+                            x3=800.0
+                            y3=120.0
+                            while x3>650:
+                                x3-=(150/60)
+                                screen.blit(d1,(x3,y3))
+                                
+                                clock.tick(60)
+                                pygame.display.flip() 
+                                for event in pygame.event.get():
+                                    if event.type == QUIT:
+                                        sys.exit()
+                                    elif event.type == MOUSEBUTTONDOWN:
+                                        if event.button == 1:
+                                            mX, mY = pygame.mouse.get_pos()
+                                            click = 1
+                                    elif event.type == MOUSEBUTTONUP:
+                                        mX, mY = 0, 0
+                                        click = 0
+                            pHands2.append(pHands[-dn])
+                            pPT=PT[len(pHands2)]
+                            j=0
+                            c=[0]*len(pHands2)
+                            for i in pPT:
+                                c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                                c[j].set_colorkey(beige)
+                                screen.blit(c[j], (i-75, 240))
+                                j+=1
+                            dr1=0
+                        if dr2==1:
+                            d1, backgroundRect = imageLoad(pHands[-1], 1)
+                            d1.set_colorkey(beige)
+                            x3=800.0
+                            y3=120.0
+                            while x3>650:
+                                x3-=(150/60)
+                                screen.blit(d1,(x3,y3))
+                                
+                                clock.tick(60)
+                                pygame.display.flip() 
+                                for event in pygame.event.get():
+                                    if event.type == QUIT:
+                                        sys.exit()
+                                    elif event.type == MOUSEBUTTONDOWN:
+                                        if event.button == 1:
+                                            mX, mY = pygame.mouse.get_pos()
+                                            click = 1
+                                    elif event.type == MOUSEBUTTONUP:
+                                        mX, mY = 0, 0
+                                        click = 0
+                            pHands2.append(pHands[-1])
+                            pPT=PT[len(pHands2)]
+                            j=0
+                            c=[0]*len(pHands2)
+                            for i in pPT:
+                                c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                                c[j].set_colorkey(beige)
+                                screen.blit(c[j], (i-75, 240))
+                                j+=1
+                            dr2=0
+
+                        dr1,dr2=0,0
                         mode="att"
+                        continue
                     else:
                         mode=modedp
+                        continue
             else:
                 x1+=chax1
                 y1+=chay1

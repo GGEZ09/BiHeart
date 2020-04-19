@@ -43,8 +43,9 @@ def mainGame():
             movey=-movey
         background, backgroundRect = imageLoad("bjs2.png", 0)
         screen.blit(background, backgroundRect)
+        pic.set_alpha(10)
         screen.blit(pic,(x,y))
-        print(x,y,movex,movey)
+        
         pygame.display.flip()
         clock.tick(240)
 
