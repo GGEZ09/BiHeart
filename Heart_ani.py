@@ -1581,8 +1581,8 @@ def mainGame():
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
-                    ol2=ol
-                    pHands2=pHands
+                        ol2=ol
+                        pHands2=pHands
                 elif state==1:
                     send_data(0,0,0)
                     temp=receive_data()
@@ -1730,6 +1730,14 @@ def mainGame():
 
 
         while mode=="attani":
+            try:
+                if to2<5:
+                    modedp="att"
+                    to=0
+                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
+                    to2+=1
+            except:
+                oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
@@ -1835,6 +1843,7 @@ def mainGame():
                     x1,y1,x2,y2=0.0,0.0,0.0,0.0
                     n1=0
                     n2=9
+                    to2=0
                     t2=0
                     dr1=0
                     dr2=0
@@ -2021,6 +2030,7 @@ def mainGame():
                     n1=0
                     n2=9
                     t2=0
+                    to2=0
                     dr1=0
                     dr2=0
                     if oHeart==0:
