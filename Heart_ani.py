@@ -1713,13 +1713,6 @@ def mainGame():
 
 
         while mode=="attani":
-            try:
-                if to2<5:
-                    to=0
-                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
-                    to2+=1
-            except:
-                oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
@@ -1852,7 +1845,7 @@ def mainGame():
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
             
-            clock.tick(60)
+            clock.tick(240)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1866,6 +1859,13 @@ def mainGame():
                     click = 0
 
         while mode=="defani":
+            try:
+                if to2<5:
+                    to=0
+                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
+                    to2+=1
+            except:
+                oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
@@ -1998,7 +1998,7 @@ def mainGame():
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
 
-            clock.tick(60)
+            clock.tick(240)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
