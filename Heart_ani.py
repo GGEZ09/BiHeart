@@ -1879,8 +1879,9 @@ def mainGame():
                         continue
                     else:
                         mode="att"
-                        print('cnt :',cnt,'->',mode)
-                        continue
+                        if mode=="def":
+                            mode="att"
+                        print('atttttcnt :',cnt,'->',mode)
             else:
                 x1+=chax1
                 y1+=chay1
