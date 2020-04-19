@@ -1765,11 +1765,11 @@ def mainGame():
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
-                        d1, set_colorkey(beige)
+                        d1.set_colorkey(beige)
                         dn=2
                     else:
                         d1, backgroundRect = imageLoad(pHands[-1], 1)
-                        d1, set_colorkey(beige)
+                        d1.set_colorkey(beige)
                         dn=1
                     x3=800.0
                     y3=120.0
@@ -1801,7 +1801,7 @@ def mainGame():
                     dr1=0
                 if dr2==1:
                     d1, backgroundRect = imageLoad(pHands[-1], 1)
-                    d1, set_colorkey(beige)
+                    d1.set_colorkey(beige)
                     x3=800.0
                     y3=120.0
                     while x3>650:
@@ -1919,11 +1919,11 @@ def mainGame():
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
-                        d1, set_colorkey(beige)
+                        d1.set_colorkey(beige)
                         dn=2
                     else:
                         d1, backgroundRect = imageLoad(pHands[-1], 1)
-                        d1, set_colorkey(beige)
+                        d1.set_colorkey(beige)
                         dn=1
                     x3=800.0
                     y3=120.0
@@ -1955,7 +1955,7 @@ def mainGame():
                     dr1=0
                 if dr2==1:
                     d1, backgroundRect = imageLoad(pHands[-1], 1)
-                    d1, set_colorkey(beige)
+                    d1.set_colorkey(beige)
                     x3=800.0
                     y3=120.0
                     while x3>650:
