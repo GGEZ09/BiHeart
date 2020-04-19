@@ -1761,7 +1761,7 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
-            if x1==250 and y1==120:
+            if y1==120:
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -1912,7 +1912,7 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
-            if x1==250 and y1==120:
+            if y1==120:
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
