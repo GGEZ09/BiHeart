@@ -1321,7 +1321,6 @@ def mainGame():
                 if to2<5:
                     modedp=mode
                     to=0
-                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
                     to2+=1
             except:
                 oo=0;
@@ -1874,9 +1873,11 @@ def mainGame():
                                     click = 0
                         
                         mode="def"
+                        print('cnt :',cnt,'->',mode)
                         continue
                     else:
                         mode="att"
+                        print('cnt :',cnt,'->',mode)
                         continue
             else:
                 x1+=chax1
@@ -2129,9 +2130,11 @@ def mainGame():
 
                         dr1,dr2=0,0
                         mode="att"
+                        print('cnt :',cnt,'->',mode)
                         continue
                     else:
-                        mode=modedp
+                        mode="def"
+                        print('cnt :',cnt,'->',mode)
                         continue
             else:
                 x1+=chax1
