@@ -1578,11 +1578,11 @@ def mainGame():
             try:
                 if state==0:
                     temp=receive_data()
+                    ol2=ol
+                    pHands2=pHands[:]
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
-                        ol2=ol
-                        pHands2=pHands
                 elif state==1:
                     send_data(0,0,0)
                     temp=receive_data()
