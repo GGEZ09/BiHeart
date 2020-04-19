@@ -1765,9 +1765,11 @@ def mainGame():
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
+                        d1, set_colorkey(beige)
                         dn=2
                     else:
                         d1, backgroundRect = imageLoad(pHands[-1], 1)
+                        d1, set_colorkey(beige)
                         dn=1
                     x3=800.0
                     y3=120.0
@@ -1787,7 +1789,7 @@ def mainGame():
                             elif event.type == MOUSEBUTTONUP:
                                 mX, mY = 0, 0
                                 click = 0
-                    pHands2=pHands2+pHands[-dn]
+                    pHands2.append(pHands[-dn])
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1799,6 +1801,7 @@ def mainGame():
                     dr1=0
                 if dr2==1:
                     d1, backgroundRect = imageLoad(pHands[-1], 1)
+                    d1, set_colorkey(beige)
                     x3=800.0
                     y3=120.0
                     while x3>650:
@@ -1817,7 +1820,7 @@ def mainGame():
                             elif event.type == MOUSEBUTTONUP:
                                 mX, mY = 0, 0
                                 click = 0
-                    pHands2=pHands2+pHands[-1]
+                    pHands2.append(pHands[-1])
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1916,9 +1919,11 @@ def mainGame():
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
+                        d1, set_colorkey(beige)
                         dn=2
                     else:
                         d1, backgroundRect = imageLoad(pHands[-1], 1)
+                        d1, set_colorkey(beige)
                         dn=1
                     x3=800.0
                     y3=120.0
@@ -1938,7 +1943,7 @@ def mainGame():
                             elif event.type == MOUSEBUTTONUP:
                                 mX, mY = 0, 0
                                 click = 0
-                    pHands2=pHands2+pHands[-dn]
+                    pHands2.append(pHands[-dn])
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1950,6 +1955,7 @@ def mainGame():
                     dr1=0
                 if dr2==1:
                     d1, backgroundRect = imageLoad(pHands[-1], 1)
+                    d1, set_colorkey(beige)
                     x3=800.0
                     y3=120.0
                     while x3>650:
@@ -1968,7 +1974,7 @@ def mainGame():
                             elif event.type == MOUSEBUTTONUP:
                                 mX, mY = 0, 0
                                 click = 0
-                    pHands2=pHands2+pHands[-1]
+                    pHands2.append(pHands[-1])
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1996,7 +2002,7 @@ def mainGame():
                     if cnt==0:
                         cnt=2
                         ol=upol(ol,2)
-                        mode="def"
+                        mode="att"
                     else:
                         mode=modedp
             else:
