@@ -1456,7 +1456,9 @@ def mainGame():
                         state=2
                         acl=que[1]
                         dcl=que[2]
-                        del pHands[que[1]]
+                        if que[0]!='T':
+                            del pHands[que[1]]
+                            pHands2=pHands[:]
                         if que[0]=='A':#When I played 'Attack' at -->
                             ac, backgroundRect = imageLoad(CT[0], 1)
                             ac.set_colorkey(beige)
