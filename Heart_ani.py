@@ -1852,6 +1852,7 @@ def mainGame():
                         d1, backgroundRect = imageLoad("switch.png", 0)
                         d1.set_alpha(0)
                         x3=800#My Turn symbol set for 1sec
+                        y3=120
                         while x3>650:
                             x3-=(150/60)
                             screen.blit(d1,(x3,y3))
@@ -2031,6 +2032,7 @@ def mainGame():
                         d1, backgroundRect = imageLoad("switch.png", 0)
                         d1.set_alpha(0)
                         x3=800#My Turn symbol set for 1sec
+                        y3=120
                         while x3>650:
                             x3-=(150/60)
                             screen.blit(d1,(x3,y3))
