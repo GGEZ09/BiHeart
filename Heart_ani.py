@@ -838,6 +838,10 @@ def mainGame():
     dr1=0#cards came to my hand at Draw 1
     dr2=0#cards came to my hand at Draw 2
     x1,x2,y1,y2=0.0,0.0,0.0,0.0
+    chax1=0.0
+    chay1=0.0
+    chax2=0.0
+    chay2=0.0
     
     dek={}
     dek2={}
@@ -1505,6 +1509,11 @@ def mainGame():
                         pPT=PT[len(pHands2)]
                         x1=pPT[acl]-75
                         y1=240
+                        chax1=((250-x1)/10)
+                        chay1=-12
+                        if n2<9:
+                            chax2=((475-x2)/10)
+                            chay2=6
                         if modedp=="att":
                             mode="attani"
                             continue
@@ -1659,6 +1668,13 @@ def mainGame():
                         pPT=PT[len(pHands2)]
                         x2=pPT[dcl]-75
                         y2=240
+                        
+                        chax1=((250-x1)/10)
+                        chay1=6
+                        if n2<9:
+                            chax2=((475-x2)/10)
+                            chay2=-12
+                        
                         if modedp=="att":
                             mode="attani"
                             continue
@@ -1833,17 +1849,15 @@ def mainGame():
                     else:
                         mode=modedp
             else:
-                chax1=((250-x1)/10)
-                chay1=-12
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
+                print(x1,y1,chax1,chay1)
                 if n2<9:
-                    chax2=((475-x2)/10)
-                    chay2=6
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
+                    print(x2,y2,chax2,chay2)
             
             clock.tick(100)
             pygame.display.flip()
@@ -1986,15 +2000,11 @@ def mainGame():
                     else:
                         mode=modedp
             else:
-                chax1=((250-x1)/10)
-                chay1=6
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
                 print(x1,y1,chax1,chay1)
                 if n2<9:
-                    chax2=((475-x2)/10)
-                    chay2=-12
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
