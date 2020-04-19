@@ -1692,7 +1692,7 @@ def mainGame():
             j=0
             c=[0]*len(pHands2)
             for i in pPT:
-                c[j], backgroundRect = imageLoad(pHands[j], 1)
+                c[j], backgroundRect = imageLoad(pHands2[j], 1)
                 c[j].set_colorkey(beige)
                 screen.blit(c[j], (i-75, 240))
                 j+=1
