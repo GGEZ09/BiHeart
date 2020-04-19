@@ -44,8 +44,9 @@ def mainGame():
         background, backgroundRect = imageLoad("bjs2.png", 0)
         screen.blit(background, backgroundRect)
         screen.blit(pic,(x,y))
+        print(x,y,movex,movey)
         pygame.display.flip()
-        clock.tick(20)
+        clock.tick(240)
 
         for event in pygame.event.get():
             if event.type == QUIT:
