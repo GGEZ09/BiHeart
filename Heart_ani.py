@@ -1448,9 +1448,9 @@ def mainGame():
                         to=0
                         state=1
                 elif state==1:
-                    send_data(1,que[0],que[2])
+                    send_data(1,que[0],que[2])# -> ['2','A~T','0~8']
                     temp=receive_data()
-                    if temp[0]=='2':#temp -> ['2','A~T','0~8']
+                    if temp[0]=='2':#temp -> ['2','0~6','0']
                         n1=1
                         to=0
                         state=2
@@ -1735,7 +1735,7 @@ def mainGame():
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
 
-            if y1<120:
+            if y1>120:
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
