@@ -1718,6 +1718,7 @@ def mainGame():
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
+            print("aaaaaaaatttttttttttttttaaaannnnnnnniiiiiiiiii")
             pPT=PT[len(pHands2)]
             j=0
             c=[0]*len(pHands2)
