@@ -1502,7 +1502,8 @@ def mainGame():
                     temp=receive_data()
                     if temp=='999' or temp[0]=='9':
                         to2=0
-                        x2=(dcl+1)*76-78
+                        if dcl<9:
+                            x2=(dcl+1)*76-78
                         y2=60
                         pPT=PT[len(pHands2)]
                         x1=pPT[acl]-75
@@ -1643,7 +1644,8 @@ def mainGame():
                         x1=(acl+1)*76-78
                         y1=60
                         pPT=PT[len(pHands2)]
-                        x2=pPT[dcl]-75
+                        if dcl<9:
+                            x2=pPT[dcl]-75
                         y2=240
                         chax1=((250-x1)/10)
                         chay1=6
