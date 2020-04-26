@@ -1770,7 +1770,7 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
-            while y1<120:
+            if y1<120:
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
@@ -1778,9 +1778,9 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(100)
+                clock.tick(60)
                 pygame.display.flip()
-            if y1==120:
+            else :
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -1902,7 +1902,6 @@ def mainGame():
                             mode="att"
                         print('atttttcnt :',cnt,'->',mode)
             
-            clock.tick(100)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -1956,7 +1955,7 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
-            while y1<120:
+            if y1<120:
                 x1+=chax1
                 y1+=chay1
                 screen.blit(ac,(x1,y1))
@@ -1964,9 +1963,9 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(100)
+                clock.tick(60)
                 pygame.display.flip()
-            if y1==120:
+            else :
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -2160,7 +2159,6 @@ def mainGame():
                         print('cnt :',cnt,'->',mode)
                         continue
                     
-            clock.tick(100)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
