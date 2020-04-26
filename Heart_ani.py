@@ -29,7 +29,7 @@ def send_data(COMM,data1,data2):
     ser.flushInput()
     ser.write(msg)
     time.sleep(0.2)
-    print('I send >> : '+COMM+data1+data2)
+    print('I send >> : '+chr(msg[2])+chr(msg[3])+chr(msg[4]))
 	
 def receive_data_first():
     bytes=ser.readline(3)
