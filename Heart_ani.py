@@ -1501,12 +1501,6 @@ def mainGame():
                     send_data(9,9,9)#send 999 untill opponent send 999
                     temp=receive_data()
                     if temp=='999' or ord(temp)==161 or ord(temp)==241 :
-                        to=0
-                        state=0
-                        to2=0
-                        que=[]
-                        tuk=9
-                        cnt-=1
                         x2=(dcl+1)*76-78
                         y2=60
                         pPT=PT[len(pHands2)]
@@ -1517,12 +1511,9 @@ def mainGame():
                         if n2<9:
                             chax2=((475-x2)/10)
                             chay2=6
-                        if modedp=="att":
-                            mode="attani"
-                            continue
-                        else:
-                            mode="defani"
-                            continue
+
+                        mode="attani"
+                        break
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1648,30 +1639,20 @@ def mainGame():
                     send_data(2,buf,0)
                     temp=receive_data()
                     if temp=='999':
-                        to=0
-                        state=0
-                        to2=0
-                        que=[]
-                        tuk=9
                         cnt-=1
                         x1=(acl+1)*76-78
                         y1=60
                         pPT=PT[len(pHands2)]
                         x2=pPT[dcl]-75
                         y2=240
-                        
                         chax1=((250-x1)/10)
                         chay1=6
                         if n2<9:
                             chax2=((475-x2)/10)
                             chay2=-12
                         
-                        if modedp=="att":
-                            mode="attani"
-                            continue
-                        else:
-                            mode="defani"
-                            continue
+                        mode="defani"
+                        break
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1816,10 +1797,14 @@ def mainGame():
                         j+=1
                     dr2=0
                 if dr1==0:
+                    to=0
+                    state=0
+                    to2=0
+                    que=[]
+                    tuk=9
                     x1,y1,x2,y2=0.0,0.0,0.0,0.0
                     n1=0
                     n2=9
-                    to2=0
                     t2=0
                     dr1=0
                     dr2=0
@@ -1989,6 +1974,11 @@ def mainGame():
                         j+=1
                     dr2=0
                 if dr1==0:
+                    to=0
+                    state=0
+                    que=[]
+                    tuk=9
+                    cnt-=1
                     x1,y1,x2,y2=0.0,0.0,0.0,0.0
                     n1=0
                     n2=9
