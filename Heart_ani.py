@@ -1500,6 +1500,7 @@ def mainGame():
                 elif state==2:#end communication
                     send_data(9,9,9)#send 999 untill opponent send 999
                     temp=receive_data()
+                    to2=0
                     if temp=='999':
                         x2=(dcl+1)*76-78
                         y2=60
@@ -1638,6 +1639,7 @@ def mainGame():
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
+                    to2=0
                     if temp=='999':
                         x1=(acl+1)*76-78
                         y1=60
