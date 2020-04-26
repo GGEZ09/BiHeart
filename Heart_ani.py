@@ -1500,8 +1500,8 @@ def mainGame():
                 elif state==2:#end communication
                     send_data(9,9,9)#send 999 untill opponent send 999
                     temp=receive_data()
-                    to2=0
                     if temp=='999':
+                        to2=0
                         x2=(dcl+1)*76-78
                         y2=60
                         pPT=PT[len(pHands2)]
@@ -1514,7 +1514,6 @@ def mainGame():
                             chay2=6
 
                         mode="attani"
-                        continue
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1639,8 +1638,8 @@ def mainGame():
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
-                    to2=0
                     if temp=='999':
+                        to2=0
                         x1=(acl+1)*76-78
                         y1=60
                         pPT=PT[len(pHands2)]
@@ -1653,7 +1652,6 @@ def mainGame():
                             chay2=-12
                         
                         mode="defani"
-                        continue
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
