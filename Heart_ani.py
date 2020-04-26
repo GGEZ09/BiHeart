@@ -29,14 +29,14 @@ def send_data(COMM,data1,data2):
     ser.flushInput()
     ser.write(msg)
     time.sleep(0.2)
-    print('I send : '+str(msg))
+    print('I send >> : '+COMM+data1+data2)
 	
 def receive_data_first():
     bytes=ser.readline(3)
     #bytes=bytes[1:]
     ser.flushOutput()
     time.sleep(0.2)
-    print('I sent : '+bytes)
+    print('I sent << : '+bytes)
     return bytes
 
 def receive_data():
@@ -46,7 +46,7 @@ def receive_data():
     temp=bytes
     ser.flushOutput()
     time.sleep(0.2)
-    print('I sent : '+bytes)
+    print('I sent << : '+bytes)
     return bytes
 
 mode="" # main 1,2 / deck 1,2 / pregame / draw / shuffle / att / def / battle
@@ -1433,7 +1433,7 @@ def mainGame():
         while mode=="attcom":
             print(modedp, state)
             to+=1
-            if to in [5,10]:
+            if to in [2,5,8,11,14]:
                 time.sleep(0.1)
             if to>=15:
                 mode=modedp
@@ -1513,7 +1513,7 @@ def mainGame():
                             chay2=6
 
                         mode="attani"
-                        break
+                        continue
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1652,7 +1652,7 @@ def mainGame():
                             chay2=-12
                         
                         mode="defani"
-                        break
+                        continue
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
