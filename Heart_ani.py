@@ -1433,6 +1433,8 @@ def mainGame():
         while mode=="attcom":
             print(modedp, state)
             to+=1
+            if to in [5,10]:
+                time.sleep(0.1)
             if to>=15:
                 mode=modedp
                 to=0
@@ -1718,7 +1720,6 @@ def mainGame():
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
-            print("aaaaaaaatttttttttttttttaaaannnnnnnniiiiiiiiii")
             pPT=PT[len(pHands2)]
             j=0
             c=[0]*len(pHands2)
