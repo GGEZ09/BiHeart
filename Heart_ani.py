@@ -1650,8 +1650,8 @@ def mainGame():
                         if n2<9:
                             chax2=((475-x2)/10)
                             chay2=-12
-                        
                         mode="defani"
+                        print("--------------------",mode)
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
