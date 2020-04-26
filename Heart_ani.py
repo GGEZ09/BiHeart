@@ -1542,18 +1542,6 @@ def mainGame():
                 gtwi+=76
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
-            click, mode = bGS.update(mX, mY, click, mode)
-            click, mode, sun, pHands2, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands2, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
-            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
-            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
-            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
-            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
-            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
-            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
-            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
-            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
-            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
                 
             pygame.display.flip() 
             for event in pygame.event.get():
@@ -1703,18 +1691,6 @@ def mainGame():
                 gtwi+=76
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
-            click, mode = bGS.update(mX, mY, click, mode)
-            click, mode, sun, pHands2, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands2, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
-            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
-            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
-            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
-            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
-            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
-            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
-            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
-            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
-            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
                 
             pygame.display.flip() 
             for event in pygame.event.get():
@@ -1730,14 +1706,14 @@ def mainGame():
 
 
         while mode=="attani":
-            try:
-                if to2<5:
-                    modedp="att"
-                    to=0
-                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
-                    to2+=1
-            except:
-                oo=0;
+            #try:
+            #    if to2<5:
+            #        modedp="att"
+            #        to=0
+            #        send_data(9,9,9)#send 999 5times to end opponent's 2nd state
+            #        to2+=1
+            #except:
+            #    oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
@@ -1757,18 +1733,6 @@ def mainGame():
                 gtwi+=76
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
-            click, mode = bGS.update(mX, mY, click, mode)
-            click, mode, sun, pHands2, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands2, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
-            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
-            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
-            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
-            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
-            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
-            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
-            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
-            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
-            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
             if y1<120:
                 x1+=chax1
@@ -1942,18 +1906,6 @@ def mainGame():
                 gtwi+=76
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
-            click, mode = bGS.update(mX, mY, click, mode)
-            click, mode, sun, pHands2, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands2, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
-            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
-            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
-            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
-            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
-            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
-            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
-            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
-            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
-            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
             if y1<120:
                 x1+=chax1
