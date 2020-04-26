@@ -1647,7 +1647,7 @@ def mainGame():
                 elif state==2:
                     send_data(2,buf,0)
                     temp=receive_data()
-                    if temp=='999' or ord(temp)==161 or ord(temp)==241 :
+                    if temp=='999':
                         to=0
                         state=0
                         to2=0
@@ -1708,14 +1708,14 @@ def mainGame():
 
 
         while mode=="attani":
-            #try:
-            #    if to2<5:
-            #        modedp="att"
-            #        to=0
-            #        send_data(9,9,9)#send 999 5times to end opponent's 2nd state
-            #        to2+=1
-            #except:
-            #    oo=0;
+            try:
+                if to2<5:
+                    modedp="att"
+                    to=0
+                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
+                    to2+=1
+            except:
+                oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
