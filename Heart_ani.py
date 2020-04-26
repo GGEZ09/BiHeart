@@ -1324,6 +1324,9 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
+            temp=receive_data()
+            if temp=='444':
+                mode="win"
             tuk=9
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
@@ -1435,7 +1438,7 @@ def mainGame():
             to+=1
             if to in [2,5,8,11,14]:
                 time.sleep(0.1)
-            if to>=15:
+            if to>=20:
                 mode=modedp
                 to=0
                 state=0
@@ -1500,7 +1503,7 @@ def mainGame():
                 elif state==2:#end communication
                     send_data(9,9,9)#send 999 untill opponent send 999
                     temp=receive_data()
-                    if temp=='999' or ord(temp)==161 or ord(temp)==241 :
+                    if temp=='999':
                         x2=(dcl+1)*76-78
                         y2=60
                         pPT=PT[len(pHands2)]
@@ -1551,7 +1554,7 @@ def mainGame():
         while mode=="defcom":
             print(modedp, state)
             to+=1
-            if to>=15:
+            if to>=20:
                 mode=modedp
                 to=0
                 state=0
@@ -2119,7 +2122,7 @@ def mainGame():
             try:
                 if to2<5:
                     to=0
-                    send_data(9,9,9)
+                    send_data(5,5,5)
                     to2+=1
             except:
                 oo=0;
@@ -2149,7 +2152,7 @@ def mainGame():
             try:
                 if to2<5:
                     to=0
-                    send_data(9,9,9)
+                    send_data(4,4,4)
                     to2+=1
             except:
                 oo=0;
