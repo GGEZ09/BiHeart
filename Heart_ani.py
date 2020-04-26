@@ -1324,9 +1324,6 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            temp=receive_data()
-            if temp=='444':
-                mode="win"
             tuk=9
             background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
