@@ -1866,9 +1866,9 @@ def mainGame():
                         while x3>650:
                             x3-=(150/60)
                             screen.blit(d1,(x3,y3))
-                            d2, backgroundRect = imageLoad("dah.png", 0)
-                            #d1.set_colorkey(beige)
-                            screen.blit(d2,(75,46))
+                            d2, backgroundRect = imageLoad("ot.png", 0)
+                            d2.set_colorkey(beige)
+                            screen.blit(d2,(100,130))
                                 
                             clock.tick(60)
                             pygame.display.flip() 
@@ -2051,9 +2051,9 @@ def mainGame():
                         while x3>650:
                             x3-=(150/60)
                             screen.blit(d1,(x3,y3))
-                            d2, backgroundRect = imageLoad("dah.png", 0)
-                            #d1.set_colorkey(beige)
-                            screen.blit(d2,(75,46))
+                            d2, backgroundRect = imageLoad("mt.png", 0)
+                            d2.set_colorkey(beige)
+                            screen.blit(d2,(100,130))
                                 
                             clock.tick(60)
                             pygame.display.flip() 
