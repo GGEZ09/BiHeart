@@ -478,7 +478,7 @@ def mainGame():
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="deck1"
                 click = 0
-                self.image, self.rect = imageLoad("GameStart.png", 0)
+                self.image, self.rect = imageLoad("DeckEdit.png", 0)
                 self.position = (600, 240)
                 self.rect.center = self.position
                 deck2=deck
@@ -1770,6 +1770,16 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
+            while y1<120:
+                x1+=chax1
+                y1+=chay1
+                screen.blit(ac,(x1,y1))
+                if n2<9:
+                    x2+=chax2
+                    y2+=chay2
+                    screen.blit(dc,(x2,y2))
+                clock.tick(100)
+                pygame.display.flip()
             if y1==120:
                 if dr1==1:
                     if dr2==1:
@@ -1891,16 +1901,6 @@ def mainGame():
                         if mode=="def":
                             mode="att"
                         print('atttttcnt :',cnt,'->',mode)
-            else:
-                x1+=chax1
-                y1+=chay1
-                screen.blit(ac,(x1,y1))
-                print(x1,y1,chax1,chay1)
-                if n2<9:
-                    x2+=chax2
-                    y2+=chay2
-                    screen.blit(dc,(x2,y2))
-                    print(x2,y2,chax2,chay2)
             
             clock.tick(100)
             pygame.display.flip()
@@ -1956,6 +1956,16 @@ def mainGame():
             click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
             click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
 
+            while y1<120:
+                x1+=chax1
+                y1+=chay1
+                screen.blit(ac,(x1,y1))
+                if n2<9:
+                    x2+=chax2
+                    y2+=chay2
+                    screen.blit(dc,(x2,y2))
+                clock.tick(100)
+                pygame.display.flip()
             if y1==120:
                 if dr1==1:
                     if dr2==1:
@@ -2149,17 +2159,7 @@ def mainGame():
                         mode="def"
                         print('cnt :',cnt,'->',mode)
                         continue
-            else:
-                x1+=chax1
-                y1+=chay1
-                screen.blit(ac,(x1,y1))
-                print(x1,y1,chax1,chay1)
-                if n2<9:
-                    x2+=chax2
-                    y2+=chay2
-                    screen.blit(dc,(x2,y2))
-                    print(x2,y2,chax2,chay2)
-
+                    
             clock.tick(100)
             pygame.display.flip()
             for event in pygame.event.get():
