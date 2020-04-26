@@ -1498,7 +1498,7 @@ def mainGame():
                 elif state==2:#end communication
                     send_data(9,9,9)#send 999 untill opponent send 999
                     temp=receive_data()
-                    if temp=='999':
+                    if temp=='999' or ord(temp)==161 or ord(temp)==241 :
                         to=0
                         state=0
                         to2=0
