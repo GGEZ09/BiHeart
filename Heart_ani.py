@@ -1639,7 +1639,6 @@ def mainGame():
                     send_data(2,buf,0)
                     temp=receive_data()
                     if temp=='999':
-                        cnt-=1
                         x1=(acl+1)*76-78
                         y1=60
                         pPT=PT[len(pHands2)]
@@ -1802,6 +1801,7 @@ def mainGame():
                     to2=0
                     que=[]
                     tuk=9
+                    cnt-=1
                     x1,y1,x2,y2=0.0,0.0,0.0,0.0
                     n1=0
                     n2=9
