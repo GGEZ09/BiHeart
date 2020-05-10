@@ -12,16 +12,20 @@ ser=0
 
 def init_serial():
     COMNUM=0
-    global ser = serial.Serial(‘/dev/ttyAMA0’, 9600, timeout=1)
+    global ser
+    ser=serial.Serial()
+    ser.baudrate=9600
+    ser.port='/dev/ttyAMA0'
+    ser.timeout=1
     ser.open()
     if ser.isOpen():
         print('Open : '+ser.portstr)
 
 def send_data(COMM,data1,data2):
     msg=[0xA1,0xF1]
-    msg.append(int(ord(str(COMM)),16))
-    msg.append(int(ord(str(data1)),16))
-    msg.append(int(ord(str(data2)),16))
+    msg.append(int(hex(ord(str(COMM))),16))
+    msg.append(int(hex(ord(str(data1))),16))
+    msg.append(int(hex(ord(str(data2))),16))
     ser.flushInput()
     ser.write(msg)
     time.sleep(0.3)
@@ -36,9 +40,9 @@ def receive_data_first():
     return bytes
 
 def receive_data():
-    bytes=ser.readline()
-    #if len(bytes)>3:
-    #    bytes=bytes[1:]
+    bytes=ser.readline(4)
+    if len(bytes)>3:
+        bytes=bytes[1:]
     temp=bytes
     ser.flushOutput()
     time.sleep(0.3)
@@ -1197,8 +1201,8 @@ def mainGame():
             buttons.draw(screen)
             click, mode = bMT.update(mX, mY, click, mode)
             click, mode = bMC.update(mX, mY, click, mode)
-                
-            pygame.display.flip() 
+            
+            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
@@ -1851,10 +1855,10 @@ def mainGame():
 
         while mode=="defani":
             try:
-                while to2<10:
+                if to2<20:
                     modedp="def"
                     to=0
-                    send_data(2,buf,0)#send 999 5times to end opponent's 2nd state
+                    send_data(2,buf,0)#send 2 buf 0 like->'999' 5times to end opponent's 2nd state
                     to2+=1
             except:
                 oo=0;
