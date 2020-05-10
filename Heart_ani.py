@@ -12,20 +12,16 @@ ser=0
 
 def init_serial():
     COMNUM=0
-    global ser
-    ser=serial.Serial()
-    ser.baudrate=9600
-    ser.port='/dev/ttyAMA0'
-    ser.timeout=1
+    global ser = serial.Serial(‘/dev/ttyAMA0’, 9600, timeout=1)
     ser.open()
     if ser.isOpen():
         print('Open : '+ser.portstr)
 
 def send_data(COMM,data1,data2):
     msg=[0xA1,0xF1]
-    msg.append(int(hex(ord(str(COMM))),16))
-    msg.append(int(hex(ord(str(data1))),16))
-    msg.append(int(hex(ord(str(data2))),16))
+    msg.append(int(ord(str(COMM)),16))
+    msg.append(int(ord(str(data1)),16))
+    msg.append(int(ord(str(data2)),16))
     ser.flushInput()
     ser.write(msg)
     time.sleep(0.3)
@@ -40,9 +36,9 @@ def receive_data_first():
     return bytes
 
 def receive_data():
-    bytes=ser.readline(4)
-    if len(bytes)>3:
-        bytes=bytes[1:]
+    bytes=ser.readline()
+    #if len(bytes)>3:
+    #    bytes=bytes[1:]
     temp=bytes
     ser.flushOutput()
     time.sleep(0.3)
@@ -1455,7 +1451,6 @@ def mainGame():
                     if temp[0]=='2':#temp -> ['2','0~6','0']
                         n1=1
                         to=0
-                        state=2
                         acl=que[1]
                         dcl=que[2]
                         if que[0]!='T':
@@ -1496,11 +1491,7 @@ def mainGame():
                             ac.set_colorkey(beige)
                             acl=0
                             cnt=1
-                            
-                elif state==2:#end communication
-                    send_data(9,9,9)#send 999 untill opponent send 999
-                    temp=receive_data()
-                    if temp=='999' or temp[0]=='9':
+                        
                         to2=0
                         if dcl<9:
                             x2=(dcl+1)*76-78
@@ -1515,6 +1506,8 @@ def mainGame():
                             chay2=6
 
                         mode="attani"
+                        continue
+
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1571,7 +1564,6 @@ def mainGame():
                     if temp[0]=='1':
                         n1=1
                         to=0
-                        state=2
                         buf=0
                         t2=int(temp[2])
                         if temp[1]=='A':
@@ -1635,11 +1627,6 @@ def mainGame():
                             ac, backgroundRect = imageLoad("back.png", 1)
                             ac.set_colorkey(beige)
                             cnt=1
-                        
-                elif state==2:
-                    send_data(2,buf,0)
-                    temp=receive_data()
-                    if temp=='999' or temp[0]=='9':
                         to2=0
                         x1=(acl+1)*76-78
                         y1=60
@@ -1653,7 +1640,8 @@ def mainGame():
                             chax2=((475-x2)/10)
                             chay2=-12
                         mode="defani"
-                        print("--------------------",mode)
+                        continue
+                
             except:
                 oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
@@ -1690,14 +1678,6 @@ def mainGame():
 
 
         while mode=="attani":
-            try:
-                if to2<5:
-                    modedp="att"
-                    to=0
-                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
-                    to2+=1
-            except:
-                oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
@@ -1810,6 +1790,8 @@ def mainGame():
                     t2=0
                     dr1=0
                     dr2=0
+                    acl=0
+                    dcl=0
                     if oHeart==0:
                         cnt=2
                         mode="win"
@@ -1869,10 +1851,10 @@ def mainGame():
 
         while mode=="defani":
             try:
-                if to2<5:
+                while to2<10:
                     modedp="def"
                     to=0
-                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
+                    send_data(2,buf,0)#send 999 5times to end opponent's 2nd state
                     to2+=1
             except:
                 oo=0;
@@ -1988,6 +1970,8 @@ def mainGame():
                     to2=0
                     dr1=0
                     dr2=0
+                    acl=0
+                    dcl=0
                     if oHeart==0:
                         cnt=2
                         mode="win"
