@@ -780,9 +780,9 @@ def mainGame():
     init_serial()
     state=0
     textFont = pygame.font.Font(None,28)
-    background, backgroundRect = imageLoad("bjs2.png", 0)
     title, backgroundRect = imageLoad("title.png", 0)
-    gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0) 
+    gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)
+    swi, backgroundRect = imageLoad("switch.png", 0)
     oCards = pygame.sprite.Group()
     pCards = pygame.sprite.Group()     #
     dE = deckEdit()                         #
@@ -881,8 +881,6 @@ def mainGame():
 
             gs, backgroundRect = imageLoad("GameStart2.png", 0)   #
             screen.blit(gs, (60,140))                        
-            
-            title, backgroundRect = imageLoad("title.png", 0)  
             screen.blit(title, (230,30))                        
             buttons = pygame.sprite.Group(dE)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
@@ -899,7 +897,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0                   
-
+            if mode!="main1":
+                continue
+            
         while mode=="main2":
             state=0
             screen.blit(background, backgroundRect)
@@ -923,7 +923,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-
+            if mode!="main2":
+                continue
+            
         while mode=="main3": #
             to=0
             state=0
@@ -949,7 +951,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-        
+            if mode!="main3":
+                continue
+            
         while mode=="deck1": 
             if hsu2>19:
                 mode="deck2"
@@ -1056,7 +1060,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-
+            if mode!="deck1":
+                continue
+            
         while mode=="deck2": 
             if hsu2<20:
                 mode="deck1"
@@ -1159,7 +1165,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-                
+            if mode!="deck2":
+                continue
+            
 
         while mode=="join":#become client
             to+=1
@@ -1212,7 +1220,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-
+            if mode!="join":
+                continue
+            
         while mode=="create":#become server
             to+=1
             if to>=15:
@@ -1267,6 +1277,8 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
+            if mode!="create":
+                continue
             
         while mode=="pregame":
             try:
@@ -1279,13 +1291,12 @@ def mainGame():
             oHeart=2
             pHeart=2
             to2=0
-            background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if sun==0:#sun=> 0 : attack / 1 : defend
-                title, backgroundRect = imageLoad("sun.png", 0)
+                title1, backgroundRect = imageLoad("sun.png", 0)
             else :
-                title, backgroundRect = imageLoad("hu.png", 0) 
-            screen.blit(title, (100, 10))
+                title1, backgroundRect = imageLoad("hu.png", 0) 
+            screen.blit(title1, (100, 10))
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
             pPT=PT[len(pHands)]
@@ -1310,7 +1321,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-                    
+            if mode!="pregame":
+                continue
+            
         while mode=="att" or mode=="def":
             try:
                 if to2<5:
@@ -1320,7 +1333,6 @@ def mainGame():
             except:
                 oo=0;
             tuk=9
-            background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if mode=="att":
                 buttons=pygame.sprite.Group(bGS, bGT, bGO)
@@ -1409,7 +1421,6 @@ def mainGame():
                     screen.blit(c[j], (i-75, 240))
                 j+=1
             if len(que)==1:
-                swi, backgroundRect = imageLoad("switch.png", 0)
                 swi.set_colorkey((255,255,255))
                 screen.blit(swi, (pPT[que[0]]-25, 330))
                 
@@ -1424,7 +1435,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-		    
+            if mode!="att" and mode!="def":
+                continue
+            
         while mode=="attcom":
             print(modedp, state)
             to+=1
@@ -1509,7 +1522,6 @@ def mainGame():
 
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
@@ -1648,7 +1660,6 @@ def mainGame():
                 
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
@@ -1682,7 +1693,6 @@ def mainGame():
 
 
         while mode=="attani":
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
@@ -1833,13 +1843,12 @@ def mainGame():
                                     click = 0
                         
                         mode="def"
-                        print('cnt :',cnt,'->',mode)
                         continue
                     else:
                         mode="att"
                         if mode=="def":
                             mode="att"
-                        print('atttttcnt :',cnt,'->',mode)
+                        continue
             
             pygame.display.flip()
             for event in pygame.event.get():
@@ -1854,7 +1863,6 @@ def mainGame():
                     click = 0
 
         while mode=="defani":
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
@@ -2078,11 +2086,9 @@ def mainGame():
 
                         dr1,dr2=0,0
                         mode="att"
-                        print('cnt :',cnt,'->',mode)
                         continue
                     else:
                         mode="def"
-                        print('cnt :',cnt,'->',mode)
                         continue
                     
             pygame.display.flip()
