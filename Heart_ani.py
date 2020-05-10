@@ -1568,6 +1568,7 @@ def mainGame():
                     if temp[0]=='1':
                         n1=1
                         to=0
+                        state=2
                         buf=0
                         t2=int(temp[2])
                         if temp[1]=='A':
@@ -1643,8 +1644,12 @@ def mainGame():
                         if n2<9:
                             chax2=((475-x2)/10)
                             chay2=-12
-                        mode="defani"
-                        continue
+                elif state==2:
+                    while to2<5:
+                        send_data(2,buf,0)#send 2 buf 0 like->'999' 5times to end opponent's 2nd state
+                        to2+=1
+                    mode="defani"
+                    continue
                 
             except:
                 oo=0;
@@ -1854,14 +1859,6 @@ def mainGame():
                     click = 0
 
         while mode=="defani":
-            try:
-                if to2<20:
-                    modedp="def"
-                    to=0
-                    send_data(2,buf,0)#send 2 buf 0 like->'999' 5times to end opponent's 2nd state
-                    to2+=1
-            except:
-                oo=0;
             background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
