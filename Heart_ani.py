@@ -60,6 +60,8 @@ PT={1:[400], 2:[325,475], 3:[250,400,550], 4:[175,325,475,625], 5:[100,250,400,5
 beige=(242,234,191)
 refb=(255,0,0)
 wine=(208,148,130)
+bjs2=["main1","main2","main3","join","create","win","los"]
+bjs=["deck1","deck2","pregame","att","def","attcom","defcom","attani","defani"]
 
 def imageLoad(name, card):              #
     if card == 1:
@@ -774,11 +776,13 @@ def mainGame():
         elif o<0:
             o=0
         return o
-            
+
     init_serial()
     state=0
     textFont = pygame.font.Font(None,28)
-    background, backgroundRect = imageLoad("bjs2.png", 0)        #D09482 / 208 148 130
+    background, backgroundRect = imageLoad("bjs2.png", 0)
+    title, backgroundRect = imageLoad("title.png", 0)
+    gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0) 
     oCards = pygame.sprite.Group()
     pCards = pygame.sprite.Group()     #
     dE = deckEdit()                         #
@@ -864,10 +868,12 @@ def mainGame():
     gsu2=0
     
     while True:
-        
+        if mode in bjs2:
+            background, backgroundRect = imageLoad("bjs2.png", 0)
+        else:
+            background, backgroundRect = imageLoad("bjs.png", 0)
         while mode=="main1": #
             state=0
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)             #
             
             titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (25,25,25), wine)#(208,148,130)
@@ -896,7 +902,6 @@ def mainGame():
 
         while mode=="main2":
             state=0
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
@@ -922,7 +927,6 @@ def mainGame():
         while mode=="main3": #
             to=0
             state=0
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             title, backgroundRect = imageLoad("title.png", 0)   #
             screen.blit(title, (230, 30))
@@ -951,7 +955,6 @@ def mainGame():
                 mode="deck2"
                 break
             textFont2 = pygame.font.Font(None,55)
-            background, backgroundRect = imageLoad("bjs.png", 0)    #f2 ea bf / 242 234 191
             screen.blit(background, backgroundRect)
             t=1
             tn=[0,0,0,0,0,0]
@@ -1059,7 +1062,6 @@ def mainGame():
                 mode="deck1"
                 break
             textFont2 = pygame.font.Font(None,55)
-            background, backgroundRect = imageLoad("bjs.png", 0)    #f2 ea bf / 242 234 191
             screen.blit(background, backgroundRect)
             t=1
             tn=[0,0,0,0,0,0]
@@ -1191,11 +1193,8 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
-            title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230, 30))
-            gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0) 
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
             buttons.draw(screen)
@@ -1248,12 +1247,8 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
-            title, backgroundRect = imageLoad("title.png", 0)   #
             screen.blit(title, (230, 30))
-            gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)   #
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
             buttons.draw(screen)
