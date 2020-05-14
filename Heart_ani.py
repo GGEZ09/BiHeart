@@ -783,6 +783,8 @@ def mainGame():
     title, backgroundRect = imageLoad("title.png", 0)
     gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)
     swi, backgroundRect = imageLoad("switch.png", 0)
+    background, backgroundRect = imageLoad("bjs.png", 0)
+    background2, backgroundRect = imageLoad("bjs2.png", 0)
     oCards = pygame.sprite.Group()
     pCards = pygame.sprite.Group()     #
     dE = deckEdit()                         #
@@ -868,13 +870,9 @@ def mainGame():
     gsu2=0
     
     while True:
-        if mode in bjs2:
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-        else:
-            background, backgroundRect = imageLoad("bjs.png", 0)
         while mode=="main1": #
             state=0
-            screen.blit(background, backgroundRect)             #
+            screen.blit(background2, backgroundRect)             #
             
             titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (25,25,25), wine)#(208,148,130)
             screen.blit(titleFont, (10, 440))
@@ -896,13 +894,11 @@ def mainGame():
                         click = 1
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
-                    click = 0                   
-            if mode!="main1":
-                continue
+                    click = 0
             
         while mode=="main2":
             state=0
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))
@@ -929,7 +925,7 @@ def mainGame():
         while mode=="main3": #
             to=0
             state=0
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             title, backgroundRect = imageLoad("title.png", 0)   #
             screen.blit(title, (230, 30))
             gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)   #
@@ -1201,7 +1197,7 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
@@ -1257,7 +1253,7 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
@@ -2111,8 +2107,7 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))
@@ -2141,8 +2136,7 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))
