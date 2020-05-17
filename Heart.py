@@ -16,7 +16,7 @@ def init_serial():
     ser=serial.Serial()
     ser.baudrate=9600
     ser.port='/dev/ttyAMA0'
-    ser.timeout=0.5
+    ser.timeout=1
     ser.open()
     if ser.isOpen():
         print('Open : '+ser.portstr)
@@ -28,15 +28,15 @@ def send_data(COMM,data1,data2):
     msg.append(int(hex(ord(str(data2))),16))
     ser.flushInput()
     ser.write(msg)
-    time.sleep(0.2)
-    print('I send : '+str(msg))
+    time.sleep(0.3)
+    print('I send >> : ',chr(msg[2]),chr(msg[3]),chr(msg[4]))
 	
 def receive_data_first():
     bytes=ser.readline(3)
     #bytes=bytes[1:]
     ser.flushOutput()
-    time.sleep(0.2)
-    print('I sent : '+bytes)
+    time.sleep(0.3)
+    print('I sent << : '+bytes)
     return bytes
 
 def receive_data():
@@ -45,8 +45,8 @@ def receive_data():
         bytes=bytes[1:]
     temp=bytes
     ser.flushOutput()
-    time.sleep(0.2)
-    print('I sent : '+bytes)
+    time.sleep(0.3)
+    print('I sent << : '+bytes)
     return bytes
 
 mode="" # main 1,2 / deck 1,2 / pregame / draw / shuffle / att / def / battle
@@ -478,7 +478,7 @@ def mainGame():
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="deck1"
                 click = 0
-                self.image, self.rect = imageLoad("GameStart.png", 0)
+                self.image, self.rect = imageLoad("DeckEdit.png", 0)
                 self.position = (600, 240)
                 self.rect.center = self.position
                 deck2=deck
@@ -628,7 +628,7 @@ def mainGame():
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 if mode=="pregame":
                     if sun==0:
-                        pHands,deck3=draw(pHands,deck3)
+                        pHands,deck3,dr=draw(pHands,deck3,2)
                         mode="att"
                     else:
                         mode="def"
@@ -728,24 +728,44 @@ def mainGame():
             deck[t],deck[i]=deck[i],deck[t]
         return deck
 
-    def draw(p, d):
-        if len(d)>=2:
-            tmp=2
-        elif len(d)==1:
-            tmp=1
-        elif len(d)==0:
-            return p, d
-        if len(p)==0:
-            return p, d
-        elif len(p)<=7:
-            p=p+d[:tmp]
-            d=d[tmp:]
-        elif len(p)==8:
-            p=p+d[:1]
-            d=d[tmp:]
-        elif len(p)==9:
-            d=d[tmp:]
-        return p, d
+    def draw(p, d, n):
+        if n==1:
+            if len(d)==0:
+                return p, d, 0
+            if len(p)==0:
+                return p, d, 0
+            elif len(p)<=8:
+                p=p+d[:1]
+                d=d[1:]
+                n=1#succeed draw
+            elif len(p)>=9:
+                d=d[1:]
+                n=-1#hand destroy
+            return p, d, n
+        
+        if n==2:
+            if len(d)>=2:
+                tmp=2
+                n=2
+            elif len(d)==1:
+                tmp=1
+                n=1
+            elif len(d)==0:
+                return p, d, 0
+            if len(p)==0:
+                return p, d, 0
+            elif len(p)<=7:
+                p=p+d[:tmp]
+                d=d[tmp:]
+                n=tmp
+            elif len(p)==8:
+                p=p+d[:1]
+                d=d[tmp:]
+                n=1
+            elif len(p)==9:
+                d=d[tmp:]
+                n=-tmp
+            return p, d, n
 
     def upol(o,i):
         o+=i
@@ -754,11 +774,15 @@ def mainGame():
         elif o<0:
             o=0
         return o
-            
+
     init_serial()
     state=0
     textFont = pygame.font.Font(None,28)
-    background, backgroundRect = imageLoad("bjs2.png", 0)        #D09482 / 208 148 130
+    title, backgroundRect = imageLoad("title.png", 0)
+    gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)
+    swi, backgroundRect = imageLoad("switch.png", 0)
+    background, backgroundRect = imageLoad("bjs.png", 0)
+    background2, backgroundRect = imageLoad("bjs2.png", 0)
     oCards = pygame.sprite.Group()
     pCards = pygame.sprite.Group()     #
     dE = deckEdit()                         #
@@ -813,6 +837,15 @@ def mainGame():
     tuk=9
     n1=0#opponent card show flag
     n2=9#player card show flag(<9)
+    acl=0#Location of attackers card
+    dcl=0#Location of defenders card
+    dr1=0#cards came to my hand at Draw 1
+    dr2=0#cards came to my hand at Draw 2
+    x1,x2,y1,y2=0.0,0.0,0.0,0.0
+    chax1=0.0
+    chay1=0.0
+    chax2=0.0
+    chay2=0.0
     
     dek={}
     dek2={}
@@ -835,19 +868,15 @@ def mainGame():
     gsu2=0
     
     while True:
-        
         while mode=="main1": #
             state=0
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)             #
+            screen.blit(background2, backgroundRect)             #
             
             titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (25,25,25), wine)#(208,148,130)
             screen.blit(titleFont, (10, 440))
 
             gs, backgroundRect = imageLoad("GameStart2.png", 0)   #
             screen.blit(gs, (60,140))                        
-            
-            title, backgroundRect = imageLoad("title.png", 0)  
             screen.blit(title, (230,30))                        
             buttons = pygame.sprite.Group(dE)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
@@ -863,12 +892,11 @@ def mainGame():
                         click = 1
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
-                    click = 0                   
-
+                    click = 0
+            
         while mode=="main2":
             state=0
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))
@@ -889,12 +917,13 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-
+            if mode!="main2":
+                continue
+            
         while mode=="main3": #
             to=0
             state=0
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             title, backgroundRect = imageLoad("title.png", 0)   #
             screen.blit(title, (230, 30))
             gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)   #
@@ -916,13 +945,14 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-        
+            if mode!="main3":
+                continue
+            
         while mode=="deck1": 
             if hsu2>19:
                 mode="deck2"
                 break
             textFont2 = pygame.font.Font(None,55)
-            background, backgroundRect = imageLoad("bjs.png", 0)    #f2 ea bf / 242 234 191
             screen.blit(background, backgroundRect)
             t=1
             tn=[0,0,0,0,0,0]
@@ -1024,13 +1054,14 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-
+            if mode!="deck1":
+                continue
+            
         while mode=="deck2": 
             if hsu2<20:
                 mode="deck1"
                 break
             textFont2 = pygame.font.Font(None,55)
-            background, backgroundRect = imageLoad("bjs.png", 0)    #f2 ea bf / 242 234 191
             screen.blit(background, backgroundRect)
             t=1
             tn=[0,0,0,0,0,0]
@@ -1128,7 +1159,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-                
+            if mode!="deck2":
+                continue
+            
 
         while mode=="join":#become client
             to+=1
@@ -1162,18 +1195,15 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
-            title, backgroundRect = imageLoad("title.png", 0)
+            screen.blit(background2, backgroundRect)
             screen.blit(title, (230, 30))
-            gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0) 
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
             buttons.draw(screen)
             click, mode = bMT.update(mX, mY, click, mode)
             click, mode = bMC.update(mX, mY, click, mode)
-                
-            pygame.display.flip() 
+            
+            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
@@ -1184,7 +1214,9 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-
+            if mode!="join":
+                continue
+            
         while mode=="create":#become server
             to+=1
             if to>=15:
@@ -1219,12 +1251,8 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
-            title, backgroundRect = imageLoad("title.png", 0)   #
+            screen.blit(background2, backgroundRect)
             screen.blit(title, (230, 30))
-            gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)   #
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
             buttons.draw(screen)
@@ -1243,6 +1271,8 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
+            if mode!="create":
+                continue
             
         while mode=="pregame":
             try:
@@ -1255,13 +1285,12 @@ def mainGame():
             oHeart=2
             pHeart=2
             to2=0
-            background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if sun==0:#sun=> 0 : attack / 1 : defend
-                title, backgroundRect = imageLoad("sun.png", 0)
+                title1, backgroundRect = imageLoad("sun.png", 0)
             else :
-                title, backgroundRect = imageLoad("hu.png", 0) 
-            screen.blit(title, (100, 10))
+                title1, backgroundRect = imageLoad("hu.png", 0) 
+            screen.blit(title1, (100, 10))
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
             pPT=PT[len(pHands)]
@@ -1286,18 +1315,18 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-                    
+            if mode!="pregame":
+                continue
+            
         while mode=="att" or mode=="def":
             try:
                 if to2<5:
                     modedp=mode
                     to=0
-                    send_data(9,9,9)#send 999 5times to end opponent's 2nd state
                     to2+=1
             except:
                 oo=0;
             tuk=9
-            background, backgroundRect = imageLoad("bjs.png", 0)
             screen.blit(background, backgroundRect)
             if mode=="att":
                 buttons=pygame.sprite.Group(bGS, bGT, bGO)
@@ -1386,7 +1415,6 @@ def mainGame():
                     screen.blit(c[j], (i-75, 240))
                 j+=1
             if len(que)==1:
-                swi, backgroundRect = imageLoad("switch.png", 0)
                 swi.set_colorkey((255,255,255))
                 screen.blit(swi, (pPT[que[0]]-25, 330))
                 
@@ -1401,11 +1429,15 @@ def mainGame():
                 elif event.type == MOUSEBUTTONUP:
                     mX, mY = 0, 0
                     click = 0
-		    
+            if mode!="att" and mode!="def":
+                continue
+            
         while mode=="attcom":
             print(modedp, state)
             to+=1
-            if to>=15:
+            if to in [2,5,8,11,14]:
+                time.sleep(0.1)
+            if to>=20:
                 mode=modedp
                 to=0
                 state=0
@@ -1414,23 +1446,28 @@ def mainGame():
                 if state==0:
                     send_data(0,0,0)
                     temp=receive_data()
+                    ol2=ol
+                    pHands2=pHands[:]
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
                 elif state==1:
-                    send_data(1,que[0],que[2])
+                    send_data(1,que[0],que[2])# -> ['2','A~T','0~8']
                     temp=receive_data()
-                    if temp[0]=='2':#temp -> ['2','X','0']
+                    if temp[0]=='2':#temp -> ['2','0~6','0']
                         n1=1
                         to=0
-                        state=2
-                        del pHands[que[1]]
+                        acl=que[1]
+                        dcl=que[2]
+                        if que[0]!='T':
+                            del pHands[que[1]]
+                            pHands2=pHands[:]
                         if que[0]=='A':#When I played 'Attack' at -->
-                            nowcard, backgroundRect = imageLoad(CT[0], 1)
-                            nowcard.set_colorkey(beige)
+                            ac, backgroundRect = imageLoad(CT[0], 1)
+                            ac.set_colorkey(beige)
                             n2=1
-                            nowcard2, backgroundRect = imageLoad(CT[int(temp[1])], 1)
-                            nowcard2.set_colorkey(beige)
+                            dc, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                            dc.set_colorkey(beige)
                             ol=upol(ol,-1)
                             if temp[1]=='4':#--> Negate : make my turn 1
                                 cnt=1
@@ -1439,89 +1476,63 @@ def mainGame():
                             elif temp[1]=='6':#--> Heart : subtract one of opponent's heart
                                 oHeart-=1
                         elif que[0]=='S':#When I played 'Snipe' and -->
-                            nowcard, backgroundRect = imageLoad(CT[1], 1)
-                            nowcard.set_colorkey(beige)
+                            ac, backgroundRect = imageLoad(CT[1], 1)
+                            ac.set_colorkey(beige)
                             if temp[1]=='0':#--> opponent has not secret card : nothing happend
                                 oo=0;
                             else:#--> opponent has secret card : delete that card
                                 n2=1
-                                nowcard2, backgroundRect = imageLoad(CT[int(temp[1])], 1)
-                                nowcard2.set_colorkey(beige)
+                                dc, backgroundRect = imageLoad(CT[int(temp[1])], 1)
+                                dc.set_colorkey(beige)
                                 ol=upol(ol,-1)
                         elif que[0]=='H':#When I played 'Hide' : draw two cards
-                            nowcard, backgroundRect = imageLoad(CT[5], 1)
-                            nowcard.set_colorkey(beige)
-                            pHands,deck3=draw(pHands,deck3)
+                            ac, backgroundRect = imageLoad(CT[5], 1)
+                            ac.set_colorkey(beige)
+                            pHands,deck3,dr=draw(pHands,deck3,1)
+                            dr1=dr
+                            pHands,deck3,dr=draw(pHands,deck3,1)
+                            dr2=dr
                         elif que[0]=='T':#When I click 'EndTurn' button : end turn
-                            nowcard, backgroundRect = imageLoad("back.png", 1)
-                            nowcard.set_colorkey(beige)
+                            ac, backgroundRect = imageLoad("back.png", 1)
+                            ac.set_colorkey(beige)
+                            acl=0
                             cnt=1
-                            
-                elif state==2:#end communication
-                    send_data(9,9,9)#send 999 untill opponent send 999
-                    temp=receive_data()
-                    if temp=='999':
-                        to=0
-                        state=0
+                        
                         to2=0
-                        que=[]
-                        tuk=9
-                        cnt-=1
-                        n1=0#opponent card show flag
-                        n2=9#player card show flag(<9)
-                        if oHeart==0:
-                            cnt=2
-                            mode="win"
-                            continue
-                        if pHeart==0:
-                            cnt=2
-                            mode="los"
-                            continue
-                        if cnt==0:
-                            cnt=2
-                            ol=upol(ol,2)
-                            mode="def"
-                        else:
-                            mode=modedp
+                        if dcl<9:
+                            x2=(dcl+1)*76-78
+                        y2=60
+                        pPT=PT[len(pHands2)]
+                        x1=pPT[acl]-75
+                        y1=240
+                        chax1=((250-x1)/10)
+                        chay1=-12
+                        if n2<9:
+                            chax2=((475-x2)/10)
+                            chay2=6
+
+                        mode="attani"
+
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
-            pPT=PT[len(pHands)]
+            pPT=PT[len(pHands2)]
             j=0
-            c=[0]*len(pHands)
+            c=[0]*len(pHands2)
             for i in pPT:
-                c[j], backgroundRect = imageLoad(pHands[j], 1)
+                c[j], backgroundRect = imageLoad(pHands2[j], 1)
                 c[j].set_colorkey(beige)
                 screen.blit(c[j], (i-75, 240))
                 j+=1
             gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
             gtwi=38
-            for i in range(ol):
+            for i in range(ol2):
                 gtwitch[i]=gtwi
                 gtwi+=76
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
-            click, mode = bGS.update(mX, mY, click, mode)
-            click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
-            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
-            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
-            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
-            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
-            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
-            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
-            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
-            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
-            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
-            if n1==0:
-                nowcard, backgroundRect = imageLoad("back.png", 1)
-                nowcard.set_colorkey(beige)
-            screen.blit(nowcard, (0, 120))
-            if n2<9:
-                screen.blit(nowcard2, (250, 120))
                 
             pygame.display.flip() 
             for event in pygame.event.get():
@@ -1538,7 +1549,7 @@ def mainGame():
         while mode=="defcom":
             print(modedp, state)
             to+=1
-            if to>=15:
+            if to>=20:
                 mode=modedp
                 to=0
                 state=0
@@ -1546,6 +1557,8 @@ def mainGame():
             try:
                 if state==0:
                     temp=receive_data()
+                    ol2=ol
+                    pHands2=pHands[:]
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
@@ -1560,36 +1573,42 @@ def mainGame():
                         t2=int(temp[2])
                         if temp[1]=='A':
                             n2=t2
-                            nowcard2, backgroundRect = imageLoad(pHands[t2], 1)
-                            nowcard, backgroundRect = imageLoad(CT[0], 1)
-                            nowcard.set_colorkey(beige)
+                            dc, backgroundRect = imageLoad(pHands[t2], 1)
+                            ac, backgroundRect = imageLoad(CT[0], 1)
+                            ac.set_colorkey(beige)
                             ol=upol(ol,-1)
                             if t2>0: #if shield card locates leftside of opponent aimed card
                                 if pHands[t2-1]==CT[2]:
                                     buf=2
-                                    nowcard2, backgroundRect = imageLoad(CT[2], 1)
+                                    dc, backgroundRect = imageLoad(CT[2], 1)
+                                    dcl=t2-1
                                     del pHands[t2-1]
                             if buf==0 and t2+1<len(pHands):#if shield card locates rightside of opponent aimed card
                                 if pHands[t2+1]==CT[2]:
                                     buf=2
-                                    nowcard2, backgroundRect = imageLoad(CT[2], 1)
+                                    dc, backgroundRect = imageLoad(CT[2], 1)
+                                    dcl=t2+1
                                     del pHands[t2+1]
                             if buf==0:
                                 buf=CT.index(pHands[t2])
                                 if buf==3: #flash
-                                    pHands,deck3=draw(pHands,deck3)
+                                    pHands,deck3,dr=draw(pHands,deck3,1)
+                                    dr1=dr
+                                    pHands,deck3,dr=draw(pHands,deck3,1)
+                                    dr2=dr
                                 elif buf==4: #Negate
                                     cnt=1
                                 elif buf==6: #Heart
                                     buf=6
                                     pHeart-=1
                                 #else : attack / snipe / hide
-                                nowcard2, backgroundRect = imageLoad(CT[buf], 1)
+                                dc, backgroundRect = imageLoad(CT[buf], 1)
+                                dcl=t2
                                 del pHands[t2]
-                            nowcard2.set_colorkey(beige)
+                            dc.set_colorkey(beige)
                         elif temp[1]=='S':
-                            nowcard, backgroundRect = imageLoad(CT[1], 1)
-                            nowcard.set_colorkey(beige)
+                            ac, backgroundRect = imageLoad(CT[1], 1)
+                            ac.set_colorkey(beige)
                             ol=upol(ol,-1)
                             k1=0
                             for i in pHands:
@@ -1599,93 +1618,484 @@ def mainGame():
                                     if i == CT[j]:
                                         buf=j
                                         n2=k1
-                                        nowcard2, backgroundRect = imageLoad(pHands[k1], 1)
-                                        nowcard2.set_colorkey(beige)
+                                        dc, backgroundRect = imageLoad(pHands[k1], 1)
+                                        dc.set_colorkey(beige)
+                                        dcl=k1
                                         del pHands[k1]
                                 k1+=1
                         elif temp[1]=='H':
-                            nowcard, backgroundRect = imageLoad(CT[5], 1)
-                            nowcard.set_colorkey(beige)
+                            ac, backgroundRect = imageLoad(CT[5], 1)
+                            ac.set_colorkey(beige)
                             ol=upol(ol,1)
                             buf=0
                         elif temp[1]=='T':
-                            nowcard, backgroundRect = imageLoad("back.png", 1)
-                            nowcard.set_colorkey(beige)
+                            ac, backgroundRect = imageLoad("back.png", 1)
+                            ac.set_colorkey(beige)
                             cnt=1
-                        
-                elif state==2:
-                    send_data(2,buf,0)
-                    temp=receive_data()
-                    if temp=='999':
-                        to=0
-                        state=0
                         to2=0
-                        que=[]
-                        tuk=9
-                        cnt-=1
-                        n1=0#opponent card show flag
-                        n2=9#player card show flag(<9)
-                        if oHeart==0:
-                            cnt=2
-                            mode="win"
-                            continue
-                        if pHeart==0:
-                            cnt=2
-                            mode="los"
-                            continue
-                        if cnt==0:
-                            cnt=2
-                            pHands,deck3=draw(pHands,deck3)
-                            mode="att"
-                            continue
-                        else:
-                            mode=modedp
-                            continue
+                        x1=(acl+1)*76-78
+                        y1=60
+                        pPT=PT[len(pHands2)]
+                        if dcl<9:
+                            x2=pPT[dcl]-75
+                        y2=240
+                        chax1=((250-x1)/10)
+                        chay1=6
+                        if n2<9:
+                            chax2=((475-x2)/10)
+                            chay2=-12
+                elif state==2:
+                    while to2<5:
+                        send_data(2,buf,0)#send 2 buf 0 like->'999' 5times to end opponent's 2nd state
+                        to2+=1
+                    mode="defani"
+                
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
             screen.blit(background, backgroundRect)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
-            pPT=PT[len(pHands)]
+            pPT=PT[len(pHands2)]
             j=0
-            c=[0]*len(pHands)
+            c=[0]*len(pHands2)
             for i in pPT:
-                if i==n2:
-                    arw, backgroundRect = imageLoad("down-gray.png", 0)
-                    arw.set_colorkey(0,0,0)
-                    screen.blit(arw, (i-22, 180))
-                c[j], backgroundRect = imageLoad(pHands[j], 1)
+                c[j], backgroundRect = imageLoad(pHands2[j], 1)
                 c[j].set_colorkey(beige)
                 screen.blit(c[j], (i-75, 240))
                 j+=1
             gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
             gtwi=38
-            for i in range(ol):
+            for i in range(ol2):
                 gtwitch[i]=gtwi
                 gtwi+=76
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
-            click, mode = bGS.update(mX, mY, click, mode)
-            click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
-            click, mode, sun = bGT.update(mX, mY, click, mode, sun)
-            click, mode, que = o1.update(mX, mY, click, mode, gtwitch[0], 0, que)
-            click, mode, que = o2.update(mX, mY, click, mode, gtwitch[1], 1, que)
-            click, mode, que = o3.update(mX, mY, click, mode, gtwitch[2], 2, que)
-            click, mode, que = o4.update(mX, mY, click, mode, gtwitch[3], 3, que)
-            click, mode, que = o5.update(mX, mY, click, mode, gtwitch[4], 4, que)
-            click, mode, que = o6.update(mX, mY, click, mode, gtwitch[5], 5, que)
-            click, mode, que = o7.update(mX, mY, click, mode, gtwitch[6], 6, que)
-            click, mode, que = o8.update(mX, mY, click, mode, gtwitch[7], 7, que)
-            click, mode, que = o9.update(mX, mY, click, mode, gtwitch[8], 8, que)
-            if n1==0:
-                nowcard, backgroundRect = imageLoad("back.png", 1)
-                nowcard.set_colorkey(beige)
-            screen.blit(nowcard, (0, 120))
-            if n2<9:
-                screen.blit(nowcard2, (250, 120))
                 
-            pygame.display.flip() 
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mX, mY = pygame.mouse.get_pos()
+                        click = 1
+                elif event.type == MOUSEBUTTONUP:
+                    mX, mY = 0, 0
+                    click = 0
+
+
+        while mode=="attani":
+            screen.blit(background, backgroundRect)
+            buttons=pygame.sprite.Group(bGS, bGO)
+            buttons.draw(screen)
+            pPT=PT[len(pHands2)]
+            j=0
+            c=[0]*len(pHands2)
+            for i in pPT:
+                c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                c[j].set_colorkey(beige)
+                screen.blit(c[j], (i-75, 240))
+                j+=1
+            gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
+            gtwi=38
+            for i in range(ol2):
+                gtwitch[i]=gtwi
+                gtwi+=76
+            buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
+            buttons1.draw(screen)
+
+            if y1>120:
+                x1+=chax1
+                y1+=chay1
+                screen.blit(ac,(x1,y1))
+                if n2<9:
+                    x2+=chax2
+                    y2+=chay2
+                    screen.blit(dc,(x2,y2))
+                clock.tick(40)
+                pygame.display.flip()
+            else :
+                if dr1==1:
+                    if dr2==1:
+                        d1, backgroundRect = imageLoad(pHands[-2], 1)
+                        d1.set_colorkey(beige)
+                        dn=2
+                    else:
+                        d1, backgroundRect = imageLoad(pHands[-1], 1)
+                        d1.set_colorkey(beige)
+                        dn=1
+                    x3=800.0
+                    y3=120.0
+                    while x3>650:
+                        x3-=(150/60)
+                        screen.blit(d1,(x3,y3))
+                        
+                        clock.tick(60)
+                        pygame.display.flip() 
+                        for event in pygame.event.get():
+                            if event.type == QUIT:
+                                sys.exit()
+                            elif event.type == MOUSEBUTTONDOWN:
+                                if event.button == 1:
+                                    mX, mY = pygame.mouse.get_pos()
+                                    click = 1
+                            elif event.type == MOUSEBUTTONUP:
+                                mX, mY = 0, 0
+                                click = 0
+                    pHands2.append(pHands[-dn])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
+                    pPT=PT[len(pHands2)]
+                    j=0
+                    c=[0]*len(pHands2)
+                    for i in pPT:
+                        c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                        c[j].set_colorkey(beige)
+                        screen.blit(c[j], (i-75, 240))
+                        j+=1
+                    dr1=0
+                if dr2==1:
+                    d1, backgroundRect = imageLoad(pHands[-1], 1)
+                    d1.set_colorkey(beige)
+                    x3=800.0
+                    y3=120.0
+                    while x3>650:
+                        x3-=(150/60)
+                        screen.blit(d1,(x3,y3))
+                        
+                        clock.tick(60)
+                        pygame.display.flip() 
+                        for event in pygame.event.get():
+                            if event.type == QUIT:
+                                sys.exit()
+                            elif event.type == MOUSEBUTTONDOWN:
+                                if event.button == 1:
+                                    mX, mY = pygame.mouse.get_pos()
+                                    click = 1
+                            elif event.type == MOUSEBUTTONUP:
+                                mX, mY = 0, 0
+                                click = 0
+                    pHands2.append(pHands[-1])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
+                    pPT=PT[len(pHands2)]
+                    j=0
+                    c=[0]*len(pHands2)
+                    for i in pPT:
+                        c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                        c[j].set_colorkey(beige)
+                        screen.blit(c[j], (i-75, 240))
+                        j+=1
+                    dr2=0
+                if dr1==0:
+                    to=0
+                    state=0
+                    to2=0
+                    que=[]
+                    tuk=9
+                    cnt-=1
+                    x1,y1,x2,y2=0.0,0.0,0.0,0.0
+                    n1=0
+                    n2=9
+                    t2=0
+                    dr1=0
+                    dr2=0
+                    acl=0
+                    dcl=0
+                    if oHeart==0:
+                        cnt=2
+                        mode="win"
+                        continue
+                    if pHeart==0:
+                        cnt=2
+                        mode="los"
+                        continue
+                    if cnt==0:
+                        cnt=2
+                        ol=upol(ol,2)
+
+                        d1, backgroundRect = imageLoad("switch.png", 0)
+                        d1.set_alpha(0)
+                        x3=800#My Turn symbol set for 1sec
+                        y3=120
+                        while x3>650:
+                            x3-=(150/60)
+                            screen.blit(d1,(x3,y3))
+                            d2, backgroundRect = imageLoad("ot.png", 0)
+                            d2.set_colorkey(beige)
+                            screen.blit(d2,(100,130))
+                                
+                            clock.tick(60)
+                            pygame.display.flip() 
+                            for event in pygame.event.get():
+                                if event.type == QUIT:
+                                    sys.exit()
+                                elif event.type == MOUSEBUTTONDOWN:
+                                    if event.button == 1:
+                                        mX, mY = pygame.mouse.get_pos()
+                                        click = 1
+                                elif event.type == MOUSEBUTTONUP:
+                                    mX, mY = 0, 0
+                                    click = 0
+                        
+                        mode="def"
+                        continue
+                    else:
+                        mode="att"
+                        if mode=="def":
+                            mode="att"
+                        continue
+            
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                elif event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mX, mY = pygame.mouse.get_pos()
+                        click = 1
+                elif event.type == MOUSEBUTTONUP:
+                    mX, mY = 0, 0
+                    click = 0
+
+        while mode=="defani":
+            screen.blit(background, backgroundRect)
+            buttons=pygame.sprite.Group(bGS, bGO)
+            buttons.draw(screen)
+            pPT=PT[len(pHands2)]
+            j=0
+            c=[0]*len(pHands2)
+            for i in pPT:
+                c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                c[j].set_colorkey(beige)
+                screen.blit(c[j], (i-75, 240))
+                j+=1
+            gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
+            gtwi=38
+            for i in range(ol2):
+                gtwitch[i]=gtwi
+                gtwi+=76
+            buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
+            buttons1.draw(screen)
+
+            if y1<120:
+                x1+=chax1
+                y1+=chay1
+                screen.blit(ac,(x1,y1))
+                if n2<9:
+                    x2+=chax2
+                    y2+=chay2
+                    screen.blit(dc,(x2,y2))
+                clock.tick(40)
+                pygame.display.flip()
+            else :
+                if dr1==1:
+                    if dr2==1:
+                        d1, backgroundRect = imageLoad(pHands[-2], 1)
+                        d1.set_colorkey(beige)
+                        dn=2
+                    else:
+                        d1, backgroundRect = imageLoad(pHands[-1], 1)
+                        d1.set_colorkey(beige)
+                        dn=1
+                    x3=800.0
+                    y3=120.0
+                    while x3>650:
+                        x3-=(150/60)
+                        screen.blit(d1,(x3,y3))
+                        
+                        clock.tick(60)
+                        pygame.display.flip() 
+                        for event in pygame.event.get():
+                            if event.type == QUIT:
+                                sys.exit()
+                            elif event.type == MOUSEBUTTONDOWN:
+                                if event.button == 1:
+                                    mX, mY = pygame.mouse.get_pos()
+                                    click = 1
+                            elif event.type == MOUSEBUTTONUP:
+                                mX, mY = 0, 0
+                                click = 0
+                    pHands2.append(pHands[-dn])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
+                    pPT=PT[len(pHands2)]
+                    j=0
+                    c=[0]*len(pHands2)
+                    for i in pPT:
+                        c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                        c[j].set_colorkey(beige)
+                        screen.blit(c[j], (i-75, 240))
+                        j+=1
+                    dr1=0
+                if dr2==1:
+                    d1, backgroundRect = imageLoad(pHands[-1], 1)
+                    d1.set_colorkey(beige)
+                    x3=800.0
+                    y3=120.0
+                    while x3>650:
+                        x3-=(150/60)
+                        screen.blit(d1,(x3,y3))
+                        
+                        clock.tick(60)
+                        pygame.display.flip() 
+                        for event in pygame.event.get():
+                            if event.type == QUIT:
+                                sys.exit()
+                            elif event.type == MOUSEBUTTONDOWN:
+                                if event.button == 1:
+                                    mX, mY = pygame.mouse.get_pos()
+                                    click = 1
+                            elif event.type == MOUSEBUTTONUP:
+                                mX, mY = 0, 0
+                                click = 0
+                    pHands2.append(pHands[-1])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
+                    pPT=PT[len(pHands2)]
+                    j=0
+                    c=[0]*len(pHands2)
+                    for i in pPT:
+                        c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                        c[j].set_colorkey(beige)
+                        screen.blit(c[j], (i-75, 240))
+                        j+=1
+                    dr2=0
+                if dr1==0:
+                    to=0
+                    state=0
+                    que=[]
+                    tuk=9
+                    cnt-=1
+                    x1,y1,x2,y2=0.0,0.0,0.0,0.0
+                    n1=0
+                    n2=9
+                    t2=0
+                    to2=0
+                    dr1=0
+                    dr2=0
+                    acl=0
+                    dcl=0
+                    if oHeart==0:
+                        cnt=2
+                        mode="win"
+                        continue
+                    if pHeart==0:
+                        cnt=2
+                        mode="los"
+                        continue
+                    if cnt==0:
+                        cnt=2
+
+                        d1, backgroundRect = imageLoad("switch.png", 0)
+                        d1.set_alpha(0)
+                        x3=800#My Turn symbol set for 1sec
+                        y3=120
+                        while x3>650:
+                            x3-=(150/60)
+                            screen.blit(d1,(x3,y3))
+                            d2, backgroundRect = imageLoad("mt.png", 0)
+                            d2.set_colorkey(beige)
+                            screen.blit(d2,(100,130))
+                                
+                            clock.tick(60)
+                            pygame.display.flip() 
+                            for event in pygame.event.get():
+                                if event.type == QUIT:
+                                    sys.exit()
+                                elif event.type == MOUSEBUTTONDOWN:
+                                    if event.button == 1:
+                                        mX, mY = pygame.mouse.get_pos()
+                                        click = 1
+                                elif event.type == MOUSEBUTTONUP:
+                                    mX, mY = 0, 0
+                                    click = 0
+                        
+                        pHands,deck3,dr=draw(pHands,deck3,1)
+                        dr1=dr
+                        pHands,deck3,dr=draw(pHands,deck3,1)
+                        dr2=dr
+                        if dr1==1:
+                            if dr2==1:
+                                d1, backgroundRect = imageLoad(pHands[-2], 1)
+                                d1.set_colorkey(beige)
+                                dn=2
+                            else:
+                                d1, backgroundRect = imageLoad(pHands[-1], 1)
+                                d1.set_colorkey(beige)
+                                dn=1
+                            x3=800.0
+                            y3=120.0
+                            while x3>650:
+                                x3-=(150/60)
+                                screen.blit(d1,(x3,y3))
+                                
+                                clock.tick(60)
+                                pygame.display.flip() 
+                                for event in pygame.event.get():
+                                    if event.type == QUIT:
+                                        sys.exit()
+                                    elif event.type == MOUSEBUTTONDOWN:
+                                        if event.button == 1:
+                                            mX, mY = pygame.mouse.get_pos()
+                                            click = 1
+                                    elif event.type == MOUSEBUTTONUP:
+                                        mX, mY = 0, 0
+                                        click = 0
+                            pHands2.append(pHands[-dn])
+                            if len(pHands2)>9:
+                                pHands2=pHands2[:9]
+                            pPT=PT[len(pHands2)]
+                            j=0
+                            c=[0]*len(pHands2)
+                            for i in pPT:
+                                c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                                c[j].set_colorkey(beige)
+                                screen.blit(c[j], (i-75, 240))
+                                j+=1
+                            dr1=0
+                        if dr2==1:
+                            d1, backgroundRect = imageLoad(pHands[-1], 1)
+                            d1.set_colorkey(beige)
+                            x3=800.0
+                            y3=120.0
+                            while x3>650:
+                                x3-=(150/60)
+                                screen.blit(d1,(x3,y3))
+                                
+                                clock.tick(60)
+                                pygame.display.flip() 
+                                for event in pygame.event.get():
+                                    if event.type == QUIT:
+                                        sys.exit()
+                                    elif event.type == MOUSEBUTTONDOWN:
+                                        if event.button == 1:
+                                            mX, mY = pygame.mouse.get_pos()
+                                            click = 1
+                                    elif event.type == MOUSEBUTTONUP:
+                                        mX, mY = 0, 0
+                                        click = 0
+                            pHands2.append(pHands[-1])
+                            if len(pHands2)>9:
+                                pHands2=pHands2[:9]
+                            pPT=PT[len(pHands2)]
+                            j=0
+                            c=[0]*len(pHands2)
+                            for i in pPT:
+                                c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                                c[j].set_colorkey(beige)
+                                screen.blit(c[j], (i-75, 240))
+                                j+=1
+                            dr2=0
+
+                        dr1,dr2=0,0
+                        mode="att"
+                        continue
+                    else:
+                        mode="def"
+                        continue
+                    
+            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
@@ -1701,12 +2111,11 @@ def mainGame():
             try:
                 if to2<5:
                     to=0
-                    send_data(9,9,9)
+                    send_data(5,5,5)
                     to2+=1
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))
@@ -1731,12 +2140,11 @@ def mainGame():
             try:
                 if to2<5:
                     to=0
-                    send_data(9,9,9)
+                    send_data(4,4,4)
                     to2+=1
             except:
                 oo=0;
-            background, backgroundRect = imageLoad("bjs2.png", 0)
-            screen.blit(background, backgroundRect)
+            screen.blit(background2, backgroundRect)
             
             title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))

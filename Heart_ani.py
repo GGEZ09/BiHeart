@@ -1671,7 +1671,7 @@ def mainGame():
             buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
             buttons1.draw(screen)
                 
-            pygame.display.flip() 
+            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
