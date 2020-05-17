@@ -738,7 +738,7 @@ def mainGame():
                 p=p+d[:1]
                 d=d[1:]
                 n=1#succeed draw
-            elif len(p)==9:
+            elif len(p)>=9:
                 d=d[1:]
                 n=-1#hand destroy
             return p, d, n
@@ -1743,6 +1743,8 @@ def mainGame():
                                 mX, mY = 0, 0
                                 click = 0
                     pHands2.append(pHands[-dn])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1774,6 +1776,8 @@ def mainGame():
                                 mX, mY = 0, 0
                                 click = 0
                     pHands2.append(pHands[-1])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1913,6 +1917,8 @@ def mainGame():
                                 mX, mY = 0, 0
                                 click = 0
                     pHands2.append(pHands[-dn])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -1944,6 +1950,8 @@ def mainGame():
                                 mX, mY = 0, 0
                                 click = 0
                     pHands2.append(pHands[-1])
+                    if len(pHands2)>9:
+                        pHands2=pHands2[:9]
                     pPT=PT[len(pHands2)]
                     j=0
                     c=[0]*len(pHands2)
@@ -2035,6 +2043,8 @@ def mainGame():
                                         mX, mY = 0, 0
                                         click = 0
                             pHands2.append(pHands[-dn])
+                            if len(pHands2)>9:
+                                pHands2=pHands2[:9]
                             pPT=PT[len(pHands2)]
                             j=0
                             c=[0]*len(pHands2)
@@ -2066,6 +2076,8 @@ def mainGame():
                                         mX, mY = 0, 0
                                         click = 0
                             pHands2.append(pHands[-1])
+                            if len(pHands2)>9:
+                                pHands2=pHands2[:9]
                             pPT=PT[len(pHands2)]
                             j=0
                             c=[0]*len(pHands2)
