@@ -1505,10 +1505,10 @@ def mainGame():
                         pPT=PT[len(pHands2)]
                         x1=pPT[acl]-75
                         y1=240
-                        chax1=((250-x1)/5)
+                        chax1=((250-x1)/20)
                         chay1=-6
                         if n2<9:
-                            chax2=((475-x2)/5)
+                            chax2=((475-x2)/20)
                             chay2=3
 
             except:
@@ -1637,10 +1637,10 @@ def mainGame():
                         if dcl<9:
                             x2=pPT[dcl]-75
                         y2=240
-                        chax1=((250-x1)/5)
+                        chax1=((250-x1)/20)
                         chay1=3
                         if n2<9:
-                            chax2=((475-x2)/5)
+                            chax2=((475-x2)/20)
                             chay2=-6
                 elif state==2:
                     while to2<5:
