@@ -60,8 +60,6 @@ PT={1:[400], 2:[325,475], 3:[250,400,550], 4:[175,325,475,625], 5:[100,250,400,5
 beige=(242,234,191)
 refb=(255,0,0)
 wine=(208,148,130)
-bjs2=["main1","main2","main3","join","create","win","los"]
-bjs=["deck1","deck2","pregame","att","def","attcom","defcom","attani","defani"]
 
 def imageLoad(name, card):              #
     if card == 1:
@@ -1514,7 +1512,6 @@ def mainGame():
                             chay2=6
 
                         mode="attani"
-                        continue
 
             except:
                 oo=0;
@@ -1652,7 +1649,6 @@ def mainGame():
                         send_data(2,buf,0)#send 2 buf 0 like->'999' 5times to end opponent's 2nd state
                         to2+=1
                     mode="defani"
-                    continue
                 
             except:
                 oo=0;
@@ -1716,7 +1712,7 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(60)
+                clock.tick(40)
                 pygame.display.flip()
             else :
                 if dr1==1:
@@ -1886,7 +1882,7 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(60)
+                clock.tick(40)
                 pygame.display.flip()
             else :
                 if dr1==1:

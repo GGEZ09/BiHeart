@@ -47,7 +47,7 @@ def mainGame():
         screen.blit(pic,(x,y))
         
         pygame.display.flip()
-        clock.tick(240)
+        clock.tick(40)
 
         for event in pygame.event.get():
             if event.type == QUIT:
