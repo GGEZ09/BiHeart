@@ -1,6 +1,7 @@
 import random
 import os
 import sys
+import time
 
 import pygame
 from pygame.locals import *
@@ -13,7 +14,7 @@ clock=pygame.time.Clock()
 def imageLoad(name, card):              #
     if card == 1:
         fullname = os.path.join("images/cards/", name)
-    else: fullname = os.path.join('images', name)
+    else: fullname = os.path.join('images/', name)
     
     try:
         image = pygame.image.load(fullname)
@@ -28,9 +29,10 @@ def display(font, sentence):
     displayFont = pygame.font.Font.render(font, sentence, 1, (255,255,255), (0,0,0)) 
     return displayFont
 
+
+
 def mainGame():
     pic=pygame.image.load("images/cards/Card_Heart.png")
-    
     x,y=0,150
     movex,movey=2,2
 
@@ -42,6 +44,7 @@ def mainGame():
         if y<=0 or y>=480:
             movey=-movey
         background, backgroundRect = imageLoad("bjs2.png", 0)
+
         screen.blit(background, backgroundRect)
         pic.set_alpha(10)
         screen.blit(pic,(x,y))

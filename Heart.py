@@ -1497,8 +1497,8 @@ def mainGame():
                             ac.set_colorkey(beige)
                             acl=0
                             cnt=1
-                        
                         to2=0
+                        mode="attani"
                         if dcl<9:
                             x2=(dcl+1)*76-78
                         y2=60
@@ -1510,8 +1510,6 @@ def mainGame():
                         if n2<9:
                             chax2=((475-x2)/10)
                             chay2=6
-
-                        mode="attani"
 
             except:
                 oo=0;
