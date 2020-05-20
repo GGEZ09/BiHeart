@@ -965,7 +965,7 @@ def mainGame():
             bi-=1
             if bi<0:
                 bi=18
-            clock.tick(5)
+            clock.tick(20)
             t=1
             tn=[0,0,0,0,0,0]
             for i in range(5):
