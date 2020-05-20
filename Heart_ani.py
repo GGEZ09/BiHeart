@@ -1046,14 +1046,14 @@ def mainGame():
             click, mode = bDC.update(mX, mY, click, mode)
 
             textFont3 = pygame.font.Font(None,35)
-            ttFont = pygame.font.Font.render(textFont3, ("TOTAL"), 1, (255,255,255), (0,0,0))
+            ttFont = pygame.font.Font.render(textFont3, ("TOTAL"), 1, (255,255,255), (255,0,0))
             screen.blit(ttFont, (475, 305))
             hsuFont = pygame.font.Font.render(textFont3, (str(hsu2)+"/20"), 1, (255,255,255), (0,0,0))
-            screen.blit(hsuFont, (475, 355))
-            atFont = pygame.font.Font.render(textFont3, ("ATTACK"), 1, (255,255,255), (0,0,0))
-            screen.blit(atFont, (475, 405))
+            screen.blit(hsuFont, (475, 345))
+            atFont = pygame.font.Font.render(textFont3, ("ATTACK"), 1, (255,255,255), (255,0,0))
+            screen.blit(atFont, (475, 385))
             gsuFont = pygame.font.Font.render(textFont3, (str(gsu2)+"(>9)"), 1, (255,255,255), (0,0,0))
-            screen.blit(gsuFont, (475, 455))
+            screen.blit(gsuFont, (475, 425))
             
             buttons.draw(screen)
                 
@@ -1162,14 +1162,14 @@ def mainGame():
             click, mode = bDC.update(mX, mY, click, mode)
 
             textFont3 = pygame.font.Font(None,35)
-            ttFont = pygame.font.Font.render(textFont3, ("TOTAL"), 1, (255,255,255), (0,0,0))
+            ttFont = pygame.font.Font.render(textFont3, ("TOTAL"), 1, (255,255,255), (255,0,0))
             screen.blit(ttFont, (475, 305))
             hsuFont = pygame.font.Font.render(textFont3, (str(hsu2)+"/20"), 1, (255,255,255), (0,0,0))
-            screen.blit(hsuFont, (475, 355))
-            atFont = pygame.font.Font.render(textFont3, ("ATTACK"), 1, (255,255,255), (0,0,0))
-            screen.blit(atFont, (475, 405))
+            screen.blit(hsuFont, (475, 345))
+            atFont = pygame.font.Font.render(textFont3, ("ATTACK"), 1, (255,255,255), (255,0,0))
+            screen.blit(atFont, (475, 385))
             gsuFont = pygame.font.Font.render(textFont3, (str(gsu2)+"(>9)"), 1, (255,255,255), (0,0,0))
-            screen.blit(gsuFont, (475, 455))
+            screen.blit(gsuFont, (475, 425))
                 
             pygame.display.flip() 
             for event in pygame.event.get():
@@ -1719,7 +1719,8 @@ def mainGame():
 
 
         while mode=="attani":
-            pygame.time.delay(1000)
+            if y1==240:
+                pygame.time.delay(1000)
             screen.fill((0,0,0))
             clock.tick(60)
             buttons=pygame.sprite.Group(bGS, bGO)
