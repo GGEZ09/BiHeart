@@ -99,18 +99,17 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Card_Attack.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (75, 120)
             
         def update(self, mX, mY, click, dek2, hsu2, gsu2):
             self.image, self.rect = imageLoad("Card_Attack.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (75, 120)
             self.rect.center = self.position
 
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect = imageLoad("Card_Attack.png", 1)
-                self.position = (75, 120)
-                self.rect.center = self.position
                 hsu2+=1
                 gsu2+=1
                 
@@ -126,10 +125,12 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Card_Flash.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (225, 360)
             
         def update(self, mX, mY, click, dek2, hsu2):
             self.image, self.rect =imageLoad("Card_Flash.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (225, 360)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
@@ -151,17 +152,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Card_Shield.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (375, 120)
             
         def update(self, mX, mY, click, dek2, hsu2):
             self.image, self.rect =imageLoad("Card_Shield.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (375, 120)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Card_Shield.png", 1)
-                self.position = (375, 120)
-                self.rect.center = self.position
                 hsu2+=1
 
                 if CT[2] in dek2:
@@ -176,17 +176,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Card_Negate.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (75, 360)
             
         def update(self, mX, mY, click, dek2, hsu2):
             self.image, self.rect =imageLoad("Card_Negate.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (75, 360)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Card_Negate.png", 1)
-                self.position = (75, 360)
-                self.rect.center = self.position
                 hsu2+=1
 
                 if CT[4] in dek2:
@@ -201,17 +200,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Card_Snipe.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (225, 120)
             
         def update(self, mX, mY, click, dek2, hsu2, gsu2):
             self.image, self.rect =imageLoad("Card_Snipe.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (225, 120)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Card_Snipe.png", 1)
-                self.position = (225, 120)
-                self.rect.center = self.position
                 hsu2+=1
                 gsu2+=1
 
@@ -227,18 +225,17 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Card_Hide.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (375, 360)
             
         def update(self, mX, mY, click, dek2, hsu2):
             self.image, self.rect = imageLoad("Card_Hide.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (375, 360)
             self.rect.center = self.position
 
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect = imageLoad("Card_Hide.png", 1)
-                self.position = (375, 360)
-                self.rect.center = self.position
                 hsu2+=1
                 
                 if CT[5] in dek2:
@@ -253,17 +250,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Thumb_Attack.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, -40)
             
         def update(self, mX, mY, click, dek2, hsu2, gsu2, tw):
             self.image, self.rect =imageLoad("Thumb_Attack.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, tw)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Thumb_Attack.png", 1)
-                self.position = (665, tw)
-                self.rect.center = self.position
                 hsu2-=1
                 gsu2-=1
 
@@ -280,17 +276,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Thumb_Snipe.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, -40)
             
         def update(self, mX, mY, click, dek2, hsu2, gsu2,tw):
             self.image, self.rect =imageLoad("Thumb_Snipe.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, tw)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Thumb_Snipe.png", 1)
-                self.position = (665, tw)
-                self.rect.center = self.position
                 hsu2-=1
                 gsu2-=1
 
@@ -307,17 +302,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Thumb_Shield.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, -40)
             
         def update(self, mX, mY, click, dek2, hsu2,tw):
             self.image, self.rect =imageLoad("Thumb_Shield.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, tw)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Thumb_Shield.png", 1)
-                self.position = (665, tw)
-                self.rect.center = self.position
                 hsu2-=1
 
                 if CT[2] in dek2:
@@ -333,17 +327,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Thumb_Flash.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, -40)
             
         def update(self, mX, mY, click, dek2, hsu2,tw):
             self.image, self.rect =imageLoad("Thumb_Flash.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, tw)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Thumb_Flash.png", 1)
-                self.position = (665, tw)
-                self.rect.center = self.position
                 hsu2-=1
 
                 if CT[3] in dek2:
@@ -359,17 +352,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Thumb_Negate.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, -40)
             
         def update(self, mX, mY, click, dek2, hsu2,tw):
             self.image, self.rect =imageLoad("Thumb_Negate.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, tw)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Thumb_Negate.png", 1)
-                self.position = (665, tw)
-                self.rect.center = self.position
                 hsu2-=1
 
                 if CT[4] in dek2:
@@ -385,17 +377,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Thumb_Hide.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, -40)
             
         def update(self, mX, mY, click, dek2, hsu2,tw):
             self.image, self.rect =imageLoad("Thumb_Hide.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (665, tw)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Thumb_Hide.png", 1)
-                self.position = (665, tw)
-                self.rect.center = self.position
                 hsu2-=1
 
                 if CT[5] in dek2:
@@ -411,10 +402,12 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Ok.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (627, 440)
             
         def update(self, mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2):
             self.image, self.rect =imageLoad("Ok.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (627, 440)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
@@ -430,9 +423,6 @@ def mainGame():
                     mode="main1"
                 else:
                     mode="main2"
-                self.image, self.rect =imageLoad("Ok2.png", 0)
-                self.position = (627, 440)
-                self.rect.center = self.position
                 print(gsu2,"/",hsu2)
                 print('dek2 : ',dek2)
                 print('dek : ',dek)
@@ -445,10 +435,12 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Cancel.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (742, 440)
             
         def update(self, mX, mY, click, mode):
             self.image, self.rect =imageLoad("Cancel.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (742, 440)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
@@ -457,9 +449,6 @@ def mainGame():
                 else:
                     mode="main2"
                 click = 0
-                self.image, self.rect =imageLoad("Cancel.png", 0)
-                self.position = (742, 440)
-                self.rect.center = self.position
                 print(gsu2,"/",hsu2)
                 print('dek2 : ',dek2)
                 print('dek : ',dek)
@@ -885,7 +874,7 @@ def mainGame():
             if bi>18:
                 bi=0
             
-            titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (25,25,25), wine)#(208,148,130)
+            titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (255,255,255), wine)#(208,148,130)
             titleFont.set_colorkey(wine)
             screen.blit(titleFont, (10, 440))
             screen.blit(gs, (60,140))
@@ -972,7 +961,11 @@ def mainGame():
                 mode="deck2"
                 break
             textFont2 = pygame.font.Font(None,55)
-            screen.blit(background, backgroundRect)
+            screen.blit(bp[bi], backgroundRect)
+            bi-=1
+            if bi<0:
+                bi=18
+            clock.tick(5)
             t=1
             tn=[0,0,0,0,0,0]
             for i in range(5):
@@ -1081,7 +1074,11 @@ def mainGame():
                 mode="deck1"
                 break
             textFont2 = pygame.font.Font(None,55)
-            screen.blit(background, backgroundRect)
+            screen.blit(bp[bi], backgroundRect)
+            bi-=1
+            if bi<0:
+                bi=18
+            clock.tick(5)
             t=1
             tn=[0,0,0,0,0,0]
             for i in range(5):
@@ -1214,7 +1211,11 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-            screen.blit(background2, backgroundRect)
+            screen.blit(bp[bi], backgroundRect)
+            bi+=1
+            if bi>18:
+                bi=0
+            clock.tick(20)
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
@@ -1270,7 +1271,11 @@ def mainGame():
                         mode="pregame"
             except:
                 oo=0;
-            screen.blit(background2, backgroundRect)
+            screen.blit(bp[bi], backgroundRect)
+            bi+=1
+            if bi>18:
+                bi=0
+            clock.tick(20)
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(bMT, bMC)
@@ -1304,7 +1309,11 @@ def mainGame():
             oHeart=2
             pHeart=2
             to2=0
-            screen.blit(background, backgroundRect)
+            screen.blit(bp[bi], backgroundRect)
+            bi+=1
+            if bi>18:
+                bi=0
+            clock.tick(20)
             if sun==0:#sun=> 0 : attack / 1 : defend
                 title1, backgroundRect = imageLoad("sun.png", 0)
             else :
