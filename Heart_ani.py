@@ -64,6 +64,8 @@ wine=(208,148,130)
 def imageLoad(name, card):              #
     if card == 1:
         fullname = os.path.join("images/cards/", name)
+    elif card == 2:
+        fullname = os.path.join("images/bg/", name)
     else: fullname = os.path.join('images', name)
     
     try:
@@ -778,6 +780,7 @@ def mainGame():
     init_serial()
     state=0
     textFont = pygame.font.Font(None,28)
+    gs, backgroundRect = imageLoad("GameStart2.png", 0)
     title, backgroundRect = imageLoad("title.png", 0)
     gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)
     swi, backgroundRect = imageLoad("switch.png", 0)
@@ -826,7 +829,12 @@ def mainGame():
     p7=playerCard()
     p8=playerCard()
     p9=playerCard()
-            
+    bp=[]
+    for i in range(19):
+        tmps, backgroundRect = imageLoad(str(i+1)+".gif", 2)
+        bp.append(tmps)
+    bi=0
+
     buttons = pygame.sprite.Group(dE, gS)
     deck=[]                 #
     deck2=[]                #
@@ -870,12 +878,14 @@ def mainGame():
     while True:
         while mode=="main1": #
             state=0
-            screen.blit(background2, backgroundRect)             #
+            screen.blit(bp[bi], backgroundRect)
+            bi+=1
+            if bi>18:
+                bi=0
             
             titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (25,25,25), wine)#(208,148,130)
             screen.blit(titleFont, (10, 440))
 
-            gs, backgroundRect = imageLoad("GameStart2.png", 0)   #
             screen.blit(gs, (60,140))                        
             screen.blit(title, (230,30))                        
             buttons = pygame.sprite.Group(dE)
@@ -896,9 +906,11 @@ def mainGame():
             
         while mode=="main2":
             state=0
-            screen.blit(background2, backgroundRect)
+            screen.blit(bp[bi], backgroundRect)
+            bi+=1
+            if bi>18:
+                bi=0
             
-            title, backgroundRect = imageLoad("title.png", 0)
             screen.blit(title, (230,30))
             buttons = pygame.sprite.Group(dE, gS)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
@@ -923,10 +935,11 @@ def mainGame():
         while mode=="main3": #
             to=0
             state=0
-            screen.blit(background2, backgroundRect)
-            title, backgroundRect = imageLoad("title.png", 0)   #
+            screen.blit(bp[bi], backgroundRect)
+            bi+=1
+            if bi>18:
+                bi=0
             screen.blit(title, (230, 30))
-            gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)   #
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(gJ, gC)
             buttons.draw(screen)
@@ -1497,21 +1510,19 @@ def mainGame():
                             ac.set_colorkey(beige)
                             acl=0
                             cnt=1
-                        
                         to2=0
+                        mode="attani"
                         if dcl<9:
                             x2=(dcl+1)*76-78
                         y2=60
                         pPT=PT[len(pHands2)]
                         x1=pPT[acl]-75
                         y1=240
-                        chax1=((250-x1)/10)
-                        chay1=-12
+                        chax1=((250-x1)/20)
+                        chay1=-6
                         if n2<9:
-                            chax2=((475-x2)/10)
-                            chay2=6
-
-                        mode="attani"
+                            chax2=((475-x2)/20)
+                            chay2=3
 
             except:
                 oo=0;
@@ -1639,11 +1650,11 @@ def mainGame():
                         if dcl<9:
                             x2=pPT[dcl]-75
                         y2=240
-                        chax1=((250-x1)/10)
-                        chay1=6
+                        chax1=((250-x1)/20)
+                        chay1=3
                         if n2<9:
-                            chax2=((475-x2)/10)
-                            chay2=-12
+                            chax2=((475-x2)/20)
+                            chay2=-6
                 elif state==2:
                     while to2<5:
                         send_data(2,buf,0)#send 2 buf 0 like->'999' 5times to end opponent's 2nd state
@@ -1712,7 +1723,7 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(40)
+                clock.tick(60)
                 pygame.display.flip()
             else :
                 if dr1==1:
@@ -1886,7 +1897,7 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(40)
+                clock.tick(60)
                 pygame.display.flip()
             else :
                 if dr1==1:
