@@ -781,9 +781,13 @@ def mainGame():
     state=0
     textFont = pygame.font.Font(None,28)
     gs, backgroundRect = imageLoad("GameStart2.png", 0)
+    gs.set_colorkey(wine)
     title, backgroundRect = imageLoad("title.png", 0)
+    title.set_colorkey(wine)
     gsnoti, backgroundRect = imageLoad("GSNOTI.png", 0)
+    gsnoti.set_colorkey(wine)
     swi, backgroundRect = imageLoad("switch.png", 0)
+    swi.set_colorkey(wine)
     background, backgroundRect = imageLoad("bjs.png", 0)
     background2, backgroundRect = imageLoad("bjs2.png", 0)
     oCards = pygame.sprite.Group()
@@ -876,7 +880,7 @@ def mainGame():
     gsu2=0
     
     while True:
-        while mode=="main1": #
+        while mode=="main1": # when deck is not set
             state=0
             screen.blit(bp[bi], backgroundRect)
             bi+=1
@@ -884,14 +888,16 @@ def mainGame():
                 bi=0
             
             titleFont = pygame.font.Font.render(textFont, "Deck is Not Set", 1, (25,25,25), wine)#(208,148,130)
+            titleFont.set_colorkey(wine)
             screen.blit(titleFont, (10, 440))
-
-            screen.blit(gs, (60,140))                        
+            screen.blit(gs, (60,140))
             screen.blit(title, (230,30))                        
             buttons = pygame.sprite.Group(dE)
+            buttons.set_colorkey(wine)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
             buttons.draw(screen)
-            
+
+            clock.tick(20)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -904,7 +910,7 @@ def mainGame():
                     mX, mY = 0, 0
                     click = 0
             
-        while mode=="main2":
+        while mode=="main2": #when the deck is set
             state=0
             screen.blit(bp[bi], backgroundRect)
             bi+=1
@@ -913,11 +919,12 @@ def mainGame():
             
             screen.blit(title, (230,30))
             buttons = pygame.sprite.Group(dE, gS)
+            buttons.set_colorkey(wine)
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
             click, mode, deck3, deck, pHands ,sun, tuk, que, cnt = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt)
             buttons.draw(screen)
-                
-            clock.tick(60)
+            
+            clock.tick(20)
             pygame.display.flip() 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -932,7 +939,7 @@ def mainGame():
             if mode!="main2":
                 continue
             
-        while mode=="main3": #
+        while mode=="main3": # looking for opponent
             to=0
             state=0
             screen.blit(bp[bi], backgroundRect)
@@ -942,12 +949,13 @@ def mainGame():
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(gJ, gC)
+            buttons.set_colorkey(wine)
             buttons.draw(screen)
             click, mode, sun = gJ.update(mX, mY, click, mode, sun)
             click, mode = gC.update(mX, mY, click, mode)
 
             pygame.display.flip()                           #
-        
+            clock.tick(20)
             for event in pygame.event.get():
                 if event.type==QUIT:
                     sys.exit()
