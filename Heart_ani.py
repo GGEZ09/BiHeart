@@ -112,7 +112,7 @@ def mainGame():
                 click = 0
                 self.image, self.rect =imageLoad("Card_Attack2.png", 1)
                 self.image.set_colorkey(beige)
-                self.position = (225, 360)
+                self.position = (75, 120)
                 self.rect.center = self.position
                 hsu2+=1
                 gsu2+=1
@@ -169,7 +169,7 @@ def mainGame():
                 click = 0
                 self.image, self.rect =imageLoad("Card_Shield2.png", 1)
                 self.image.set_colorkey(beige)
-                self.position = (225, 360)
+                self.position = (375, 120)
                 self.rect.center = self.position
                 hsu2+=1
 
@@ -197,7 +197,7 @@ def mainGame():
                 click = 0
                 self.image, self.rect =imageLoad("Card_Negate2.png", 1)
                 self.image.set_colorkey(beige)
-                self.position = (225, 360)
+                self.position = (75, 360)
                 self.rect.center = self.position
                 hsu2+=1
 
@@ -225,7 +225,7 @@ def mainGame():
                 click = 0
                 self.image, self.rect =imageLoad("Card_Snipe2.png", 1)
                 self.image.set_colorkey(beige)
-                self.position = (225, 360)
+                self.position = (225, 120)
                 self.rect.center = self.position
                 hsu2+=1
                 gsu2+=1
@@ -255,7 +255,7 @@ def mainGame():
                 click = 0
                 self.image, self.rect =imageLoad("Card_Hide2.png", 1)
                 self.image.set_colorkey(beige)
-                self.position = (225, 360)
+                self.position = (375, 360)
                 self.rect.center = self.position
                 hsu2+=1
                 
@@ -568,41 +568,21 @@ def mainGame():
             
             return click, mode
         
-    class buttonMainTest(pygame.sprite.Sprite):   #
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image, self.rect = imageLoad("GameTest.png", 0)
-            self.position = (310, 280)
-            
-        def update(self, mX, mY, click, mode):
-            self.image, self.rect = imageLoad("GameTest.png", 0)
-            self.position = (310, 280)
-            self.rect.center = self.position
-            if self.rect.collidepoint(mX, mY) == 1 and click == 1:
-                mode="pregame" ## "connect"
-                click = 0
-                self.image, self.rect = imageLoad("GameTest.png", 0)
-                self.position = (310, 280)
-                self.rect.center = self.position
-            
-            return click, mode
-        
     class buttonMainCancel(pygame.sprite.Sprite):   #
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Cancel2.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (500, 280)
             
         def update(self, mX, mY, click, mode):
             self.image, self.rect = imageLoad("Cancel2.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (500, 280)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="main2"
                 click = 0
-                self.image, self.rect = imageLoad("Cancel2.png", 0)
-                self.position = (500, 280)
-                self.rect.center = self.position
             
             return click, mode
 
@@ -610,18 +590,17 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Surren.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (745, 40)
             
         def update(self, mX, mY, click, mode):
             self.image, self.rect = imageLoad("Surren.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (745, 40)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="main2"
                 click = 0
-                self.image, self.rect = imageLoad("Surren.png", 0)
-                self.position = (745, 40)
-                self.rect.center = self.position
             
             return click, mode
 
@@ -629,10 +608,12 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Ok.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (745, 200)
             
         def update(self, mX, mY, click, mode, sun, pHands, oHands, deck3, cnt):
             self.image, self.rect = imageLoad("Ok.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (745, 200)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
@@ -649,9 +630,6 @@ def mainGame():
                 elif mode=="win"or mode=="los":
                     mode='main2'
                 click = 0
-                self.image, self.rect = imageLoad("Ok.png", 0)
-                self.position = (745, 200)
-                self.rect.center = self.position
             
             return click, mode, sun, pHands, oHands, deck3, cnt
 
@@ -659,17 +637,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("Turnj.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (745, 120)
             
         def update(self, mX, mY, click, mode, que):
             self.image, self.rect = imageLoad("Turnj.png", 0)
+            self.image.set_colorkey(beige)
             self.position = (745, 120)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect = imageLoad("Turnj.png", 0)
-                self.position = (745, 120)
-                self.rect.center = self.position
                 que=['T',9,9]
                 mode='attcom'
             
@@ -679,17 +656,16 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("back.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (-40, 120)
             
         def update(self, mX, mY, click, mode, gtwi, opos, que):
             self.image, self.rect = imageLoad("back.png", 1)
+            self.image.set_colorkey(beige)
             self.position = (gtwi, 120)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect = imageLoad("back.png", 1)
-                self.position = (gtwi, 120)
-                self.rect.center = self.position
 
                 if mode=="att" and len(que)==3:
                     if que[0]=="A":
@@ -705,6 +681,7 @@ def mainGame():
             
         def update(self, mX, mY, click, mode, ptwi, tuk, pos, pHands, que):
             self.image, self.rect = imageLoad(pHands[pos], 1)
+            self.image.set_colorkey(beige)
             if tuk==pos:
                 self.position = (ptwi, 330)
             else:
@@ -722,7 +699,7 @@ def mainGame():
                     pp=pHands[pos]
                     if pp in CT[:2]:
                         if pp == CT[0]:
-                            que=["A",pos,9]
+                            que=["A",pos,0]
                         elif pp == CT[1]:
                             que=["S",pos,9]
                     elif pp == CT[5]:
@@ -818,7 +795,6 @@ def mainGame():
     tF=thumbFlash()
     tN=thumbNegate()
     tH=thumbHide()
-    bMT=buttonMainTest()
     bMC=buttonMainCancel()
     bGS=buttonGameSurren()
     bGO=buttonGameOk()
@@ -1239,9 +1215,8 @@ def mainGame():
             clock.tick(20)
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
-            buttons=pygame.sprite.Group(bMT, bMC)
+            buttons=pygame.sprite.Group(bMC)
             buttons.draw(screen)
-            click, mode = bMT.update(mX, mY, click, mode)
             click, mode = bMC.update(mX, mY, click, mode)
             
             pygame.display.flip()
@@ -1299,9 +1274,8 @@ def mainGame():
             clock.tick(20)
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
-            buttons=pygame.sprite.Group(bMT, bMC)
+            buttons=pygame.sprite.Group(bMC)
             buttons.draw(screen)
-            click, mode = bMT.update(mX, mY, click, mode)
             click, mode = bMC.update(mX, mY, click, mode)
 
             pygame.display.flip()                           #
@@ -1330,15 +1304,13 @@ def mainGame():
             oHeart=2
             pHeart=2
             to2=0
-            screen.blit(bp[bi], backgroundRect)
-            bi+=1
-            if bi>18:
-                bi=0
+            screen.fill((0,0,0))
             clock.tick(20)
             if sun==0:#sun=> 0 : attack / 1 : defend
                 title1, backgroundRect = imageLoad("sun.png", 0)
             else :
-                title1, backgroundRect = imageLoad("hu.png", 0) 
+                title1, backgroundRect = imageLoad("hu.png", 0)
+            title1.set_colorkey(beige)
             screen.blit(title1, (100, 10))
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
@@ -1376,7 +1348,8 @@ def mainGame():
             except:
                 oo=0;
             tuk=9
-            screen.blit(background, backgroundRect)
+            screen.fill((0,0,0))
+            clock.tick(20)
             if mode=="att":
                 buttons=pygame.sprite.Group(bGS, bGT, bGO)
             else :
@@ -1455,14 +1428,14 @@ def mainGame():
                 pp9=pygame.sprite.Group(p9)
                 pp9.draw(screen)
                 click, mode, que, pHands = p9.update(mX, mY, click, mode, ptwitch[8],tuk, 8, pHands, que)
-            for i in pPT:
-                c[j], backgroundRect = imageLoad(pHands[j], 1)
-                c[j].set_colorkey(beige)
-                if tuk==j:
-                    screen.blit(c[j], (i-75, 210))
-                else:
-                    screen.blit(c[j], (i-75, 240))
-                j+=1
+            #for i in pPT:
+            #    c[j], backgroundRect = imageLoad(pHands[j], 1)
+            #    c[j].set_colorkey(beige)
+            #    if tuk==j:
+            #        screen.blit(c[j], (i-75, 210))
+            #    else:
+            #        screen.blit(c[j], (i-75, 240))
+            #    j+=1
             if len(que)==1:
                 swi.set_colorkey((255,255,255))
                 screen.blit(swi, (pPT[que[0]]-25, 330))
@@ -1559,10 +1532,13 @@ def mainGame():
                         if n2<9:
                             chax2=((475-x2)/20)
                             chay2=3
+                    if temp[0]=='4':#temp -> other player lost 444
+                        mode="win"
 
             except:
                 oo=0;
-            screen.blit(background, backgroundRect)
+            screen.fill((0,0,0))
+            clock.tick(20)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
             pPT=PT[len(pHands2)]
@@ -1699,7 +1675,8 @@ def mainGame():
                 
             except:
                 oo=0;
-            screen.blit(background, backgroundRect)
+            screen.fill((0,0,0))
+            clock.tick(20)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
             pPT=PT[len(pHands2)]
@@ -1732,7 +1709,8 @@ def mainGame():
 
 
         while mode=="attani":
-            screen.blit(background, backgroundRect)
+            screen.fill((0,0,0))
+            clock.tick(60)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
             pPT=PT[len(pHands2)]
@@ -1759,9 +1737,8 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(60)
-                pygame.display.flip()
             else :
+                pygame.time.delay(3000)
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -1906,7 +1883,8 @@ def mainGame():
                     click = 0
 
         while mode=="defani":
-            screen.blit(background, backgroundRect)
+            screen.fill((0,0,0))
+            clock.tick(60)
             buttons=pygame.sprite.Group(bGS, bGO)
             buttons.draw(screen)
             pPT=PT[len(pHands2)]
@@ -1933,8 +1911,6 @@ def mainGame():
                     x2+=chax2
                     y2+=chay2
                     screen.blit(dc,(x2,y2))
-                clock.tick(60)
-                pygame.display.flip()
             else :
                 if dr1==1:
                     if dr2==1:
@@ -2162,9 +2138,9 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            screen.blit(background2, backgroundRect)
-            
-            title, backgroundRect = imageLoad("title.png", 0)
+            screen.fill((0,0,0))
+            clock.tick(20)
+
             screen.blit(title, (230,30))
             buttons=pygame.sprite.Group(bGO)
             buttons.draw(screen)
@@ -2191,9 +2167,9 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            screen.blit(background2, backgroundRect)
-            
-            title, backgroundRect = imageLoad("title.png", 0)
+            screen.fill((0,0,0))
+            clock.tick(20)
+
             screen.blit(title, (230,30))
             buttons=pygame.sprite.Group(bGO)
             buttons.draw(screen)

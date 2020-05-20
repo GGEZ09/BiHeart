@@ -46,6 +46,7 @@ def mainGame():
         background, backgroundRect = imageLoad("bjs2.png", 0)
 
         screen.blit(background, backgroundRect)
+        screen.fill((0,0,0))
         pic.set_alpha(10)
         screen.blit(pic,(x,y))
         
