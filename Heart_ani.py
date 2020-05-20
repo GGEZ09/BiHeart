@@ -475,10 +475,10 @@ def mainGame():
             self.position = (600, 240)
             
         def update(self, mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2):
-            #self.image, self.rect = imageLoad("DeckEdit.png", 0)
-            #self.image.set_colorkey(wine)
+            self.image, self.rect = imageLoad("DeckEdit.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (600, 240)
-            #self.rect.center = self.position
+            self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="deck1"
                 click = 0
@@ -528,6 +528,7 @@ def mainGame():
             
         def update(self, mX, mY, click, mode, sun):
             self.image, self.rect = imageLoad("join.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (310, 280)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
@@ -535,10 +536,6 @@ def mainGame():
                 click = 0
 
                 sun=random.randint(0,1)
-                
-                self.image, self.rect = imageLoad("join.png", 0)
-                self.position = (310, 280)
-                self.rect.center = self.position
             
             return click, mode, sun
 
@@ -551,15 +548,13 @@ def mainGame():
             
         def update(self, mX, mY, click, mode):
             self.image, self.rect = imageLoad("create.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (500, 280)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="create" ## server decide attack/defend, draw his card, go to "connent"
                 click = 0
                 
-                self.image, self.rect = imageLoad("create.png", 0)
-                self.position = (500, 280)
-                self.rect.center = self.position
             
             return click, mode
         
