@@ -477,7 +477,7 @@ def mainGame():
         def update(self, mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2):
             #self.image, self.rect = imageLoad("DeckEdit.png", 0)
             #self.image.set_colorkey(wine)
-            #self.position = (600, 240)
+            self.position = (600, 240)
             #self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 mode="deck1"
