@@ -110,6 +110,10 @@ def mainGame():
 
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
+                self.image, self.rect =imageLoad("Card_Attack2.png", 1)
+                self.image.set_colorkey(beige)
+                self.position = (225, 360)
+                self.rect.center = self.position
                 hsu2+=1
                 gsu2+=1
                 
@@ -135,7 +139,8 @@ def mainGame():
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
-                self.image, self.rect =imageLoad("Card_Flash.png", 1)
+                self.image, self.rect =imageLoad("Card_Flash2.png", 1)
+                self.image.set_colorkey(beige)
                 self.position = (225, 360)
                 self.rect.center = self.position
                 hsu2+=1
@@ -162,6 +167,10 @@ def mainGame():
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
+                self.image, self.rect =imageLoad("Card_Shield2.png", 1)
+                self.image.set_colorkey(beige)
+                self.position = (225, 360)
+                self.rect.center = self.position
                 hsu2+=1
 
                 if CT[2] in dek2:
@@ -186,6 +195,10 @@ def mainGame():
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
+                self.image, self.rect =imageLoad("Card_Negate2.png", 1)
+                self.image.set_colorkey(beige)
+                self.position = (225, 360)
+                self.rect.center = self.position
                 hsu2+=1
 
                 if CT[4] in dek2:
@@ -210,6 +223,10 @@ def mainGame():
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
+                self.image, self.rect =imageLoad("Card_Snipe2.png", 1)
+                self.image.set_colorkey(beige)
+                self.position = (225, 360)
+                self.rect.center = self.position
                 hsu2+=1
                 gsu2+=1
 
@@ -236,6 +253,10 @@ def mainGame():
 
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
                 click = 0
+                self.image, self.rect =imageLoad("Card_Hide2.png", 1)
+                self.image.set_colorkey(beige)
+                self.position = (225, 360)
+                self.rect.center = self.position
                 hsu2+=1
                 
                 if CT[5] in dek2:
@@ -1078,7 +1099,7 @@ def mainGame():
             bi-=1
             if bi<0:
                 bi=18
-            clock.tick(5)
+            clock.tick(20)
             t=1
             tn=[0,0,0,0,0,0]
             for i in range(5):
