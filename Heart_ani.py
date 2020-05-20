@@ -471,6 +471,7 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("DeckEdit.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (600, 240)
             
         def update(self, mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2):
@@ -498,10 +499,12 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("GameStart.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (200, 240)
             
         def update(self, mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt):
             self.image, self.rect = imageLoad("GameStart.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (200, 240)
             self.rect.center = self.position
             if self.rect.collidepoint(mX, mY) == 1 and click == 1:
@@ -522,6 +525,7 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("join.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (310, 280)
             
         def update(self, mX, mY, click, mode, sun):
@@ -544,6 +548,7 @@ def mainGame():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
             self.image, self.rect = imageLoad("create.png", 0)
+            self.image.set_colorkey(wine)
             self.position = (500, 280)
             
         def update(self, mX, mY, click, mode):
@@ -893,7 +898,7 @@ def mainGame():
             screen.blit(gs, (60,140))
             screen.blit(title, (230,30))                        
             buttons = pygame.sprite.Group(dE)
-            buttons.set_colorkey(wine)
+            
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
             buttons.draw(screen)
 
@@ -919,7 +924,7 @@ def mainGame():
             
             screen.blit(title, (230,30))
             buttons = pygame.sprite.Group(dE, gS)
-            buttons.set_colorkey(wine)
+            
             click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2 = dE.update(mX, mY, click, mode, deck, dek, hsu, gsu, deck2, dek2, hsu2, gsu2)
             click, mode, deck3, deck, pHands ,sun, tuk, que, cnt = gS.update(mX, mY, click, mode, deck3, deck, pHands, sun, tuk, que, cnt)
             buttons.draw(screen)
@@ -949,7 +954,7 @@ def mainGame():
             screen.blit(title, (230, 30))
             screen.blit(gsnoti, (250, 165))
             buttons=pygame.sprite.Group(gJ, gC)
-            buttons.set_colorkey(wine)
+            
             buttons.draw(screen)
             click, mode, sun = gJ.update(mX, mY, click, mode, sun)
             click, mode = gC.update(mX, mY, click, mode)
