@@ -66,6 +66,8 @@ def imageLoad(name, card):              #
         fullname = os.path.join("images/cards/", name)
     elif card == 2:
         fullname = os.path.join("images/bg/", name)
+    elif card == 3:
+        fullname = os.path.join("images/efx/", name)
     else: fullname = os.path.join('images', name)
     
     try:
@@ -818,10 +820,19 @@ def mainGame():
     p8=playerCard()
     p9=playerCard()
     bp=[]
+    he=[]
+    efx=[]
     for i in range(19):
         tmps, backgroundRect = imageLoad(str(i+1)+".gif", 2)
         bp.append(tmps)
     bi=0
+
+    for i in range(16):
+        tmps, backgroundRect = imageLoad("h"+str(i+1)+".gif", 3)
+        he.append(tmps)
+        he[i].set_colorkey((0,0,0))
+        he[i].set_colorkey(beige)
+    hei=0
 
     buttons = pygame.sprite.Group(dE, gS)
     deck=[]                 #
@@ -1507,6 +1518,7 @@ def mainGame():
                                 ol=upol(ol,2)
                             elif temp[1]=='6':#--> Heart : subtract one of opponent's heart
                                 oHeart-=1
+                                efx=he
                         elif que[0]=='S':#When I played 'Snipe' and -->
                             ac, backgroundRect = imageLoad(CT[1], 1)
                             ac.set_colorkey(beige)
@@ -1634,6 +1646,7 @@ def mainGame():
                                 elif buf==6: #Heart
                                     buf=6
                                     pHeart-=1
+                                    efx=he
                                 #else : attack / snipe / hide
                                 dc, backgroundRect = imageLoad(CT[buf], 1)
                                 dcl=t2
@@ -1723,8 +1736,6 @@ def mainGame():
                 pygame.time.delay(1000)
             screen.fill((0,0,0))
             clock.tick(60)
-            buttons=pygame.sprite.Group(bGS, bGO)
-            buttons.draw(screen)
             pPT=PT[len(pHands2)]
             j=0
             c=[0]*len(pHands2)
@@ -1751,6 +1762,31 @@ def mainGame():
                     screen.blit(dc,(x2,y2))
             else :
                 pygame.time.delay(1000)
+                if efx==he:
+                    while True:
+                        screen.fill((0,0,0))
+                        clock.tick(20)
+                        pPT=PT[len(pHands2)]
+                        j=0
+                        c=[0]*len(pHands2)
+                        for i in pPT:
+                            c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                            c[j].set_colorkey(beige)
+                            screen.blit(c[j], (i-75, 240))
+                            j+=1
+                        gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
+                        gtwi=38
+                        for i in range(ol2):
+                            gtwitch[i]=gtwi
+                            gtwi+=76
+                        buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
+                        buttons1.draw(screen)
+                        screen.blit(he[hei], backgroundRect)
+                        pygame.display.flip()
+                        hei+=1
+                        if hei>15:
+                            hei=0
+                            break
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -1837,7 +1873,7 @@ def mainGame():
                     dr1=0
                     dr2=0
                     acl=0
-                    dcl=0
+                    dcl=9
                     if oHeart==0:
                         cnt=2
                         mode="win"
@@ -1897,8 +1933,6 @@ def mainGame():
         while mode=="defani":
             screen.fill((0,0,0))
             clock.tick(60)
-            buttons=pygame.sprite.Group(bGS, bGO)
-            buttons.draw(screen)
             pPT=PT[len(pHands2)]
             j=0
             c=[0]*len(pHands2)
@@ -1925,6 +1959,31 @@ def mainGame():
                     screen.blit(dc,(x2,y2))
             else :
                 pygame.time.delay(1000)
+                if efx==he:
+                    while True:
+                        screen.fill((0,0,0))
+                        clock.tick(20)
+                        pPT=PT[len(pHands2)]
+                        j=0
+                        c=[0]*len(pHands2)
+                        for i in pPT:
+                            c[j], backgroundRect = imageLoad(pHands2[j], 1)
+                            c[j].set_colorkey(beige)
+                            screen.blit(c[j], (i-75, 240))
+                            j+=1
+                        gtwitch=[-40,-40,-40,-40,-40,-40,-40,-40,-40]
+                        gtwi=38
+                        for i in range(ol2):
+                            gtwitch[i]=gtwi
+                            gtwi+=76
+                        buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
+                        buttons1.draw(screen)
+                        screen.blit(he[hei], backgroundRect)
+                        pygame.display.flip()
+                        hei+=1
+                        if hei>15:
+                            hei=0
+                            break
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -2011,7 +2070,7 @@ def mainGame():
                     dr1=0
                     dr2=0
                     acl=0
-                    dcl=0
+                    dcl=9
                     if oHeart==0:
                         cnt=2
                         mode="win"
@@ -2151,10 +2210,9 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            screen.fill((0,0,0))
             clock.tick(20)
-
-            screen.blit(title, (230,30))
+            winb, backgroundRect = imageLoad("win.png", 0)
+            screen.blit(winb, backgroundRect)
             buttons=pygame.sprite.Group(bGO)
             buttons.draw(screen)
             click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
@@ -2180,10 +2238,9 @@ def mainGame():
                     to2+=1
             except:
                 oo=0;
-            screen.fill((0,0,0))
             clock.tick(20)
-
-            screen.blit(title, (230,30))
+            losb, backgroundRect = imageLoad("los.png", 0)
+            screen.blit(losb, backgroundRect)
             buttons=pygame.sprite.Group(bGO)
             buttons.draw(screen)
             click, mode, sun, pHands, oHands, deck3, cnt = bGO.update(mX, mY, click, mode, sun, pHands, oHands, deck3, cnt)
