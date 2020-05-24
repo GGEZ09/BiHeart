@@ -830,8 +830,6 @@ def mainGame():
     for i in range(16):
         tmps, backgroundRect = imageLoad("h"+str(i+1)+".png", 3)
         he.append(tmps)
-        he[i].set_colorkey((0,0,0))
-        he[i].set_colorkey(beige)
     hei=0
 
     buttons = pygame.sprite.Group(dE, gS)
@@ -1781,6 +1779,8 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
+                        he[hei].set_colorkey((0,0,0))
+                        he[hei].set_colorkey(beige)
                         screen.blit(he[hei], backgroundRect)
                         pygame.display.flip()
                         hei+=1
@@ -1978,8 +1978,6 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
-                        screen.blit(he[hei], backgroundRect)
-                        pygame.display.flip()
                         hei+=1
                         if hei>15:
                             hei=0
