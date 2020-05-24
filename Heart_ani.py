@@ -828,7 +828,7 @@ def mainGame():
     bi=0
 
     for i in range(16):
-        tmps, backgroundRect = imageLoad("h"+str(i+1)+".gif", 3)
+        tmps, backgroundRect = imageLoad("h"+str(i+1)+".png", 3)
         he.append(tmps)
         he[i].set_colorkey((0,0,0))
         he[i].set_colorkey(beige)
