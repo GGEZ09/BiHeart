@@ -1447,14 +1447,6 @@ def mainGame():
                 pp9=pygame.sprite.Group(p9)
                 pp9.draw(screen)
                 click, mode, que, pHands = p9.update(mX, mY, click, mode, ptwitch[8],tuk, 8, pHands, que)
-            #for i in pPT:
-            #    c[j], backgroundRect = imageLoad(pHands[j], 1)
-            #    c[j].set_colorkey(beige)
-            #    if tuk==j:
-            #        screen.blit(c[j], (i-75, 210))
-            #    else:
-            #        screen.blit(c[j], (i-75, 240))
-            #    j+=1
             if len(que)==1:
                 swi.set_colorkey((255,255,255))
                 screen.blit(swi, (pPT[que[0]]-25, 330))
@@ -1780,7 +1772,6 @@ def mainGame():
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
                         he[hei].set_colorkey((0,0,0))
-                        he[hei].set_colorkey(beige)
                         screen.blit(he[hei], backgroundRect)
                         pygame.display.flip()
                         hei+=1
@@ -1874,6 +1865,7 @@ def mainGame():
                     dr2=0
                     acl=0
                     dcl=9
+                    efx=[]##############################allreset###########################
                     if oHeart==0:
                         cnt=2
                         mode="win"
@@ -1978,6 +1970,10 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
+                        he[hei].set_colorkey((0,0,0))
+                        he[hei].set_colorkey(beige)
+                        screen.blit(he[hei], backgroundRect)
+                        pygame.display.flip()
                         hei+=1
                         if hei>15:
                             hei=0
@@ -2069,6 +2065,7 @@ def mainGame():
                     dr2=0
                     acl=0
                     dcl=9
+                    efx=[]##############################allreset###########################
                     if oHeart==0:
                         cnt=2
                         mode="win"
