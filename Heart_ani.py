@@ -830,6 +830,22 @@ def mainGame():
     for i in range(16):
         tmps, backgroundRect = imageLoad("h"+str(i+1)+".png", 3)
         he.append(tmps)
+        tmps, backgroundRect = imageLoad("hh"+str(i+1)+".png", 3)
+        hhe.append(tmps)
+        tmps, backgroundRect = imageLoad("sh"+str(i+1)+".png", 3)
+        she.append(tmps)
+        tmps, backgroundRect = imageLoad("a"+str(i+1)+".png", 3)
+        ae.append(tmps)
+        tmps, backgroundRect = imageLoad("s"+str(i+1)+".png", 3)
+        se.append(tmps)
+        tmps, backgroundRect = imageLoad("f"+str(i+1)+".png", 3)
+        fe.append(tmps)
+        tmps, backgroundRect = imageLoad("n"+str(i+1)+".png", 3)
+        ne.append(tmps)
+        tmps, backgroundRect = imageLoad("sf"+str(i+1)+".png", 3)
+        sfe.append(tmps)
+        tmps, backgroundRect = imageLoad("sn"+str(i+1)+".png", 3)
+        sne.append(tmps)
     hei=0
 
     buttons = pygame.sprite.Group(dE, gS)
@@ -846,6 +862,8 @@ def mainGame():
     dcl=0#Location of defenders card
     dr1=0#cards came to my hand at Draw 1
     dr2=0#cards came to my hand at Draw 2
+    acheck=['0','1','2','3','4','5','6','7','8']
+    dcheck=['A','S','H','T']
     x1,x2,y1,y2=0.0,0.0,0.0,0.0
     chax1=0.0
     chay1=0.0
@@ -1485,9 +1503,9 @@ def mainGame():
                         to=0
                         state=1
                 elif state==1:
-                    send_data(1,que[0],que[2])# -> ['2','A~T','0~8']
+                    send_data(1,que[0],que[2])# -> ['1','A~T','0~8']
                     temp=receive_data()
-                    if temp[0]=='2':#temp -> ['2','0~6','0']
+                    if temp[0]=='2' and temp[1] in acheck and temp[2]=='0':#temp -> ['2','0~6','0']
                         n1=1
                         to=0
                         acl=que[1]
@@ -1502,10 +1520,20 @@ def mainGame():
                             dc, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                             dc.set_colorkey(beige)
                             ol=upol(ol,-1)
-                            if temp[1]=='4':#--> Negate : make my turn 1
-                                cnt=1
+                            if temp[1]=='0':#--> Attack 
+                                efx=ae
+                            elif temp[1]=='1':#--> Snipe 
+                                efx=se
+                            elif temp[1]=='2':#--> Shield 
+                                efx=she
                             elif temp[1]=='3':#--> Flash : opponent draw 2cards
                                 ol=upol(ol,2)
+                                efx=fe
+                            elif temp[1]=='4':#--> Negate : make my turn 1
+                                cnt=1
+                                efx=ne
+                            elif temp[1]=='5':#--> Hide
+                                efx=hhe
                             elif temp[1]=='6':#--> Heart : subtract one of opponent's heart
                                 oHeart-=1
                                 efx=he
@@ -1514,11 +1542,18 @@ def mainGame():
                             ac.set_colorkey(beige)
                             if temp[1]=='0':#--> opponent has not secret card : nothing happend
                                 oo=0;
+                                #efx=sf
                             else:#--> opponent has secret card : delete that card
                                 n2=1
                                 dc, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                                 dc.set_colorkey(beige)
                                 ol=upol(ol,-1)
+                                if temp[1]=='2':#--> Shield 
+                                    efx=she
+                                elif temp[1]=='3':#--> Flash
+                                    efx=sfe
+                                elif temp[1]=='4':#--> Negate
+                                    efx=sne
                         elif que[0]=='H':#When I played 'Hide' : draw two cards
                             ac, backgroundRect = imageLoad(CT[5], 1)
                             ac.set_colorkey(beige)
@@ -1527,7 +1562,7 @@ def mainGame():
                             pHands,deck3,dr=draw(pHands,deck3,1)
                             dr2=dr
                         elif que[0]=='T':#When I click 'EndTurn' button : end turn
-                            ac, backgroundRect = imageLoad("back.png", 1)
+                            ac, backgroundRect = imageLoad("Card_Tj.png", 1)
                             ac.set_colorkey(beige)
                             acl=0
                             cnt=1
@@ -1600,7 +1635,7 @@ def mainGame():
                 elif state==1:
                     send_data(0,0,0)
                     temp=receive_data()
-                    if temp[0]=='1':
+                    if temp[0]=='1' and temp[1] in dcheck and temp[2] in acheck:#temp -> ['1','A~T','0~8']
                         n1=1
                         to=0
                         state=2
@@ -1626,18 +1661,26 @@ def mainGame():
                                     del pHands[t2+1]
                             if buf==0:
                                 buf=CT.index(pHands[t2])
-                                if buf==3: #flash
+                                if temp[1]==0:#--> Attack 
+                                    efx=ae
+                                elif temp[1]==1:#--> Snipe 
+                                    efx=se
+                                elif temp[1]==2:#--> Shield 
+                                    efx=she
+                                elif temp[1]==3:#--> Flash : opponent draw 2cards
                                     pHands,deck3,dr=draw(pHands,deck3,1)
                                     dr1=dr
                                     pHands,deck3,dr=draw(pHands,deck3,1)
                                     dr2=dr
-                                elif buf==4: #Negate
+                                    efx=fe
+                                elif temp[1]==4:#--> Negate : make my turn 1
                                     cnt=1
-                                elif buf==6: #Heart
-                                    buf=6
+                                    efx=ne
+                                elif temp[1]==5:#--> Hide
+                                    efx=hhe
+                                elif temp[1]==6:#--> Heart : subtract one of opponent's heart
                                     pHeart-=1
                                     efx=he
-                                #else : attack / snipe / hide
                                 dc, backgroundRect = imageLoad(CT[buf], 1)
                                 dcl=t2
                                 del pHands[t2]
@@ -1653,6 +1696,12 @@ def mainGame():
                                 for j in range(2,5):
                                     if i == CT[j]:
                                         buf=j
+                                        if buf==2:#--> Shield 
+                                            efx=she
+                                        elif buf==3:#--> Flash
+                                            efx=sfe
+                                        elif buf==4:#--> Negate
+                                            efx=sne
                                         n2=k1
                                         dc, backgroundRect = imageLoad(pHands[k1], 1)
                                         dc.set_colorkey(beige)
@@ -1665,7 +1714,7 @@ def mainGame():
                             ol=upol(ol,1)
                             buf=0
                         elif temp[1]=='T':
-                            ac, backgroundRect = imageLoad("back.png", 1)
+                            ac, backgroundRect = imageLoad("Card_Tj.png", 1)
                             ac.set_colorkey(beige)
                             cnt=1
                         to2=0
@@ -1752,8 +1801,9 @@ def mainGame():
                     screen.blit(dc,(x2,y2))
             else :
                 pygame.time.delay(1000)
-                if efx==he:
-                    while True:
+                if len(efx)>0:
+                    hei=0
+                    while hei<17:
                         screen.fill((0,0,0))
                         clock.tick(20)
                         pPT=PT[len(pHands2)]
@@ -1771,13 +1821,11 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
-                        he[hei].set_colorkey((0,0,0))
-                        screen.blit(he[hei], backgroundRect)
+                        if hei<16
+                            efx[hei].set_colorkey((0,0,0))
+                            screen.blit(efx[hei], backgroundRect)
                         pygame.display.flip()
                         hei+=1
-                        if hei>15:
-                            hei=0
-                            break
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
@@ -1951,8 +1999,9 @@ def mainGame():
                     screen.blit(dc,(x2,y2))
             else :
                 pygame.time.delay(1000)
-                if efx==he:
-                    while True:
+                if len(efx)>0:
+                    hei=0
+                    while hei<17:
                         screen.fill((0,0,0))
                         clock.tick(20)
                         pPT=PT[len(pHands2)]
@@ -1970,13 +2019,11 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
-                        he[hei].set_colorkey((0,0,0))
-                        screen.blit(he[hei], backgroundRect)
+                        if hei<16
+                            efx[hei].set_colorkey((0,0,0))
+                            screen.blit(efx[hei], backgroundRect)
                         pygame.display.flip()
                         hei+=1
-                        if hei>15:
-                            hei=0
-                            break
                 if dr1==1:
                     if dr2==1:
                         d1, backgroundRect = imageLoad(pHands[-2], 1)
