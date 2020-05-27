@@ -821,6 +821,14 @@ def mainGame():
     p9=playerCard()
     bp=[]
     he=[]
+    hhe=[]
+    she=[]
+    ae=[]
+    se=[]
+    fe=[]
+    ne=[]
+    sfe=[]
+    sne=[]
     efx=[]
     for i in range(19):
         tmps, backgroundRect = imageLoad(str(i+1)+".gif", 2)
