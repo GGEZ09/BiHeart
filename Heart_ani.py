@@ -1821,7 +1821,7 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
-                        if hei<16
+                        if hei<16 :
                             efx[hei].set_colorkey((0,0,0))
                             screen.blit(efx[hei], backgroundRect)
                         pygame.display.flip()
@@ -2019,7 +2019,7 @@ def mainGame():
                             gtwi+=76
                         buttons1=pygame.sprite.Group(o1,o2,o3,o4,o5,o6,o7,o8,o9)
                         buttons1.draw(screen)
-                        if hei<16
+                        if hei<16 :
                             efx[hei].set_colorkey((0,0,0))
                             screen.blit(efx[hei], backgroundRect)
                         pygame.display.flip()
