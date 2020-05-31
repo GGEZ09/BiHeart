@@ -2123,6 +2123,7 @@ def mainGame():
                         j+=1
                     dr2=0
                 if dr1==0:
+                    print("def all reset")
                     to=0
                     state=0
                     que=[]
