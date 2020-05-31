@@ -1689,7 +1689,7 @@ def mainGame():
                                 buf=CT.index(pHands[t2])
                                 if buf==0:#--> Attack 
                                     efx=ae
-                                elif buf=1:#--> Snipe 
+                                elif buf==1:#--> Snipe 
                                     efx=se
                                 elif buf==2:#--> Shield 
                                     efx=she
