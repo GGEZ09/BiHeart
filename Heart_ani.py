@@ -1687,24 +1687,24 @@ def mainGame():
                                     del pHands[t2+1]
                             if buf==0:
                                 buf=CT.index(pHands[t2])
-                                if temp[1]=='0':#--> Attack 
+                                if buf==0:#--> Attack 
                                     efx=ae
-                                elif temp[1]=='1':#--> Snipe 
+                                elif buf=1:#--> Snipe 
                                     efx=se
-                                elif temp[1]=='2':#--> Shield 
+                                elif buf==2:#--> Shield 
                                     efx=she
-                                elif temp[1]=='3':#--> Flash : opponent draw 2cards
+                                elif buf==3:#--> Flash : opponent draw 2cards
                                     pHands,deck3,dr=draw(pHands,deck3,1)
                                     dr1=dr
                                     pHands,deck3,dr=draw(pHands,deck3,1)
                                     dr2=dr
                                     efx=fe
-                                elif temp[1]=='4':#--> Negate : make my turn 1
+                                elif buf==4:#--> Negate : make my turn 1
                                     cnt=1
                                     efx=ne
-                                elif temp[1]=='5':#--> Hide
+                                elif buf==5:#--> Hide
                                     efx=hhe
-                                elif temp[1]=='6':#--> Heart : subtract one of opponent's heart
+                                elif buf==6:#--> Heart : subtract one of opponent's heart
                                     pHeart-=1
                                     efx=he
                                 dc, backgroundRect = imageLoad(CT[buf], 1)
