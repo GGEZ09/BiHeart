@@ -1507,6 +1507,22 @@ def mainGame():
                     temp=receive_data()
                     ol2=ol
                     pHands2=pHands[:]
+                    if que[0]=='A':
+                        ac, backgroundRect = imageLoad(CT[0], 1)
+                        ac.set_colorkey(beige)
+                        acl=que[1]
+                        n2=1
+                    elif que[0]=='S':
+                        ac, backgroundRect = imageLoad(CT[1], 1)
+                        ac.set_colorkey(beige)
+                        acl=que[1]
+                    elif que[0]=='H':
+                        ac, backgroundRect = imageLoad(CT[5], 1)
+                        ac.set_colorkey(beige)
+                        acl=que[1]
+                    elif que[0]=='T':
+                        ac, backgroundRect = imageLoad("Card_Tj.png", 1)
+                        ac.set_colorkey(beige)
                     if temp=='000' or temp=='00' or temp[1:]=='00':
                         to=0
                         state=1
@@ -1516,14 +1532,14 @@ def mainGame():
                     if temp[0]=='2':#temp -> ['2','0~6','0']
                         n1=1
                         to=0
-                        acl=que[1]
+                        #acl=que[1]
                         dcl=que[2]
                         if que[0]!='T':
                             del pHands[que[1]]
                             pHands2=pHands[:]
                         if que[0]=='A':#When I played 'Attack' at -->
-                            ac, backgroundRect = imageLoad(CT[0], 1)
-                            ac.set_colorkey(beige)
+                            #ac, backgroundRect = imageLoad(CT[0], 1)
+                            #ac.set_colorkey(beige)
                             n2=1
                             dc, backgroundRect = imageLoad(CT[int(temp[1])], 1)
                             dc.set_colorkey(beige)
@@ -1546,8 +1562,8 @@ def mainGame():
                                 oHeart-=1
                                 efx=he
                         elif que[0]=='S':#When I played 'Snipe' and -->
-                            ac, backgroundRect = imageLoad(CT[1], 1)
-                            ac.set_colorkey(beige)
+                            #ac, backgroundRect = imageLoad(CT[1], 1)
+                            #ac.set_colorkey(beige)
                             if temp[1]=='0':#--> opponent has not secret card : nothing happend
                                 oo=0;
                                 #efx=sf
@@ -1563,15 +1579,15 @@ def mainGame():
                                 elif temp[1]=='4':#--> Negate
                                     efx=sne
                         elif que[0]=='H':#When I played 'Hide' : draw two cards
-                            ac, backgroundRect = imageLoad(CT[5], 1)
-                            ac.set_colorkey(beige)
+                            #ac, backgroundRect = imageLoad(CT[5], 1)
+                            #ac.set_colorkey(beige)
                             pHands,deck3,dr=draw(pHands,deck3,1)
                             dr1=dr
                             pHands,deck3,dr=draw(pHands,deck3,1)
                             dr2=dr
                         elif que[0]=='T':#When I click 'EndTurn' button : end turn
-                            ac, backgroundRect = imageLoad("Card_Tj.png", 1)
-                            ac.set_colorkey(beige)
+                            #ac, backgroundRect = imageLoad("Card_Tj.png", 1)
+                            #ac.set_colorkey(beige)
                             acl=0
                             cnt=1
                         to2=0
