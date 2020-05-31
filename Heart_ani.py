@@ -870,8 +870,8 @@ def mainGame():
     dcl=0#Location of defenders card
     dr1=0#cards came to my hand at Draw 1
     dr2=0#cards came to my hand at Draw 2
-    acheck=['0','1','2','3','4','5','6','7','8']
-    dcheck=['A','S','H','T']
+    #acheck=['0','1','2','3','4','5','6','7','8']
+    #dcheck=['A','S','H','T']
     x1,x2,y1,y2=0.0,0.0,0.0,0.0
     chax1=0.0
     chay1=0.0
@@ -1513,7 +1513,7 @@ def mainGame():
                 elif state==1:
                     send_data(1,que[0],que[2])# -> ['1','A~T','0~8']
                     temp=receive_data()
-                    if temp[0]=='2' and temp[1] in acheck and temp[2]=='0':#temp -> ['2','0~6','0']
+                    if temp[0]=='2':#temp -> ['2','0~6','0']
                         n1=1
                         to=0
                         acl=que[1]
@@ -1643,7 +1643,7 @@ def mainGame():
                 elif state==1:
                     send_data(0,0,0)
                     temp=receive_data()
-                    if temp[0]=='1' and temp[1] in dcheck and temp[2] in acheck:#temp -> ['1','A~T','0~8']
+                    if temp[0]=='1':#temp -> ['1','A~T','0~8']
                         n1=1
                         to=0
                         state=2
@@ -1659,12 +1659,14 @@ def mainGame():
                                 if pHands[t2-1]==CT[2]:
                                     buf=2
                                     dc, backgroundRect = imageLoad(CT[2], 1)
+                                    efx=she
                                     dcl=t2-1
                                     del pHands[t2-1]
                             if buf==0 and t2+1<len(pHands):#if shield card locates rightside of opponent aimed card
                                 if pHands[t2+1]==CT[2]:
                                     buf=2
                                     dc, backgroundRect = imageLoad(CT[2], 1)
+                                    efx=she
                                     dcl=t2+1
                                     del pHands[t2+1]
                             if buf==0:
